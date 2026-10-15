@@ -1,4 +1,5 @@
-# Atlas
+# Atlas-for-friends
+lol this is vibe coded, don't @ me. Open to learning and critique, so feel free to drop comments, DM me, or share your modifications.
 
 A private project tracker that runs entirely on your own Google account: Outline (Project > Task > Sub-task), a 2D/3D map of linked steps, Calendar, Competitions, Upcoming, a Discovery tab for things you want to learn, a free-form Canvas with arrows, a Team tab for AI agents, and a Warehouse for assets and suppliers.
 
