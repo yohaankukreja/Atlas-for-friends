@@ -1,0 +1,20 @@
+# Never commit secrets or personal data
+.env
+.env.*
+*.key
+*.pem
+secrets*
+*.json.bak
+# keep the manifest, ignore local clasp/Apps Script credentials
+.clasprc.json
+.clasp.json
+# exports of your own data
+*.csv
+plan.md
+*.xlsx
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+node_modules/
