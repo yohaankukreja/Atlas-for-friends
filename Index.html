@@ -58,12 +58,43 @@ a{color:var(--accent)}
 .count span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--head-muted)}
 .count.warn b{color:#f3a79d}
 
+.side-up{position:fixed;top:120px;right:0;z-index:60;display:flex;align-items:flex-start;font-size:12.5px}
+.side-up-tab{writing-mode:vertical-rl;text-orientation:mixed;background:var(--surface);border:1px solid var(--line);border-right:none;border-radius:8px 0 0 8px;padding:10px 7px;cursor:pointer;color:var(--muted);font-size:11.5px;letter-spacing:.02em}
+.side-up.open .side-up-tab{color:var(--ink);border-color:var(--ink)}
+.side-up-body{width:0;overflow:hidden;max-height:70vh;background:var(--surface);border:1px solid var(--line);border-radius:8px 0 0 8px;box-shadow:-4px 0 16px rgba(0,0,0,.12)}
+.side-up.open .side-up-body{width:230px;overflow-y:auto}
+.side-up-row{display:flex;align-items:center;gap:7px;padding:7px 10px;border-bottom:1px solid var(--line);cursor:pointer}
+.side-up-row:last-child{border-bottom:none}
+.side-up-row:hover{background:var(--hover)}
+.side-up-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.side-up-dot.red{background:var(--red-fg)}
+.side-up-dot.amber{background:var(--amber-fg)}
+.side-up-dot.green{background:var(--green-fg)}
+.side-up-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.side-up-when{color:var(--muted);font-size:11px;flex:none}
+.side-up-empty{padding:10px;color:var(--muted)}
+@media (max-width:760px){.side-up{display:none}}
+.ticker-wrap{margin-top:12px;max-width:1120px;margin-left:auto;margin-right:auto;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.15);cursor:pointer}
+.ticker-wrap.empty{opacity:.6}
+.ticker{display:inline-block;padding:7px 0;animation:tickscroll 38s linear infinite}
+.ticker-wrap:hover .ticker{animation-play-state:paused}
+.ticker-wrap.empty .ticker{animation:none}
+@keyframes tickscroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-block;padding:0 18px;font-size:12px;font-family:var(--font-mono);border-right:1px solid rgba(255,255,255,.15);color:var(--head-muted)}
+.tick-item b{font-weight:700;margin-left:6px}
+.tick-item.red b{color:#f3a79d}
+.tick-item.amber b{color:#f1cf79}
+.tick-item.green b{color:#8fd6a9}
+@media (prefers-reduced-motion:reduce){.ticker{animation:none;white-space:normal}}
+
 .wrap{max-width:1120px;margin:0 auto;padding-block:16px 64px;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
 .tabs,.chips{display:flex;gap:4px;flex-wrap:wrap}
 .tab{border:0;background:transparent;padding:7px 12px;border-radius:6px;color:var(--muted);font-weight:500}
 .tab[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 0 0 1px var(--line)}
+.tab.soon{opacity:.55}
+.tab.soon::after{content:"soon";font-size:9px;letter-spacing:.06em;text-transform:uppercase;margin-left:5px;padding:1px 4px;border-radius:4px;background:var(--hover);color:var(--muted);vertical-align:middle}
 .tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .search{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 10px;min-width:180px}
 .chip-b{border:1px solid var(--line);background:transparent;border-radius:6px;padding:5px 10px;font-size:12.5px;color:var(--muted)}
@@ -96,6 +127,9 @@ a{color:var(--accent)}
 .prog i{display:block;height:100%;background:var(--accent)}
 .pnum{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
 .chip{font-size:11.5px;text-decoration:none;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);flex:none}
+.area-tag{flex:none;width:92px;min-width:0;border:1px solid var(--line);background:var(--hover);border-radius:999px;padding:3px 10px;font-size:11.5px;color:var(--muted);text-align:center}
+.area-tag:focus{background:var(--surface);box-shadow:0 0 0 1px var(--accent);color:var(--ink)}
+.area-tag:not(:placeholder-shown){color:var(--ink)}
 .mdue{display:none}
 
 select.pill{appearance:none;-webkit-appearance:none;border:0;border-radius:999px;padding:3px 12px;font-size:12px;font-weight:500;cursor:pointer;max-width:100%;text-align:center;text-align-last:center}
@@ -198,6 +232,18 @@ svg#map.linking{cursor:crosshair}
 .n-comp{fill:var(--amber-bg);stroke:var(--amber-fg)}
 .node.sel .sh{stroke:var(--ink);stroke-width:3}
 .node.dim,.edge.dim{opacity:.15}
+.node.faint,.edge.faint{opacity:.35}
+.help{position:relative;display:inline-block;margin-left:6px;vertical-align:middle}
+.focusmenu{position:relative;display:inline-block}
+.focusmenu summary{list-style:none;cursor:pointer}
+.focusmenu summary::-webkit-details-marker{display:none}
+.help summary{list-style:none;cursor:pointer;width:18px;height:18px;border-radius:50%;border:1px solid var(--line);color:var(--muted);font-size:11px;line-height:16px;text-align:center;background:var(--surface)}
+.help summary::-webkit-details-marker{display:none}
+.help[open] summary{color:var(--ink);border-color:var(--ink)}
+.help-pop{position:absolute;z-index:40;top:24px;left:0;width:260px;max-width:70vw;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font-size:13px;line-height:1.4;color:var(--ink);box-shadow:0 6px 20px rgba(0,0,0,.2)}
+.bang-ib{width:18px;height:18px;border-radius:50%;border:1px solid var(--amber-fg,var(--line));color:var(--amber-fg,var(--muted));font-size:11px;line-height:16px;text-align:center;background:var(--surface);padding:0;flex:none}
+.bang-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:90;display:flex;align-items:center;justify-content:center;padding:16px}
+.bang-box{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;max-width:560px;width:100%;max-height:80vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.35);color:var(--ink)}
 text.lbl{fill:var(--ink);font-size:11px;font-family:var(--font-body);paint-order:stroke;stroke:var(--surface);stroke-width:3.5px;stroke-linejoin:round;pointer-events:none}
 text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 .mapinfo{margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between}
@@ -226,6 +272,19 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 .day-item{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);align-items:center}
 .day-item:last-of-type{border-bottom:0}
 .day-item span{color:var(--muted);font-size:12.5px}
+
+.cal-sub{margin-bottom:12px}
+.gantt-warn{color:var(--red-fg);font-weight:500;margin-bottom:10px}
+.gantt-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.gantt-grid{display:grid;grid-auto-rows:30px;min-width:max-content}
+.gantt-cell{display:flex;align-items:center;border-bottom:1px solid var(--line);border-right:1px solid var(--line);font-size:11px;color:var(--muted);padding:0 4px;overflow:hidden}
+.gantt-corner{position:sticky;left:0;background:var(--surface);z-index:2}
+.gantt-dh{justify-content:center;font-family:var(--font-mono);background:var(--hover)}
+.gantt-dh.today{color:var(--accent-ink);background:var(--accent);font-weight:600}
+.gantt-label{position:sticky;left:0;background:var(--surface);z-index:1;white-space:nowrap;text-overflow:ellipsis;font-size:12px;color:var(--ink)}
+.gantt-bar{align-self:center;margin:3px 2px;border-radius:5px;background:var(--accent-soft);color:var(--accent);font-size:11px;padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;min-width:16px}
+.gantt-bar.c{background:var(--amber-bg);color:var(--amber-fg)}
+.gantt-bar.clash{background:var(--red-bg);color:var(--red-fg);box-shadow:0 0 0 1px var(--red-fg) inset}
 
 @media (max-width:760px){
   .crow,.cols.cc{grid-template-columns:minmax(0,1fr) 104px 64px}
@@ -308,7 +367,9 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 <header class="mast"><div class="mast-in">
   <div class="brand"><h1>Atlas</h1><p id="today"></p></div>
   <div class="counts" id="counts"></div>
-</div></header>
+</div>
+<div class="ticker-wrap" id="ticker-wrap"><div class="ticker" id="ticker"></div></div>
+</header>
 
 <main class="wrap">
   <div class="bar">
@@ -316,14 +377,15 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       <button class="tab" role="tab" id="tab-outline" aria-selected="true" data-view="outline">Outline</button>
       <button class="tab" role="tab" id="tab-map" aria-selected="false" data-view="map">Map</button>
       <button class="tab" role="tab" id="tab-calendar" aria-selected="false" data-view="calendar">Calendar</button>
-      <button class="tab" role="tab" id="tab-comps" aria-selected="false" data-view="comps">Competitions</button>
-      <button class="tab" role="tab" id="tab-upcoming" aria-selected="false" data-view="upcoming">Upcoming</button>
       <button class="tab" role="tab" id="tab-disc" aria-selected="false" data-view="disc">Discovery</button>
       <button class="tab" role="tab" id="tab-canvas" aria-selected="false" data-view="canvas">Canvas</button>
       <button class="tab" role="tab" id="tab-team" aria-selected="false" data-view="team">Team</button>
       <button class="tab" role="tab" id="tab-warehouse" aria-selected="false" data-view="warehouse">Warehouse</button>
+      <button class="tab" role="tab" id="tab-rd" aria-selected="false" data-view="rd">R&amp;D</button>
+      <button class="tab soon" role="tab" id="tab-branding" aria-selected="false" data-view="branding" title="Coming soon">Branding</button>
+      <button class="tab" role="tab" id="tab-offline" aria-selected="false" data-view="offline">Offline</button>
     </div>
-    <div class="tools" id="gc"><button class="btn" id="pause-btn" aria-pressed="false" title="Master switch: pauses every agent at once">Agents: live</button><button class="btn" id="bell-btn">Alerts</button><button class="btn" id="set-btn">Settings</button><button class="btn" id="focus-btn" aria-pressed="false" title="Hide Discovery and stay on the main work">Focus: off</button><span class="hint" id="gc-msg"></span><button class="btn" id="gc-now" hidden>Sync now</button><button class="btn" id="gc-btn" aria-pressed="false">Google Calendar: off</button></div>
+    <div class="tools" id="gc"><button class="btn" id="pause-btn" aria-pressed="false" title="Master switch: pauses every agent at once">Agents: live</button><button class="btn" id="bell-btn">Alerts</button><button class="btn" id="set-btn">Settings</button><details class="focusmenu" id="focus-menu" title="Hide a tab and stay on the main work"><summary class="btn" id="focus-summary">Focus</summary><div class="help-pop" style="width:220px"><label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer"><input type="checkbox" id="focus-disc"> Hide Discovery (Ideas)</label><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="focus-rd"> Hide R&amp;D</label></div></details><span class="hint" id="gc-msg"></span><button class="btn" id="gc-now" hidden>Sync now</button><button class="btn" id="gc-btn" aria-pressed="false">Google Calendar: off</button></div>
     <div class="tools" id="tools">
       <input class="search" id="q" type="search" placeholder="Search tasks" aria-label="Search tasks">
       <div class="chips">
@@ -331,11 +393,14 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
         <button class="chip-b" id="f-active" aria-pressed="false" data-flt="active">Open</button>
         <button class="chip-b" id="f-over" aria-pressed="false" data-flt="overdue">Overdue</button>
         <button class="chip-b" id="f-hide" aria-pressed="false" data-hide="1">Hide done</button>
+        <select id="area-flt-sel" aria-label="Filter by project area" style="margin-left:4px"></select>
+        <datalist id="area-list"></datalist>
       </div>
     </div>
   </div>
   <div id="view"></div>
 </main>
+<div class="side-up" id="side-up"><button class="side-up-tab" id="side-up-tab" aria-label="Toggle the upcoming list">Upcoming</button><div class="side-up-body" id="side-up-body"></div></div>
 <div class="toast" id="toast" hidden></div>
 <div class="npanel" id="notes-panel"></div>
 
@@ -346,18 +411,66 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   var OWNERS=['Me','Teammate','Collaborator','Other'];
   var CSTAT=['Idea','Preparing','Submitted','Won','Missed'];
   var CCLS={Idea:'s-todo',Preparing:'s-inprogress',Submitted:'p-medium',Won:'s-done',Missed:'s-blocked'};
+  var CTYPE=['Competition','Accelerator','Investment call','Grant','Other'];
+  var RDSTAT=['Planned','Running','Blocked','Done'];
   var now0=new Date();
   var S={items:{},kids:{},comps:{},view:'outline',open:null,copen:null,q:'',flt:'all',hideDone:false,collapsed:{},ready:false,delArm:null,focusNew:null,
-         calY:now0.getFullYear(),calM:now0.getMonth(),sync:false,syncState:'',syncMsg:'',selDay:null,calParent:'',mapProj:'',mapSub:true,mapSel:null,linkFrom:null,disc:{},dopen:null,focus:false,map3d:true};
+         calY:now0.getFullYear(),calM:now0.getMonth(),calView:'month',upFlt:'all',oppsOn:true,oppBusy:null,oppHandoff:null,areaFlt:'',repoSumBusy:null,repoHandoff:null,bang:null,sideUpOpen:true,sync:false,syncState:'',syncMsg:'',selDay:null,calParent:'',mapProj:'',mapSub:true,mapSel:null,linkFrom:null,disc:{},dopen:null,focus:{disc:false,rd:false},map3d:true,
+         mapLayer:'tasks',mapPins:[],mapIso:null,mapIndirect:false,combo:null,comboBusy:false};
   var db=null,pendingRender=false,chains={},toastT=null;
   var M={pos:{},view:{x:-450,y:-300,w:900,h:600},drag:null};
   var $=function(s){return document.querySelector(s)};
 
   try{var sv=JSON.parse(localStorage.getItem('atlas-ui')||'{}');if(sv.sync)S.sync=true;
-    if(sv.collapsed)S.collapsed=sv.collapsed; if(sv.view)S.view=sv.view; if(sv.hideDone)S.hideDone=true;if(sv.focus)S.focus=true;if(sv.map3d===false)S.map3d=false;}catch(e){}
-  function persist(){try{localStorage.setItem('atlas-ui',JSON.stringify({collapsed:S.collapsed,view:S.view,hideDone:S.hideDone,sync:S.sync,focus:S.focus,map3d:S.map3d}))}catch(e){}}
+    if(sv.collapsed)S.collapsed=sv.collapsed; if(sv.view)S.view=sv.view; if(sv.hideDone)S.hideDone=true;if(sv.focus){S.focus=typeof sv.focus==='boolean'?{disc:sv.focus,rd:false}:Object.assign({disc:false,rd:false},sv.focus)}if(sv.map3d===false)S.map3d=false;if(sv.calView)S.calView=sv.calView;if(sv.sideUpOpen===false)S.sideUpOpen=false;
+    if(S.view==='upcoming'){S.view='calendar';S.calView='list'}
+    if(S.view==='comps'){S.view='calendar';S.calView='opps'}}catch(e){}
+  function persist(){try{localStorage.setItem('atlas-ui',JSON.stringify({collapsed:S.collapsed,view:S.view,hideDone:S.hideDone,sync:S.sync,focus:S.focus,map3d:S.map3d,calView:S.calView,sideUpOpen:S.sideUpOpen}))}catch(e){}}
+  offLoad();
+  window.addEventListener('online',function(){offSyncNow()});
 
   function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function help(text){return '<details class="help"><summary aria-label="What is this?">?</summary><div class="help-pop">'+esc(text)+'</div></details>'}
+  /* No API key? "!" gives a ready-to-copy prompt (plus a link to the real data where there is one) so any AI the user
+     already has — or the user themselves — can do the same job a direct API call would have done. Mirrors the system
+     prompts Code.gs sends for the same features, so the manual result should land close to what the API would give. */
+  var REPO_SUMMARY_PROMPT_='Write a thorough, readable research note in your own words about the source below, for a personal research repository — think of it as the note I would write for my own future memory. Cover: what the source is, its core method or argument, the key findings or claims, and anything useful to my own project work. Plain prose with short paragraphs, not a bullet list, unless the source itself is structured as one. Do not invent facts that are not actually in the text below. Reply with ONLY the note itself.';
+  var METHOD_EXTRACT_PROMPT_='Extract ONE reusable analysis method from the text below, for my personal research or project tool. Reply with ONLY JSON: {"name":"short name","instructions":"clear, reusable step-by-step instructions for applying this method to a new dataset, as a simplified or flow-chart style description, not prose. Include the formula if the method has one."}. Do not invent a method that is not actually described in the text.';
+  var TRAINABLE_PROMPT_='Write a single, complete, self-contained Python 3 script that implements the method described below as a TRAINABLE supervised learning model (a small neural network trained with gradient descent, or another real supervised technique if that is what the text actually describes) — for someone with a plain Python install plus numpy, and scikit-learn only if genuinely useful. No GPU, no deep learning framework, no internet access, no other dependencies.\nRequirements: a command-line interface (python script.py train.csv [--epochs N] [--resume weights.json] [--evaluate other.csv] [--out weights.json]); read a CSV with a header row, treating the LAST numeric column as the label/target unless the text clearly says otherwise; a model structure drawn from the method actually described, never an invented unrelated architecture; a real loss function, printing loss each epoch; save trained weights to JSON and support resuming from one via --resume; --evaluate loads saved weights and reports metrics on a second CSV without retraining. Reply with ONLY a single python code block containing the whole script.';
+  function bang(kind,id){return '<button class="ib bang-ib" data-act="bangshow" data-kind="'+kind+'"'+(id?' data-id="'+id+'"':'')+' title="No API key? Get a ready prompt to paste into any AI instead" aria-label="Copy a prompt for this — no API key needed">!</button>'}
+  function bangModal(){
+    var b=S.bang;if(!b)return '';
+    return '<div class="bang-overlay"><div class="bang-box">'+
+      '<h3 style="margin:0 0 8px;font-size:15px">'+esc(b.title||'Prompt for your AI')+'</h3>'+
+      '<p class="hint" style="margin:0 0 10px">No API key needed — copy this into any AI you already use (ChatGPT, Gemini, Claude, whatever), then bring its answer back here yourself.</p>'+
+      (b.link&&isUrl(b.link)?'<p style="margin:0 0 10px"><a class="chip" href="'+esc(b.link)+'" target="_blank" rel="noopener">Open the source link</a></p>':'')+
+      '<textarea readonly rows="12" style="width:100%;font-family:monospace;font-size:12px;box-sizing:border-box" id="bang-text">'+esc(b.prompt||'')+'</textarea>'+
+      '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:10px"><button class="btn" data-act="bangclose">Close</button><button class="btn primary" data-act="bangcopy">Copy prompt</button></div>'+
+      '</div></div>';
+  }
+  function bangShow(kind,id){
+    if(kind==='reposum'){
+      var a=S.assets[id];if(!a){toast('Source not found');return}
+      toast('Loading the source text…');
+      gs('repoRawText',id).then(function(r){
+        S.bang={title:'Prompt: write notes for "'+esc(r.name||a.name||'Untitled')+'"',link:r.link||'',prompt:REPO_SUMMARY_PROMPT_+'\n\nSource: '+(r.name||a.name||'Untitled')+(r.link?'\nOriginal link: '+r.link:'')+'\n\nText:\n'+(r.text||'(nothing indexed yet for this source — add its text first)')};
+        render();
+      }).catch(function(e){toast('Could not load the source text: '+((e&&e.message)||e))});
+      return;
+    }
+    if(kind==='opextract'){
+      var xtext=($('#opx-text')&&$('#opx-text').value.trim())||'',xlink=($('#opx-link')&&$('#opx-link').value.trim())||'',xkind=$('#opx-kind')?$('#opx-kind').value:'instr';
+      if(!xtext){toast('Paste the method text first');return}
+      S.bang={title:xkind==='train'?'Prompt: build a trainable model':'Prompt: extract a methodology',link:xlink,prompt:(xkind==='train'?TRAINABLE_PROMPT_:METHOD_EXTRACT_PROMPT_)+'\n\n'+xtext};
+      render();return;
+    }
+    if(kind==='sxtract'){
+      var sxtext=($('#sx-text')&&$('#sx-text').value.trim())||'',sxlink=($('#sx-link')&&$('#sx-link').value.trim())||'';
+      if(!sxtext){toast('Paste the method text first');return}
+      S.bang={title:'Prompt: extract a script',link:sxlink,prompt:METHOD_EXTRACT_PROMPT_+'\n\n'+sxtext};
+      render();return;
+    }
+  }
   function pad(n){return (n<10?'0':'')+n}
   function fmt(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
   function today(){return fmt(new Date())}
@@ -385,7 +498,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function rebuildComps(docs){var c={};docs.forEach(function(d){c[d.id]=Object.assign({id:d.id,isComp:true},d.data())});S.comps=c}
   function reload(){rebuild(Object.keys(S.items).map(function(k){return {id:k,data:function(){return S.items[k]}}}));render()}
   function kidsOf(id){return S.kids[id||'']||[]}
-  function node(id){return S.items[id]||S.comps[id]}
+  function node(id){var n=S.items[id]||S.comps[id]||(S.assets&&S.assets[id])||(S.rd&&S.rd[id]);if(n&&!n.kind&&S.rd&&S.rd[id]===n)n.kind='rd';return n}
   function allNodes(){return Object.keys(S.items).map(function(k){return S.items[k]}).concat(Object.keys(S.comps).map(function(k){return S.comps[k]}))}
   function rootOf(n){while(n.parent&&S.items[n.parent])n=S.items[n.parent];return n}
   function leaves(n,out){out=out||[];var k=kidsOf(n.id);if(!k.length)out.push(n);else k.forEach(function(c){leaves(c,out)});return out}
@@ -395,7 +508,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function descendants(n,out){out=out||[];kidsOf(n.id).forEach(function(c){out.push(c);descendants(c,out)});return out}
   function maxOrder(pid){var k=kidsOf(pid);return k.length?k[k.length-1].order:0}
   function pathOf(n){var p=[];while(n.parent&&S.items[n.parent]){n=S.items[n.parent];p.unshift(n.title)}return p}
-  function title(n){return n.isComp?(n.name||'Untitled competition'):(n.title||'Untitled')}
+  function title(n){return n.isComp?(n.name||'Untitled competition'):(n.kind==='repo'||n.kind==='method'||n.kind==='rd'?(n.name||'Untitled'):(n.title||'Untitled'))}
 
   function write(id,patch){
     var col=S.comps[id]?'comps':'items';
@@ -436,6 +549,30 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     render();
   }
   function newId(pre){return pre+Date.now().toString(36)+Math.random().toString(36).slice(2,5)}
+  S.offQueue=[];S.offSyncing=false;
+  function offLoad(){try{S.offQueue=JSON.parse(localStorage.getItem('atlas-offline-queue')||'[]')}catch(e){S.offQueue=[]}}
+  function offSave(){try{localStorage.setItem('atlas-offline-queue',JSON.stringify(S.offQueue))}catch(e){}}
+  function offSyncOne(text){
+    var id=newId('i');
+    var doc={title:text||'',parent:'',order:maxOrder('')+1,done:false,status:'To do',priority:'',owner:'Me',due:'',notes:'',link:'',links:[],added:today(),started:'',finished:''};
+    return db.doc('items/'+id).set(doc).then(function(){
+      S.items[id]=Object.assign({id:id},doc);(S.kids['']=S.kids['']||[]).push(S.items[id]);
+      return id;
+    });
+  }
+  function offSyncNow(){
+    if(!S.offQueue.length||S.offSyncing)return;
+    S.offSyncing=true;render();
+    var queue=S.offQueue.slice();
+    (function step(i){
+      if(i>=queue.length){S.offSyncing=false;offSave();render();toast('Offline items synced to your Outline');return}
+      offSyncOne(queue[i].text).then(function(){
+        S.offQueue=S.offQueue.filter(function(o){return o.id!==queue[i].id});
+        offSave();render();
+        step(i+1);
+      }).catch(function(){S.offSyncing=false;render()});
+    })(0);
+  }
   function addItem(pid,ttl,due){
     var id=newId('i'),isProj=!pid;
     var doc={title:ttl||'',parent:pid||'',order:maxOrder(pid||'')+1,done:false,status:isProj?'':'To do',priority:'',owner:isProj?'':'Me',due:due||'',notes:'',link:'',links:[],added:today(),started:'',finished:''};
@@ -498,7 +635,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function linkOptions(exclude){
     var out=[];
     (function walk(pid,d){kidsOf(pid).forEach(function(n){if(n.id!==exclude)out.push([n.id,new Array(d+1).join('  ')+(n.title||'Untitled')]);walk(n.id,d+1)})})('',0);
-    Object.keys(S.comps).forEach(function(k){if(k!==exclude)out.push([k,'Competition: '+title(S.comps[k])])});
+    Object.keys(S.comps).forEach(function(k){if(k!==exclude)out.push([k,'Opportunity: '+title(S.comps[k])])});
     return out;
   }
   function linkBox(n){
@@ -517,7 +654,8 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(S.hideDone&&n.done)return false;
     return true;
   }
-  function shows(n){return selfMatch(n)||kidsOf(n.id).some(shows)}
+  function areaOk(n){return !S.areaFlt||(rootOf(n).area||'')===S.areaFlt}
+  function shows(n){return areaOk(n)&&(selfMatch(n)||kidsOf(n.id).some(shows))}
   function collapsed(n){return !S.q&&S.flt==='all'&&!S.hideDone?!!S.collapsed[n.id]:false}
 
   /* ---------- calendar links / exports ---------- */
@@ -526,7 +664,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       '&dates='+date.replace(/-/g,'')+'/'+addDays(date,1).replace(/-/g,'')+'&details='+encodeURIComponent(details||'');
   }
   function gcal(n){
-    if(n.isComp)return gcalUrl('Competition deadline: '+title(n),n.deadline,(n.notes||'')+(isUrl(n.url)?'\n'+n.url:''));
+    if(n.isComp)return gcalUrl('Opportunity deadline: '+title(n),n.deadline,(n.notes||'')+(isUrl(n.url)?'\n'+n.url:''));
     var r=rootOf(n);
     return gcalUrl('['+r.title+'] '+n.title,n.due,(n.notes||'')+(isUrl(n.link)?'\n'+n.link:''));
   }
@@ -547,7 +685,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function events(){
     var out=[];
     allNodes().forEach(function(n){
-      if(n.isComp){if(n.deadline&&n.status!=='Missed'&&n.onCal!==false)out.push({date:n.deadline,title:'Competition deadline: '+title(n),node:n,kind:'c',done:n.status==='Won'||n.status==='Submitted'})}
+      if(n.isComp){if(n.deadline&&n.status!=='Missed'&&n.onCal!==false)out.push({date:n.deadline,title:'Opportunity deadline: '+title(n),node:n,kind:'c',done:n.status==='Won'||n.status==='Submitted'})}
       else if(n.due&&n.parent&&!kidsOf(n.id).length)out.push({date:n.due,title:'['+rootOf(n).title+'] '+n.title,node:n,kind:'t',done:n.done});
     });
     return out;
@@ -604,6 +742,51 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       '<div class="count"><b>'+comps+'</b><span>Competitions</span></div>';
   }
   function opts(list,cur,blank){return (blank?'<option value=""'+(cur?'':' selected')+'>'+blank+'</option>':'')+list.map(function(o){return '<option'+(o===cur?' selected':'')+'>'+esc(o)+'</option>'}).join('')}
+  function areaList(){
+    var set={};
+    Object.keys(S.items).forEach(function(k){var n=S.items[k];if(!n.parent&&n.area)set[n.area]=1});
+    return Object.keys(set).sort(function(a,b){return a.toLowerCase()<b.toLowerCase()?-1:1});
+  }
+  function paintAreaFilter(){
+    var sel=$('#area-flt-sel'),dl=$('#area-list');if(!sel)return;
+    var areas=areaList();
+    if(dl)dl.innerHTML=areas.map(function(a){return '<option value="'+esc(a)+'">'}).join('');
+    if(!areas.length){sel.hidden=true;sel.innerHTML='';return}
+    sel.hidden=false;
+    sel.innerHTML='<option value="">All areas</option>'+areas.map(function(a){return '<option value="'+esc(a)+'"'+(S.areaFlt===a?' selected':'')+'>'+esc(a)+'</option>'}).join('');
+  }
+  function ticker(){
+    var tw=$('#ticker-wrap');if(!tw)return;
+    var t=today();
+    var list=events().filter(function(e){return !e.done}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+    var items=list.filter(function(e){var dl=daysLeft(e.date);return dl<0||dl<=30});
+    if(!items.length){tw.className='ticker-wrap empty';$('#ticker').innerHTML='<span class="tick-item">Nothing looming — add a due date to a task or competition and it shows up here.</span>';return}
+    tw.className='ticker-wrap';
+    var cells=items.map(function(e){
+      var dl=daysLeft(e.date),cls=dl<0?'red':(dl<=3?'amber':'green');
+      var lbl=dl<0?Math.abs(dl)+'d late':(dl===0?'Today':dl===1?'Tomorrow':dl+'d');
+      return '<span class="tick-item '+cls+'">'+esc(title(e.node))+'<b>'+lbl+'</b></span>';
+    }).join('');
+    $('#ticker').innerHTML=cells+cells;
+  }
+
+  /* A small, always-there side panel (desktop/laptop only — hidden under 760px, the ticker already covers phones)
+     listing the same looming items as the ticker, as a live list you can glance at instead of waiting for it to
+     scroll past. Docks to the right edge; the tab stays visible even collapsed so it's never fully gone. */
+  function sideUp(){
+    var sp=$('#side-up');if(!sp)return;
+    sp.className='side-up'+(S.sideUpOpen?' open':'');
+    var list=events().filter(function(e){return !e.done}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
+    var items=list.filter(function(e){var dl=daysLeft(e.date);return dl<0||dl<=30});
+    var tab=$('#side-up-tab');if(tab)tab.textContent=items.length?('Upcoming ('+items.length+')'):'Upcoming';
+    var body=$('#side-up-body');if(!body)return;
+    if(!items.length){body.innerHTML='<div class="side-up-empty">Nothing looming.</div>';return}
+    body.innerHTML=items.slice(0,20).map(function(e){
+      var dl=daysLeft(e.date),cls=dl<0?'red':(dl<=3?'amber':'green');
+      var lbl=dl<0?Math.abs(dl)+'d late':(dl===0?'Today':dl===1?'Tomorrow':dl+'d');
+      return '<div class="side-up-row" data-kind="'+e.kind+'" data-id="'+e.node.id+'"><span class="side-up-dot '+cls+'"></span><span class="side-up-title" title="'+esc(title(e.node))+'">'+esc(title(e.node))+'</span><span class="side-up-when">'+lbl+'</span></div>';
+    }).join('');
+  }
 
   /* ---------- render: outline ---------- */
   function rowHTML(n,depth){
@@ -615,6 +798,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       '<button class="chev'+(has?'':' ghost')+'" data-act="toggle" aria-label="Fold" aria-expanded="'+(!col)+'">'+I.chev+'</button>'+
       (isProj?'':'<input type="checkbox" class="chk" data-act="done" aria-label="Done"'+(n.done?' checked':'')+'>')+
       '<input class="ttl" data-k="ttl:'+n.id+'" value="'+esc(n.title)+'" placeholder="'+(isProj?'Project name':'Untitled')+'" aria-label="Title">'+
+      (isProj?'<input class="area-tag" list="area-list" data-k="area:'+n.id+'" value="'+esc(n.area||'')+'" placeholder="Area" aria-label="Project area">':'')+
       (pr?'<span class="prog" title="'+pr.pct+'%"><i style="width:'+pr.pct+'%"></i></span><span class="pnum">'+pr.d+'/'+pr.t+'</span>':'')+
       (nl?'<span class="pnum" title="Linked steps">⧉ '+nl+'</span>':'')+
       (isUrl(n.link)?'<a class="chip" href="'+esc(n.link)+'" target="_blank" rel="noopener">Folder</a>':'')+
@@ -632,12 +816,14 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     return '<div class="detail" data-id="'+n.id+'">'+
       '<label>Notes<textarea data-k="notes:'+n.id+'" placeholder="Steps, decisions, what you are waiting on">'+esc(n.notes||'')+'</textarea></label>'+
       '<div class="d-side"><label>Link (Drive folder or Doc)<input type="text" data-k="link:'+n.id+'" value="'+esc(n.link||'')+'" placeholder="https://drive.google.com/..."></label>'+
+      (n.parent?'<label>Start date (optional'+help('Only used to draw a multi-day bar on Calendar → Gantt. Leave blank and the bar is just a single day, at the deadline.')+')<input type="date" data-act="start" value="'+esc(n.start||'')+'" aria-label="Start date"></label>':'')+
       linkBox(n)+assetsBlock(n)+
       '<div class="d-meta"><span>Added '+esc(n.added||'-')+'</span><span>Started '+esc(n.started||'-')+'</span><span>Finished '+esc(n.finished||'-')+'</span></div></div>'+
       '<div class="d-act">'+
         '<button class="btn primary" data-act="ntopen">Notes doc</button><button class="btn" data-act="up">Move up</button><button class="btn" data-act="down">Move down</button>'+
         '<button class="btn" data-act="indent">Nest under previous</button><button class="btn" data-act="outdent">Move out a level</button>'+
         '<button class="btn" data-act="showmap">Show on map</button>'+
+        (!n.parent?'<button class="btn" data-act="cocreate">'+(n.coShare?'Collab: '+(n.coShare.role==='owner'?'shared':'joined'):'Collab')+'</button>':'')+
         (n.due&&!n.done?'<a class="btn" href="'+esc(gcal(n))+'" target="_blank" rel="noopener">Add to Google Calendar</a>':'')+
         '<button class="btn danger" data-act="del">'+(armed?'Click again: delete '+cnt+' item'+(cnt>1?'s':''):'Delete')+'</button>'+
       '</div></div>';
@@ -662,37 +848,84 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     return h;
   }
 
-  /* ---------- render: upcoming ---------- */
-  function renderUpcoming(){
+  /* ---------- render: calendar > list (formerly Upcoming) ---------- */
+  function renderUpList(){
     var t=today(),wk=addDays(t,7);
     var list=events().filter(function(e){return !e.done}).sort(function(a,b){return a.date<b.date?-1:a.date>b.date?1:0});
-    var groups=[['Overdue',list.filter(function(e){return e.date<t})],['Next 7 days',list.filter(function(e){return e.date>=t&&e.date<=wk})],['Later',list.filter(function(e){return e.date>wk})]];
-    var h='<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px"><button class="btn" data-act="csv">Export deadlines for Google Calendar</button></div>';
+    var groups=[['Overdue','overdue',list.filter(function(e){return e.date<t})],['Next 7 days','next7',list.filter(function(e){return e.date>=t&&e.date<=wk})],['Later','later',list.filter(function(e){return e.date>wk})]];
+    var flt=S.upFlt||'all';
+    var h='<div class="chips" style="margin-bottom:10px">'+
+      ['all','overdue','next7','later'].map(function(k){return '<button class="chip-b" data-act="upflt" data-v="'+k+'" aria-pressed="'+(flt===k)+'">'+(k==='all'?'All':k==='overdue'?'Overdue':k==='next7'?'Next 7 days':'Later')+'</button>'}).join('')+
+      '<span style="flex:1"></span><button class="btn" data-act="csv">Export deadlines for Google Calendar</button></div>';
     if(!list.length)return h+'<div class="sheet"><div class="empty"><h2>No deadlines set</h2>Give a task or competition a deadline and it shows up here, with a one-click Add to Google Calendar.</div></div>';
+    var shown=0;
     groups.forEach(function(g){
-      if(!g[1].length)return;
-      h+='<section class="up-group"><h3>'+g[0]+' <small>'+g[1].length+'</small></h3>';
-      g[1].forEach(function(e){
-        var n=e.node,sub=n.isComp?'Competition · '+n.status:pathOf(n).join(' › ')+(n.priority?' · '+n.priority:'');
+      if(flt!=='all'&&flt!==g[1])return;
+      if(!g[2].length)return;
+      shown+=g[2].length;
+      h+='<section class="up-group"><h3>'+g[0]+' <small>'+g[2].length+'</small></h3>';
+      g[2].forEach(function(e){
+        var n=e.node,sub=n.isComp?'Opportunity · '+n.status:pathOf(n).join(' › ')+(n.priority?' · '+n.priority:'');
         h+='<div class="up-item"><div class="up-date'+(e.date<t?' over':'')+'">'+esc(dateLabel(e.date))+'</div><div class="up-t"><b>'+esc(title(n))+'</b><span>'+esc(sub)+'</span></div><a href="'+esc(gcal(n))+'" target="_blank" rel="noopener">Add to Google Calendar</a></div>';
       });
       h+='</section>';
     });
+    if(!shown)h+='<div class="sheet"><div class="empty"><h2>Nothing in this filter</h2>Try "All" to see everything with a deadline.</div></div>';
+    return h;
+  }
+
+  /* ---------- render: calendar > gantt ---------- */
+  function dayClamped(ds,y,m,dim){
+    var d=new Date(ds+'T00:00:00');
+    if(d.getFullYear()===y&&d.getMonth()===m)return d.getDate();
+    return ds<fmt(new Date(y,m,1))?1:dim;
+  }
+  function renderGantt(){
+    var y=S.calY,m=S.calM,first=new Date(y,m,1),dim=new Date(y,m+1,0).getDate(),t=today();
+    var monFirst=fmt(first),monLast=fmt(new Date(y,m,dim));
+    var rows=calEvents().filter(function(e){return !e.done}).map(function(e){
+      var n=e.node,due=e.date,st=(!n.isComp&&n.start)?n.start:due;
+      if(st>due)st=due;
+      return {node:n,title:title(n),isComp:!!n.isComp,start:st,due:due};
+    }).filter(function(r){return r.due>=monFirst&&r.start<=monLast});
+    rows.sort(function(a,b){return a.start<b.start?-1:a.start>b.start?1:(a.due<b.due?-1:1)});
+    rows.forEach(function(r){r.clash=false});
+    for(var i=0;i<rows.length;i++)for(var j=i+1;j<rows.length;j++){
+      if(rows[i].start<=rows[j].due&&rows[j].start<=rows[i].due){rows[i].clash=true;rows[j].clash=true}
+    }
+    var clashN=rows.filter(function(r){return r.clash}).length;
+    var h='<div class="cal-head"><h2>'+first.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</h2>'+
+      '<button class="btn" data-act="calprev" aria-label="Previous month">‹</button><button class="btn" data-act="caltoday">Today</button><button class="btn" data-act="calnext" aria-label="Next month">›</button></div>';
+    if(clashN)h+='<p class="hint gantt-warn">⚠ '+clashN+' item(s) overlap in date this month — check the highlighted bars below.</p>';
+    if(!rows.length)return h+'<div class="sheet"><div class="empty"><h2>Nothing scheduled this month</h2>Give a task a due date (and, optionally, a "Start date" in its details, for a multi-day bar) to see it here.</div></div>';
+    var cols='minmax(160px,220px) repeat('+dim+',minmax(22px,1fr))';
+    h+='<div class="gantt-wrap"><div class="gantt-grid" style="grid-template-columns:'+cols+'">';
+    h+='<div class="gantt-cell gantt-corner" style="grid-row:1;grid-column:1"></div>';
+    for(var d=1;d<=dim;d++){
+      var ds=fmt(new Date(y,m,d));
+      h+='<div class="gantt-cell gantt-dh'+(ds===t?' today':'')+'" style="grid-row:1;grid-column:'+(d+1)+'">'+d+'</div>';
+    }
+    rows.forEach(function(r,ri){
+      var row=ri+2,si=dayClamped(r.start,y,m,dim),ei=dayClamped(r.due,y,m,dim);
+      h+='<div class="gantt-cell gantt-label" style="grid-row:'+row+';grid-column:1" title="'+esc(r.title)+'">'+esc(r.title)+'</div>';
+      h+='<div class="gantt-bar'+(r.isComp?' c':'')+(r.clash?' clash':'')+'" style="grid-row:'+row+';grid-column:'+(si+1)+' / '+(ei+2)+'" title="'+esc(r.title)+' · '+esc(dateLabel(r.start))+(r.due!==r.start?' – '+esc(dateLabel(r.due)):'')+'">'+esc(r.title)+'</div>';
+    });
+    h+='</div></div>';
     return h;
   }
 
   /* ---------- render: competitions ---------- */
-  function renderComps(){
+  function renderOpps(){
     var cs=Object.keys(S.comps).map(function(k){return S.comps[k]}).sort(function(a,b){
       var ao=(a.status==='Won'||a.status==='Missed')?1:0,bo=(b.status==='Won'||b.status==='Missed')?1:0;
       if(ao!==bo)return ao-bo;return (a.deadline||'9999')<(b.deadline||'9999')?-1:1});
-    var h='<div class="sheet"><div class="cols cc"><span>Competition</span><span>Status</span><span class="h-cdue">Deadline</span><span class="h-left">Time left</span><span></span></div>';
-    if(!cs.length)h+='<div class="empty"><h2>No competitions yet</h2>Add prizes, grants and challenges you want to enter. Each gets a deadline, a status and links to the project steps it depends on.</div>';
+    var h='<div class="sheet"><div class="cols cc"><span>Opportunity</span><span>Status</span><span class="h-cdue">Deadline</span><span class="h-left">Time left</span><span></span></div>';
+    if(!cs.length)h+='<div class="empty"><h2>No opportunities yet</h2>Competitions, accelerators, investment calls, grants — anything with a recurring or one-off deadline. Each gets a type, a deadline, a status and links to the project steps it depends on.</div>';
     cs.forEach(function(c){
       var dl=c.deadline?daysLeft(c.deadline):null,closed=c.status==='Won'||c.status==='Missed'||c.status==='Submitted';
       var lc=dl==null||closed?'':(dl<0?' over':(dl<=7?' soon':''));
       h+='<div class="crow" data-id="'+c.id+'">'+
-        '<div class="c-title" style="padding-left:6px"><input class="ttl" data-k="cname:'+c.id+'" value="'+esc(c.name||'')+'" placeholder="Competition name" aria-label="Competition name">'+(isUrl(c.url)?'<a class="chip" href="'+esc(c.url)+'" target="_blank" rel="noopener">Page</a>':'')+'</div>'+
+        '<div class="c-title" style="padding-left:6px"><input class="ttl" data-k="cname:'+c.id+'" value="'+esc(c.name||'')+'" placeholder="Opportunity name" aria-label="Opportunity name">'+(c.type?'<span class="chip">'+esc(c.type)+'</span>':'')+(isUrl(c.url)?'<a class="chip" href="'+esc(c.url)+'" target="_blank" rel="noopener">Page</a>':'')+'</div>'+
         '<div><select class="pill '+CCLS[c.status]+'" data-act="cstatus" aria-label="Status">'+opts(CSTAT,c.status)+'</select></div>'+
         '<div class="c-cdue"><input type="date" class="date" data-act="cdue" value="'+esc(c.deadline||'')+'" aria-label="Deadline"></div>'+
         '<div class="c-left left'+lc+'">'+(dl==null?'-':(closed?'':(dl<0?Math.abs(dl)+'d late':(dl===0?'Today':dl+' days'))))+'</div>'+
@@ -701,25 +934,42 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
         var armed=S.delArm===c.id;
         h+='<div class="detail" data-id="'+c.id+'">'+
           '<label>Requirements and notes<textarea data-k="cnotes:'+c.id+'" placeholder="Brief, eligibility, what to submit">'+esc(c.notes||'')+'</textarea></label>'+
-          '<div class="d-side"><label>Competition page<input type="text" data-k="curl:'+c.id+'" value="'+esc(c.url||'')+'" placeholder="https://"></label>'+
+          '<div class="d-side"><label>Type<select data-act="ctype" aria-label="Type">'+opts(CTYPE,c.type,'Unset')+'</select></label>'+
+          '<label>Page<input type="text" data-k="curl:'+c.id+'" value="'+esc(c.url||'')+'" placeholder="https://"></label>'+
           '<label>Entry fee<input type="text" data-k="cfee:'+c.id+'" value="'+esc(c.fee||'')+'" placeholder="Free, 50 USD..."></label>'+
           '<label>Prize<input type="text" data-k="cprize:'+c.id+'" value="'+esc(c.prize||'')+'" placeholder="Cash, funding, mentoring"></label>'+
           linkBox(c)+'</div>'+
-          '<div class="d-act"><button class="btn'+(c.onCal===false?' primary':'')+'" data-act="concal">'+(c.onCal===false?'Add to calendar and Upcoming':'On calendar and Upcoming (remove)')+'</button><button class="btn" data-act="showmap">Show on map</button>'+
+          '<div class="d-act"><button class="btn'+(c.onCal===false?' primary':'')+'" data-act="concal">'+(c.onCal===false?'Add to calendar and List':'On calendar and List (remove)')+'</button><button class="btn" data-act="showmap">Show on map</button>'+
           (c.deadline?'<a class="btn" href="'+esc(gcal(c))+'" target="_blank" rel="noopener">Add to Google Calendar</a>':'')+
-          '<button class="btn danger" data-act="cdel">'+(armed?'Click again to delete':'Delete')+'</button></div></div>';
+          '<button class="btn" data-act="oppupdate"'+(S.oppBusy===c.id?' disabled':'')+'>'+(S.oppBusy===c.id?'Checking…':'Update dates')+'</button>'+
+          '<button class="btn danger" data-act="cdel">'+(armed?'Click again to delete':'Delete')+'</button></div>'+
+          (S.oppHandoff&&S.oppHandoff.id===c.id?'<div class="wc" style="grid-column:1/-1"><p class="hint">No AI key is set, so Atlas opened a Doc with a ready prompt instead of calling an API. Paste the prompt into any AI with web search (or search it yourself), write the date under "YOUR ANSWER" as YYYY-MM-DD, then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.oppHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="oppcheckhandoff">Check for answer</button></div></div>':'')+
+          '</div>';
       }
     });
-    h+='<div class="add-row"><button class="btn primary" data-act="addcomp">+ New competition</button></div></div>';
+    h+='<div class="add-row"><button class="btn primary" data-act="addcomp">+ New opportunity</button></div></div>';
     return h;
   }
 
   /* ---------- render: calendar ---------- */
+  function calSwitcher(){
+    var v=S.calView||'month';
+    var h='<div class="chips cal-sub" style="margin-bottom:10px">'+
+      ['month','list','gantt','opps'].map(function(k){return '<button class="chip-b" data-act="calview" data-v="'+k+'" aria-pressed="'+(v===k)+'">'+(k==='month'?'Month':k==='list'?'List':k==='gantt'?'Gantt':'Opportunities')+'</button>'}).join('');
+    if(v==='month'||v==='gantt')h+='<label style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-left:4px"><input type="checkbox" id="opps-toggle"'+(S.oppsOn?' checked':'')+'> Show opportunities</label>';
+    return h+'</div>';
+  }
+  function calEvents(){return events().filter(function(e){return S.oppsOn!==false||e.kind!=='c'})}
   function renderCal(){
+    var v=S.calView||'month';
+    if(v==='list')return calSwitcher()+renderUpList();
+    if(v==='gantt')return calSwitcher()+renderGantt();
+    if(v==='opps')return calSwitcher()+renderOpps();
     var y=S.calY,m=S.calM,first=new Date(y,m,1),off=(first.getDay()+6)%7,start=new Date(y,m,1-off);
-    var ev={};events().forEach(function(e){(ev[e.date]=ev[e.date]||[]).push(e)});
+    var ev={};calEvents().forEach(function(e){(ev[e.date]=ev[e.date]||[]).push(e)});
     var t=today();
-    var h='<div class="cal-head"><h2>'+first.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</h2>'+
+    var h=calSwitcher();
+    h+='<div class="cal-head"><h2>'+first.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</h2>'+
       '<button class="btn" data-act="calprev" aria-label="Previous month">‹</button><button class="btn" data-act="caltoday">Today</button><button class="btn" data-act="calnext" aria-label="Next month">›</button></div>';
     h+='<div class="cal-grid">'+['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(function(d){return '<div class="cal-dow">'+d+'</div>'}).join('');
     for(var i=0;i<42;i++){
@@ -734,10 +984,10 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       var list2=ev[S.selDay]||[];
       h+='<div class="daypanel"><h3>'+esc(dateLabel(S.selDay))+'</h3>';
       if(!list2.length)h+='<p class="hint" style="margin:0 0 10px">Nothing due. Add something below and it lands on this day.</p>';
-      list2.forEach(function(e){h+='<div class="day-item"><div><b>'+esc(title(e.node))+'</b><br><span>'+esc(e.node.isComp?'Competition · '+e.node.status:pathOf(e.node).join(' › '))+'</span></div><a href="'+esc(gcal(e.node))+'" target="_blank" rel="noopener">Add to Google Calendar</a></div>'});
+      list2.forEach(function(e){h+='<div class="day-item"><div><b>'+esc(title(e.node))+'</b><br><span>'+esc(e.node.isComp?'Opportunity · '+e.node.status:pathOf(e.node).join(' › '))+'</span></div><a href="'+esc(gcal(e.node))+'" target="_blank" rel="noopener">Add to Google Calendar</a></div>'});
       var po=[];(function walk(pid,dd){kidsOf(pid).forEach(function(n){if(dd<=1)po.push(n);if(dd<1)walk(n.id,dd+1)})})('',0);
       h+='<div class="quick" style="margin:12px 0 0"><input type="text" id="cal-title" data-k="caltitle" placeholder="New task for this day" aria-label="New task title">'+
-        '<select id="cal-parent" aria-label="Where it goes"><option value="__comp"'+(S.calParent==='__comp'?' selected':'')+'>New competition deadline</option>'+
+        '<select id="cal-parent" aria-label="Where it goes"><option value="__comp"'+(S.calParent==='__comp'?' selected':'')+'>New opportunity deadline</option>'+
         po.map(function(n){return '<option value="'+n.id+'"'+(S.calParent===n.id?' selected':'')+'>Task under: '+esc((n.parent?'  ':'')+(n.title||'Untitled'))+'</option>'}).join('')+'</select>'+
         '<button class="btn primary" data-act="caladd">Add to '+esc(dateLabel(S.selDay))+'</button></div></div>';
     }else h+='<p class="hint" style="margin-top:10px">Click a day to see what is due and add a task or competition to it.</p>';
@@ -746,30 +996,53 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 
   /* ---------- render: map ---------- */
   function mapVisible(){
+    if(S.mapIso&&S.mapIso.length){
+      var viso={};
+      S.mapIso.forEach(function(id){
+        if(!node(id))return;viso[id]=1;
+        if(S.mapIndirect){
+          linkedIds(id).forEach(function(o){if(node(o))viso[o]=1});
+          var n=node(id);if(n&&!n.isComp&&n.parent&&node(n.parent))viso[n.parent]=1;
+        }
+      });
+      return viso;
+    }
+    var layer=S.mapLayer||'tasks';
+    if(layer==='rd'){
+      var visR={};
+      Object.keys(S.rd||{}).forEach(function(k){visR[k]=1});
+      Object.keys(visR).slice().forEach(function(id){linkedIds(id).forEach(function(o){if(node(o))visR[o]=1})});
+      return visR;
+    }
     var all=allNodes(),vis={};
+    if(layer!=='tasks')Object.keys(S.assets||{}).forEach(function(k){if(S.assets[k].kind==='repo')all.push(S.assets[k])});
     all.forEach(function(n){
       if(n.isComp)return;
+      if(n.kind==='repo'){if(layer==='tasks')return;vis[n.id]=1;return}
+      if(layer==='repos')return;
       var d=depthOf(n);
       if(!S.mapSub&&d>=2)return;
       if(S.mapProj&&rootOf(n).id!==S.mapProj)return;
+      if(S.mapStatus&&d>0&&(n.status||'To do')!==S.mapStatus)return;
       vis[n.id]=1;
     });
     // pull in direct cross-links (one hop) so connections to other projects stay visible
     Object.keys(vis).slice().forEach(function(id){linkedIds(id).forEach(function(o){var n=node(o);
       if(!n)return;if(n.isComp){vis[o]=1;return}
       if(S.mapSub||depthOf(n)<2)vis[o]=1})});
-    if(!S.mapProj)Object.keys(S.comps).forEach(function(k){vis[k]=1});
+    if(!S.mapProj&&layer!=='repos')Object.keys(S.comps).forEach(function(k){vis[k]=1});
     return vis;
   }
   function mapEdges(vis){
     var e=[];
     Object.keys(vis).forEach(function(id){var n=node(id);
+      if(n.kind==='repo'){if(n.tag&&vis[n.tag])e.push({a:id,b:n.tag,t:'l'});return}
       if(!n.isComp&&n.parent&&vis[n.parent])e.push({a:n.parent,b:id,t:'h'});
       (n.links||[]).forEach(function(o){if(vis[o]&&node(o))e.push({a:id,b:o,t:'l'})});
     });
     return e;
   }
-  function nodeR(n){if(n.isComp)return 9;var d=depthOf(n);return d===0?17:d===1?10:6}
+  function nodeR(n){if(n.kind==='repo')return 11;if(n.kind==='rd')return 13;if(n.isComp)return 9;var d=depthOf(n);return d===0?17:d===1?10:6}
   function sim(ids,edges,iters,fixed){
     var P=M.pos,V={};
     ids.forEach(function(id){V[id]={x:0,y:0}});
@@ -815,6 +1088,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
   function nodeClass(n){
     if(n.isComp)return 'n-comp';
+    if(n.kind==='rd')return n.status==='Done'?'n-done':(n.status==='Blocked'?'n-blocked':(n.status==='Running'?'n-prog':'n-todo'));
     if(depthOf(n)===0)return 'n-proj';
     if(n.done)return 'n-done';
     if(n.status==='In progress')return 'n-prog';
@@ -828,13 +1102,15 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else sel=null;
     var k=M.view.w<700?1:0;
     var h='';
+    var isoSet=S.mapIso&&S.mapIso.length?S.mapIso:null;
     L.edges.forEach(function(e){var a=M.pos[e.a],b=M.pos[e.b];if(!a||!b)return;
       var dim=sel&&!(nb[e.a]&&nb[e.b]&&(e.a===sel||e.b===sel));
-      h+='<line class="edge'+(e.t==='l'?' lnk':'')+(dim?' dim':'')+'" x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+'"/>'});
+      var faint=isoSet&&(isoSet.indexOf(e.a)<0||isoSet.indexOf(e.b)<0);
+      h+='<line class="edge'+(e.t==='l'?' lnk':'')+(dim?' dim':'')+(faint?' faint':'')+'" x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+'"/>'});
     L.ids.forEach(function(id){
       var n=node(id),p=M.pos[id];if(!p)return;
       var r=nodeR(n),isP=!n.isComp&&depthOf(n)===0,deep=!n.isComp&&depthOf(n)>=2;
-      var dim=sel&&!nb[id],cls='node '+(id===sel?'sel ':'')+(dim?'dim ':'')+(S.linkFrom===id?'sel ':'');
+      var dim=sel&&!nb[id],faintN=isoSet&&isoSet.indexOf(id)<0,cls='node '+(id===sel?'sel ':'')+(dim?'dim ':'')+(faintN?'faint ':'')+(S.linkFrom===id?'sel ':'');
       h+='<g class="'+cls+'" data-node="'+id+'" transform="translate('+p.x.toFixed(1)+','+p.y.toFixed(1)+')">';
       if(n.isComp)h+='<rect class="sh '+nodeClass(n)+'" x="'+(-r)+'" y="'+(-r)+'" width="'+(2*r)+'" height="'+(2*r)+'" transform="rotate(45)"/>';
       else h+='<circle class="sh '+nodeClass(n)+'" r="'+r+'"/>';
@@ -906,13 +1182,16 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else sel=null;
     var Q={};L.ids.forEach(function(id){if(M3.pos[id])Q[id]=proj3(M3.pos[id])});
     var h='',H=[];
+    var isoSet=S.mapIso&&S.mapIso.length?S.mapIso:null;
     L.edges.slice().filter(function(e){return Q[e.a]&&Q[e.b]}).sort(function(a,b){return (Q[b.a].z+Q[b.b].z)-(Q[a.a].z+Q[a.b].z)}).forEach(function(e){
       var a=Q[e.a],b=Q[e.b],dim=sel&&!(nb[e.a]&&nb[e.b]&&(e.a===sel||e.b===sel)),o=.15+.55*(1-(a.k+b.k)/2);
-      h+='<line class="edge'+(e.t==='l'?' lnk':'')+(dim?' dim':'')+'" style="opacity:'+(dim?.1:o.toFixed(2))+'" x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+'"/>';
+      var faint=isoSet&&(isoSet.indexOf(e.a)<0||isoSet.indexOf(e.b)<0);
+      if(faint)o=Math.min(o,.3);
+      h+='<line class="edge'+(e.t==='l'?' lnk':'')+(dim?' dim':'')+(faint?' faint':'')+'" style="opacity:'+(dim?.1:o.toFixed(2))+'" x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+b.x.toFixed(1)+'" y2="'+b.y.toFixed(1)+'"/>';
     });
     L.ids.filter(function(id){return Q[id]}).forEach(function(id){
       var n=node(id),q=Q[id],r=nodeR(n)*q.s,isP=!n.isComp&&depthOf(n)===0,deep=!n.isComp&&depthOf(n)>=2;
-      var dim=sel&&!nb[id],o=dim?.12:(.45+.55*(1-q.k)),cls='node '+(id===sel?'sel ':'')+(dim?'dim ':'')+(S.linkFrom===id?'sel ':'');
+      var dim=sel&&!nb[id],faintN=isoSet&&isoSet.indexOf(id)<0,o=dim?.12:(faintN?.3:(.45+.55*(1-q.k))),cls='node '+(id===sel?'sel ':'')+(dim?'dim ':'')+(faintN?'faint ':'')+(S.linkFrom===id?'sel ':'');
       var g='<g class="'+cls+'" data-node="'+id+'" style="opacity:'+o.toFixed(2)+'" transform="translate('+q.x.toFixed(1)+','+q.y.toFixed(1)+')">';
       if(n.isComp)g+='<rect class="sh '+nodeClass(n)+'" x="'+(-r).toFixed(1)+'" y="'+(-r).toFixed(1)+'" width="'+(2*r).toFixed(1)+'" height="'+(2*r).toFixed(1)+'" transform="rotate(45)"/>';
       else g+='<circle class="sh '+nodeClass(n)+'" r="'+r.toFixed(1)+'"/>';
@@ -940,25 +1219,49 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function drawMap(){var g=$('#map-g');if(!g)return;g.innerHTML=mapGraphHTML({edges:M.L.edges,ids:M.L.ids})}
   function renderMap(){
     var roots=kidsOf('');
-    if(!Object.keys(S.items).length)return '<div class="sheet"><div class="empty"><h2>Nothing to map yet</h2>Add projects and tasks in the Outline, then link the steps that depend on each other.</div></div>';
+    var layerNow=S.mapLayer||'tasks';
+    if(layerNow==='rd'){if(!Object.keys(S.rd||{}).length)return '<div class="sheet"><div class="empty"><h2>No experiments to map yet</h2>Log one in R&amp;D → Overview, then come back here.</div></div>'}
+    else if(!Object.keys(S.items).length)return '<div class="sheet"><div class="empty"><h2>Nothing to map yet</h2>Add projects and tasks in the Outline, then link the steps that depend on each other.</div></div>';
     M.L=S.map3d?mapLayout3():mapLayout();
     var sel=S.mapSel&&node(S.mapSel)?node(S.mapSel):null;
-    var h='<div class="mapbar"><select id="map-proj" data-act="mapproj" aria-label="Project"><option value="">All projects</option>'+roots.map(function(r){return '<option value="'+r.id+'"'+(S.mapProj===r.id?' selected':'')+'>'+esc(r.title||'Untitled')+'</option>'}).join('')+'</select>'+
+    var h='<div class="mapbar">'+help('This is a visual map of everything in Atlas: projects, steps and how they connect. Click a node to see its connections. Pin a few nodes you care about, then Isolate to hide everything else.')+'<select id="map-proj" data-act="mapproj" aria-label="Project"><option value="">All projects</option>'+roots.map(function(r){return '<option value="'+r.id+'"'+(S.mapProj===r.id?' selected':'')+'>'+esc(r.title||'Untitled')+'</option>'}).join('')+'</select>'+
+      '<select id="map-status" data-act="mapstatus" aria-label="Status filter"><option value="">All statuses</option>'+STATUS.map(function(s){return '<option value="'+esc(s)+'"'+(S.mapStatus===s?' selected':'')+'>'+esc(s)+'</option>'}).join('')+'</select>'+
+      '<select id="map-layer" data-act="maplayer" aria-label="What to show"><option value="tasks"'+(!S.mapLayer||S.mapLayer==='tasks'?' selected':'')+'>Tasks</option><option value="repos"'+(S.mapLayer==='repos'?' selected':'')+'>Repositories</option><option value="both"'+(S.mapLayer==='both'?' selected':'')+'>Both</option><option value="rd"'+(S.mapLayer==='rd'?' selected':'')+'>R&amp;D</option></select>'+
       '<button class="chip-b" data-act="mapsub" aria-pressed="'+S.mapSub+'">Sub-tasks</button>'+
       '<button class="btn'+(S.linkFrom?' primary':'')+'" data-act="maplink">'+(S.linkFrom?'Pick the second step… (click here to cancel)':'Link two steps')+'</button>'+
       '<button class="btn" data-act="maprelayout">Re-arrange</button>'+
       '<button class="chip-b" data-act="map3d" aria-pressed="'+S.map3d+'">3D</button>'+(S.map3d?'<button class="chip-b" data-act="map3dspin" aria-pressed="'+M3.spin+'">Auto-rotate</button>':'')+'<span class="grow"></span>'+
       '<button class="btn" data-act="planmd">Export plan.md</button></div>';
     h+='<div class="legend" style="margin-bottom:8px"><span><i class="proj"></i>Project</span><span><i></i>Step</span><span><i style="background:var(--blue-bg);border-color:var(--blue-fg)"></i>In progress</span><span><i style="background:var(--red-bg);border-color:var(--red-fg)"></i>Blocked</span><span><i style="background:var(--green-bg);border-color:var(--green-fg)"></i>Done</span><span><i class="comp"></i>Competition</span><span><i class="lk"></i>Linked</span></div>';
+    if(S.mapPins.length||S.mapIso){
+      var pinNames=(S.mapIso||S.mapPins).map(function(id){var n=node(id);return n?title(n):null}).filter(Boolean);
+      h+='<div class="mapbar" style="margin-bottom:8px">'+(S.mapIso?'<b>Isolated:</b> ':'<b>Pinned:</b> ')+esc(pinNames.join(', ')||'none')+
+        help(S.mapIso?'Only your pinned nodes and the connections directly between them are showing. Turn on "Show indirect connections" to also see, faintly, the nodes that sit in between but weren\'t pinned.':'These are the nodes you selected with "Pin to selection". Click Isolate to hide everything else on the map and focus on just these.')+
+        '<span class="grow"></span>'+
+        (S.mapIso?'<button class="btn'+(S.mapIndirect?' primary':'')+'" data-act="mapindirect" aria-pressed="'+S.mapIndirect+'">Show indirect connections</button><button class="btn" data-act="mapexitiso">Exit isolate</button>':'<button class="btn'+(S.mapPins.length>1?' primary':'')+'" data-act="mapisolate"'+(S.mapPins.length<1?' disabled':'')+'>Isolate</button><button class="btn" data-act="mappinclear">Clear pins</button>')+'</div>';
+    }
     h+='<div class="mapbox"><svg id="map" class="'+(S.linkFrom?'linking':'')+'" viewBox="'+(S.map3d?'-450 -300 900 600':M.view.x+' '+M.view.y+' '+M.view.w+' '+M.view.h)+'" role="img" aria-label="Mind map of projects, steps and competitions"><g id="map-g">'+mapGraphHTML(M.L)+'</g></svg></div>';
     h+='<div class="mapinfo">';
     if(S.linkFrom&&node(S.linkFrom))h+='<div><b>Linking from '+esc(title(node(S.linkFrom)))+'</b><div class="sub">Click another node to link or unlink it.</div></div>';
     else if(sel){
-      var ln=linkedIds(sel.id).map(function(x){return title(node(x))});
-      h+='<div><b>'+esc(title(sel))+'</b><div class="sub">'+esc(sel.isComp?('Competition · '+sel.status+(sel.deadline?' · due '+dateLabel(sel.deadline):'')):(pathOf(sel).concat([]).join(' › ')+(sel.status?(pathOf(sel).length?' · ':'')+sel.status:'')+(sel.due?' · due '+dateLabel(sel.due):'')))+'</div>'+(ln.length?'<div class="sub">Linked: '+esc(ln.join(', '))+'</div>':'')+'</div>'+
-        '<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="mapstart">Link from here</button><button class="btn" data-act="mapopen">Open in '+(sel.isComp?'Competitions':'Outline')+'</button></div>';
-    }else h+='<span class="hint">'+(S.map3d?'Click a node to focus its connections. Drag to rotate, scroll to zoom. It pauses spinning while you move over it.':'Click a node to focus its connections. Drag to move, scroll to zoom, drag empty space to pan.')+' Use Link two steps to connect work that depends on each other.</span>';
+      var ln=linkedIds(sel.id).map(function(x){return title(node(x))}),pinned=S.mapPins.indexOf(sel.id)>-1;
+      h+='<div><b>'+esc(title(sel))+'</b><div class="sub">'+esc(sel.isComp?('Competition · '+sel.status+(sel.deadline?' · due '+dateLabel(sel.deadline):'')):sel.kind==='repo'?('Repository source'+(sel.summary?' · '+sel.summary:'')):sel.kind==='rd'?('R&D experiment'+(sel.status?' · '+sel.status:'')+(sel.number?' · #'+sel.number:'')):(pathOf(sel).concat([]).join(' › ')+(sel.status?(pathOf(sel).length?' · ':'')+sel.status:'')+(sel.due?' · due '+dateLabel(sel.due):'')))+'</div>'+(ln.length?'<div class="sub">Linked: '+esc(ln.join(', '))+'</div>':'')+'</div>'+
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">'+(sel.kind==='repo'?'':'<button class="btn" data-act="mapstart">Link from here</button><button class="btn" data-act="mapopen">Open in '+(sel.isComp?'Opportunities':sel.kind==='rd'?'R&amp;D':'Outline')+'</button>')+'<button class="btn'+(pinned?' primary':'')+'" data-act="mappin">'+(pinned?'Unpin':'Pin to selection')+'</button></div>';
+    }else h+='<span class="hint">'+(S.map3d?'Click a node to focus its connections. Drag to rotate, scroll to zoom. It pauses spinning while you move over it.':'Click a node to focus its connections. Drag to move, scroll to zoom, drag empty space to pan.')+' Use Link two steps to connect work that depends on each other, or Pin a few and Isolate them.</span>';
+    if(S.mapIso)h+=mapComboHTML();
     return h+'</div>';
+  }
+  function mapComboHTML(){
+    var methods=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind==='method'});
+    var roots=kidsOf('');
+    var c=S.combo||{note:''};
+    var h='<div class="dsec" style="margin-top:10px"><h2>This combination'+help('Everything here applies to the whole group of isolated nodes together, not one at a time: a shared note, a saved Script run against all of them, or a brand-new node that gets created already linked to every one of them.')+'</h2>';
+    h+='<label>Note on this combination<textarea id="combo-note" rows="3" placeholder="What do you notice about these together?">'+esc(c.note||'')+'</textarea></label>';
+    h+='<div style="display:flex;gap:8px;justify-content:flex-end;margin:6px 0"><button class="btn primary" data-act="combosave">Save note</button></div>';
+    h+='<div class="dadd" style="flex-wrap:wrap;gap:8px"><select id="combo-method" aria-label="Script">'+(methods.length?'<option value="">Pick a script…</option>'+methods.map(function(m){return '<option value="'+m.id+'">'+esc(m.name||'Untitled script')+'</option>'}).join(''):'<option value="">No scripts yet — add one in Warehouse</option>')+'</select><button class="btn"'+(S.comboBusy?' disabled':'')+' data-act="comborun">'+(S.comboBusy?'Running…':'Run script')+'</button></div>';
+    h+='<div class="dadd" style="flex-wrap:wrap;gap:8px"><input type="text" id="combo-title" placeholder="Title for a new node"><select id="combo-parent" aria-label="Add under">'+roots.map(function(r){return '<option value="'+r.id+'">'+esc(r.title||'Untitled')+'</option>'}).join('')+'</select><button class="btn" data-act="combopromote">Add new node, linked to all of these</button></div>';
+    h+='</div>';
+    return h;
   }
 
 
@@ -987,7 +1290,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     var over=items.filter(isOverdue).length;
     var h='<div class="disc"><div class="nudge"><b>Park it here, ship it there.</b> '+
       (hi||over?hi+' high-priority task'+(hi===1?'':'s')+' and '+over+' overdue still open. ':'Nothing urgent open right now. ')+
-      'Nothing in Discovery changes your plan until you promote an idea to a task. Press Focus to hide this tab.</div>';
+      'Nothing in Discovery changes your plan until you promote an idea to a task. Use Focus (top right) to hide this tab.</div>';
     /* topics */
     var tp=dlist('topic');
     h+='<div class="dsec"><h2>Topics I want to explore</h2><p>Your running list of curiosities. Status tells you what is live and what is parked.</p><div class="sheet"><div class="dtopics">';
@@ -1062,13 +1365,24 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     return false;
   }
 
+  /* ---------- Renaming: adapt the app's names to your own project ---------- */
+  var LBLDEF={appName:'Atlas',navOutline:'Outline',navMap:'Map',navCalendar:'Calendar',navDisc:'Discovery',navCanvas:'Canvas',navTeam:'Team',navWarehouse:'Warehouse',navRd:'R&D',rdOverview:'Overview',rdAnalysis:'Analysis'};
+  function L(key){var c=(S.cfg&&S.cfg.main&&S.cfg.main.labels)||{};return (c[key]&&String(c[key]).trim())||LBLDEF[key]}
+  function applyLabels(){
+    document.title=L('appName');
+    var h1=$('.brand h1');if(h1)h1.textContent=L('appName');
+    var map={outline:'navOutline',map:'navMap',calendar:'navCalendar',disc:'navDisc',canvas:'navCanvas',team:'navTeam',warehouse:'navWarehouse',rd:'navRd'};
+    Object.keys(map).forEach(function(v){var el=$('#tab-'+v);if(el)el.textContent=L(map[v])});
+  }
   /* ---------- Team (agents), Links directory, Settings ---------- */
   var PROV={anthropic:{label:'Claude (Anthropic)',model:'claude-haiku-5-5',hint:'claude-haiku-5-5, claude-sonnet-5-5, claude-opus-5-5'},
-            openai:{label:'GPT (OpenAI)',model:'',hint:'Type the model name exactly as OpenAI lists it'},
-            xai:{label:'Grok (xAI)',model:'',hint:'Type the model name exactly as xAI lists it'}};
-  S.agents={};S.runs={};S.dir={};S.notes={};S.cfg={};S.keys={anthropic:false,openai:false,xai:false};S.busy={};S.teamOpen=null;S.runOpen=null;S.adminArm=null;S.brief='';S.briefBusy=false;S.setOpen=false;S.notesOpen=false;S.trig=false;S.folders=[];
+            openai:{label:'GPT (OpenAI)',model:'',hint:'Type the model name exactly as OpenAI lists it. A ChatGPT Plus subscription does NOT include this \u2014 it needs its own API key with its own billing.'},
+            xai:{label:'Grok (xAI)',model:'',hint:'Type the model name exactly as xAI lists it'},
+            google:{label:'Gemini (Google)',model:'gemini-2.0-flash',hint:'gemini-2.0-flash has a real free tier \u2014 good for the Low/Medium level. gemini-2.5-pro is paid.'}};
+  var LEVELS={low:{label:'Low',hint:'Cheapest only. Summarise and basic chat, short replies, no web search, agents cannot run.'},medium:{label:'Medium',hint:'Normal day-to-day use: chat, Summarise, folders, agents with moderate replies and web search.'},high:{label:'High',hint:'Co-pilot mode: longer replies, web search, agents unrestricted \u2014 limited only by your own API account.'}};
+  S.agents={};S.runs={};S.dir={};S.notes={};S.cfg={};S.keys={anthropic:false,openai:false,xai:false,google:false};S.busy={};S.teamOpen=null;S.runOpen=null;S.adminArm=null;S.brief='';S.briefBusy=false;S.setOpen=false;S.notesOpen=false;S.trig=false;S.folders=[];
   function rebuildGen(col,docs){var c={};docs.forEach(function(d){c[d.id]=Object.assign({id:d.id},d.data())});S[col]=c}
-  function cfgd(){var c=S.cfg.main||{};return {pause:!!c.pause,primary:c.primary||{provider:'anthropic',model:'claude-haiku-5-5'},budgets:c.budgets||{},email:!!c.email,about:c.about||''}}
+  function cfgd(){var c=S.cfg.main||{};return {pause:!!c.pause,level:LEVELS[c.level]?c.level:'medium',primary:c.primary||{provider:'anthropic',model:'claude-haiku-5-5'},budgets:c.budgets||{},email:!!c.email,about:c.about||'',labels:c.labels||{}}}
   function saveCfg(patch){var c=Object.assign({},cfgd(),patch);S.cfg.main=Object.assign({id:'main'},c);db.doc('cfg/main').set(c).catch(function(){toast('Could not save settings')});render()}
   function agentList(){return Object.keys(S.agents).map(function(k){return S.agents[k]}).sort(function(a,b){return a.id<b.id?-1:1})}
   function ownerName(o){if(o&&o.indexOf('agent:')===0){var a=S.agents[o.slice(6)];return a?'agent '+(a.name||'unnamed'):'agent'}return o||''}
@@ -1130,6 +1444,18 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     /* primary */
     var pu=usageOf(function(r){return r.agentId==='primary'});
     h+='<div class="dsec"><h2>Primary AI</h2><p>The one AI that keeps an eye on everything. Pick it in Settings.</p><div class="sheet"><div class="dadd" style="align-items:center"><b>'+esc(PROV[pr.provider]?PROV[pr.provider].label:'Not set')+'</b><span class="hint">'+esc(pr.model||'no model chosen')+' · '+(S.keys[pr.provider]?'key saved':'no key yet')+' · '+fmtTok(pu.all)+' tokens used</span><span class="grow" style="flex:1"></span><button class="btn" data-act="opensettings">Settings</button><button class="btn primary" data-act="brief"'+(S.briefBusy?' disabled':'')+'>'+(S.briefBusy?'Thinking…':'Brief me')+'</button></div>'+(S.brief?'<pre class="trun">'+esc(S.brief)+'</pre>':'')+'</div></div>';
+    /* co-create */
+    (function(){
+      var all=Object.keys(S.items).map(function(k){return S.items[k]}).filter(function(n){return !n.parent});
+      var shared=all.filter(function(n){return n.coShare}),own=all.filter(function(n){return !n.coShare});
+      h+='<div class="dsec" id="cocreate-sec"><h2>Collab'+help('Share just one project with another person\'s email. It creates a separate Sheet and Doc for that project only and gives them edit access to it. From then on you both see and change the same tasks in that one project — everything else in your Atlas stays private.')+'</h2><p>Share one project with another person so you both see and edit the same tasks. Starting it makes a separate Sheet + Doc for just that project and gives them Editor access.</p><div class="sheet">';
+      if(shared.length)shared.forEach(function(n){
+        h+='<div class="dadd" data-id="'+n.id+'" style="align-items:center'+(S.coJump===n.id?';outline:2px solid var(--accent);border-radius:8px':'')+'"><b>'+esc(n.title||'Untitled')+'</b><span class="chip">'+(n.coShare.role==='owner'?'You share this \u2014 '+esc(n.coShare.email||''):'Shared with you')+'</span><span class="grow" style="flex:1"></span>'+(n.coShare.folderId?'<a class="btn" href="https://drive.google.com/drive/folders/'+esc(n.coShare.folderId)+'" target="_blank" rel="noopener">Open shared folder</a>':'')+(n.coShare.role==='member'?'<button class="btn danger" data-act="coleave">'+(S.delArm==='co:'+n.id?'Click again to leave':'Leave')+'</button>':'')+'</div>';
+      });else h+='<span class="hint">No shared projects yet.</span>';
+      h+='<div class="dadd" style="flex-wrap:wrap;gap:8px"><select id="co-proj" aria-label="Project to share">'+(own.length?own.map(function(r){return '<option value="'+r.id+'">'+esc(r.title||'Untitled')+'</option>'}).join(''):'<option value="">No projects to share yet</option>')+'</select><input type="text" id="co-email" placeholder="Their email address"><button class="btn primary" data-act="costart">Start collab</button></div>';
+      h+='<div class="dadd"><input type="text" id="co-join" placeholder="Paste the Sheet link they sent you"><button class="btn primary" data-act="cojoin">Join a collab</button></div>';
+      h+='</div></div>';
+    })();
     /* budgets */
     h+='<div class="dsec"><h2>Token budgets</h2><p>Your own limits, set in Settings. The app counts tokens from each reply. It cannot see your real balance at the provider, so check billing on their site too.</p><div class="sheet">';
     Object.keys(PROV).forEach(function(p){
@@ -1184,6 +1510,9 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
   /* Warehouse: digital assets (links), physical assets, suppliers */
   S.assets={};S.wh='digital';S.whUrl='';
+  /* R&D: experiments overview */
+  S.rd={};S.rdOpen=null;S.rdBusy=false;S.an={};S.rdView='overview';S.rdaOpen=null;S.rdBusy2=null;S.rdBusy3=false;S.rdSynBusy=null;S.rdSynDraft=null;S.rdExtractBusy=false;S.rdExtractDraft=null;S.rdSyncBusy=null;S.rdHandoff=null;S.scriptDraft=null;S.scriptExtractBusy=false;
+  S.brandView='posts';
   var PLITE=['None','Normal','High','Critical'],NEED=['Have','Need to buy','Running low'],DTYPE=['Doc','Sheet','Folder','Photos','Video','Other'];
   function dirFor(id){return Object.keys(S.dir).map(function(k){return S.dir[k]}).filter(function(d){return d.tag===id&&isUrl(d.url)})}
   function assetsFor(id){return Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.tag===id})}
@@ -1208,18 +1537,68 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       dg.map(function(d){return '<span><a href="'+esc(d.url)+'" target="_blank" rel="noopener">'+esc(d.title||d.url)+'</a>'+(d.type?' · '+esc(d.type):'')+'</span>'}).join('')+'</div>';
   }
   function renderWarehouse(){
-    var h='<div class="dsec"><h2>Warehouse</h2><p>Everything you have and keep: links, files, physical things and who you bought them from. Tag an item to a project and it appears under that task, and digital links orbit their node on the Map. A readable copy is kept in your data Sheet.</p>'+
-      '<div class="mapbar"><button class="chip-b" data-act="whview" data-v="digital" aria-pressed="'+(S.wh==='digital')+'">Digital assets</button><button class="chip-b" data-act="whview" data-v="physical" aria-pressed="'+(S.wh==='physical')+'">Physical assets</button><button class="chip-b" data-act="whview" data-v="supplier" aria-pressed="'+(S.wh==='supplier')+'">Suppliers</button><span class="grow"></span><a class="btn" id="wh-sheet" href="'+esc(S.whUrl)+'" target="_blank" rel="noopener" style="'+(S.whUrl?'':'display:none')+'">Open the Sheet</a><button class="btn" data-act="whsync">Sync to Sheet now</button></div><div class="sheet">';
+    var h='<div class="dsec"><h2>Warehouse'+help('Everywhere you keep stuff that isn\'t a task: links and accounts, physical items, who you bought them from, research you want searchable, and reusable sets of instructions. Tag anything to a project and it shows up under that task.')+'</h2><p>Everything you have and keep: links, files, physical things and who you bought them from. Tag an item to a project and it appears under that task, and digital links orbit their node on the Map. A readable copy is kept in your data Sheet.</p>'+
+      '<div class="mapbar"><button class="chip-b" data-act="whview" data-v="digital" aria-pressed="'+(S.wh==='digital')+'">Digital assets</button><button class="chip-b" data-act="whview" data-v="physical" aria-pressed="'+(S.wh==='physical')+'">Physical assets</button><button class="chip-b" data-act="whview" data-v="supplier" aria-pressed="'+(S.wh==='supplier')+'">Suppliers</button><button class="chip-b" data-act="whview" data-v="repo" aria-pressed="'+(S.wh==='repo')+'">Repositories</button><button class="chip-b" data-act="whview" data-v="method" aria-pressed="'+(S.wh==='method')+'">Scripts</button><span class="grow"></span><a class="btn" id="wh-sheet" href="'+esc(S.whUrl)+'" target="_blank" rel="noopener" style="'+(S.whUrl?'':'display:none')+'">Open the Sheet</a><button class="btn" data-act="whsync">Sync to Sheet now</button></div><div class="sheet">';
     if(S.wh==='digital'){
       var ls=Object.keys(S.dir).map(function(k){return S.dir[k]}).sort(function(a,b){return (a.title||'').toLowerCase()<(b.title||'').toLowerCase()?-1:1});
+      h+='<div class="dadd" style="flex-wrap:wrap;gap:8px;margin-bottom:10px"><span class="hint" style="margin-right:2px">Quick upload:</span><a class="chip" href="https://studio.youtube.com/channel/UC/videos/upload" target="_blank" rel="noopener">YouTube</a><a class="chip" href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a><a class="chip" href="https://www.linkedin.com/feed/?shareActive=true" target="_blank" rel="noopener">LinkedIn</a>'+help('These just open the platform\'s own upload/post screen in a new tab so you can paste your media straight in — Atlas has no API access to post for you.')+'</div>';
       if(!ls.length)h+='<div class="empty"><h2>No digital assets yet</h2>Docs, Sheets, Drive folders for photos and videos, accounts. Add the first one below.</div>';
-      ls.forEach(function(d){
-        h+='<div class="lrow" data-id="'+d.id+'"><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><input class="ttl" data-k="ltitle:'+d.id+'" value="'+esc(d.title||'')+'" placeholder="Name this link" aria-label="Link name"><input type="text" data-k="lurl:'+d.id+'" value="'+esc(d.url||'')+'" placeholder="https://" aria-label="URL"></div>'+
-          '<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div style="display:flex;gap:6px"><select data-act="ltype" aria-label="Type">'+opts(DTYPE,d.type,'Type')+'</select><input type="text" data-k="lacct:'+d.id+'" value="'+esc(d.account||'')+'" placeholder="Account" aria-label="Account"></div><select data-act="ltag" aria-label="Belongs to">'+tagOpts(d.tag)+'</select></div>'+
-          '<textarea rows="2" data-k="labout:'+d.id+'" placeholder="What is this? Two lines." aria-label="About" style="resize:none">'+esc(d.about||'')+'</textarea>'+
-          '<div style="display:flex;gap:6px;justify-content:flex-end;align-items:center">'+(isUrl(d.url)?'<a class="chip" href="'+esc(d.url)+'" target="_blank" rel="noopener">Open</a>':'')+'<button class="ib" data-act="ldel" aria-label="Delete">'+(S.delArm===d.id?'?':'×')+'</button></div></div>';
+      var dgroups={};ls.forEach(function(d){var g=d.group||'Ungrouped';(dgroups[g]=dgroups[g]||[]).push(d)});
+      var gnames=Object.keys(dgroups).sort(function(a,b){return a==='Ungrouped'?1:b==='Ungrouped'?-1:(a.toLowerCase()<b.toLowerCase()?-1:1)});
+      gnames.forEach(function(gn){
+        h+='<details class="wgroup" open style="margin-bottom:8px"><summary style="cursor:pointer;font-size:13px;font-weight:600;padding:6px 2px;color:var(--muted)">'+esc(gn)+' <span class="hint">('+dgroups[gn].length+')</span></summary>';
+        dgroups[gn].forEach(function(d){
+          h+='<div class="lrow" data-id="'+d.id+'"><div style="display:flex;flex-direction:column;gap:6px;min-width:0"><input class="ttl" data-k="ltitle:'+d.id+'" value="'+esc(d.title||'')+'" placeholder="Name this link" aria-label="Link name"><input type="text" data-k="lurl:'+d.id+'" value="'+esc(d.url||'')+'" placeholder="https://" aria-label="URL"></div>'+
+            '<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><div style="display:flex;gap:6px"><select data-act="ltype" aria-label="Type">'+opts(DTYPE,d.type,'Type')+'</select><input type="text" data-k="lacct:'+d.id+'" value="'+esc(d.account||'')+'" placeholder="Account" aria-label="Account"></div><div style="display:flex;gap:6px"><input type="text" data-k="lgroup:'+d.id+'" value="'+esc(d.group||'')+'" placeholder="Group, e.g. Brand videos" aria-label="Group"><select data-act="ltag" aria-label="Belongs to">'+tagOpts(d.tag)+'</select></div></div>'+
+            '<textarea rows="2" data-k="labout:'+d.id+'" placeholder="What is this? Two lines." aria-label="About" style="resize:none">'+esc(d.about||'')+'</textarea>'+
+            '<div style="display:flex;gap:6px;justify-content:flex-end;align-items:center">'+(isUrl(d.url)?'<a class="chip" href="'+esc(d.url)+'" target="_blank" rel="noopener">Open</a>':'')+'<button class="ib" data-act="ldel" aria-label="Delete">'+(S.delArm===d.id?'?':'×')+'</button></div></div>';
+        });
+        h+='</details>';
       });
       h+='<div class="add-row"><button class="btn primary" data-act="lnew">+ New digital asset</button></div>';
+    }else if(S.wh==='repo'){
+      var rs=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind==='repo'}).sort(function(a,b){return (a.added||'')<(b.added||'')?1:-1});
+      h+='<p class="hint" style="padding:0 2px">Save research so you can search it later — a paper, a patent, a dataset.'+help('The "Link" field is just a citation — a reference back to where this came from. It is not what gets searched. The big text box below is what actually gets read and made searchable, so paste the real content there: an abstract, the key sections, or the whole thing. If you only have a link and no pasted text, Atlas has nothing to search yet. Needs an OpenAI or Google (Gemini) API key in Settings — Gemini has a free tier.')+'</p>';
+      if(!rs.length)h+='<div class="empty"><h2>No sources yet</h2>Add your first paper, patent or dataset below.</div>';
+      rs.forEach(function(a){
+        var canSum=!a.needsText&&(a.chunks||a.summary);
+        h+='<div class="wrow" data-id="'+a.id+'"><div class="wl"></div>'+
+          '<div class="wc"><b style="display:block">'+esc(a.name||'Untitled')+(a.needsText?' <span class="chip" style="background:var(--amber-bg);color:var(--amber-fg)">Needs text</span>':'')+'</b><span class="hint">'+(a.needsText?'not indexed yet':((a.chunks||0)+' chunk(s) indexed'))+' · '+esc(a.added||'')+'</span></div>'+
+          '<div class="wc">'+(isUrl(a.link)?'<a class="chip" href="'+esc(a.link)+'" target="_blank" rel="noopener">Original</a> ':'')+(isUrl(a.docLink)?'<a class="chip" href="'+esc(a.docLink)+'" target="_blank" rel="noopener">My notes</a> ':'')+'<select data-act="atag" aria-label="Belongs to">'+tagOpts(a.tag)+'</select></div>'+
+          '<div class="wc"><span class="hint">'+esc(a.summary||'')+(a.tags?' · '+esc(a.tags):'')+'</span><div style="text-align:right;display:flex;gap:4px;justify-content:flex-end;align-items:center">'+
+            (canSum?'<button class="btn" data-act="reposum" data-id="'+a.id+'"'+(S.repoSumBusy===a.id?' disabled':'')+'>'+(S.repoSumBusy===a.id?'Writing…':(a.docLink?'Rewrite notes':'Write notes doc'))+'</button>'+bang('reposum',a.id):'')+
+            '<button class="ib" data-act="adel" aria-label="Delete">'+(S.delArm===a.id?'?':'×')+'</button></div></div>'+
+          (a.needsText?'<div class="wc" style="grid-column:1/-1"><textarea rows="3" data-repotext="'+a.id+'" placeholder="Could not fetch this automatically — paste the text here to index it"></textarea><div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn primary" data-act="repofill" data-id="'+a.id+'">Index this text</button></div></div>':'')+
+          (S.repoHandoff&&S.repoHandoff.id===a.id?'<div class="wc" style="grid-column:1/-1"><p class="hint">No AI key is set, so Atlas opened a Doc with a ready prompt instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the write-up under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.repoHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="repocheckhandoff" data-id="'+a.id+'">Check for answer</button></div></div>':'')+
+          '</div>';
+      });
+      h+='<div class="dadd" style="flex-wrap:wrap;gap:8px"><input type="text" id="repo-title" placeholder="Title"><input type="text" id="repo-link" placeholder="Citation link (optional, not searched)"><select id="repo-tag" aria-label="Belongs to">'+tagOpts('')+'</select></div>'+
+        '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><textarea id="repo-text" rows="6" placeholder="Paste the text you want indexed — an abstract, key sections, or the whole paper"></textarea><div style="display:flex;justify-content:flex-end"><button class="btn primary" data-act="repoadd">Add & index</button></div></div>';
+      h+='<div class="dsec" style="margin-top:14px"><h2 style="font-size:15px">Add several at once'+help('Three ways in, use any combination: paste a list of links (Atlas fetches each page itself), paste a list of paper/patent titles (Atlas searches Semantic Scholar for the abstract), or upload text/markdown files you already have. PDFs are not read automatically yet — upload them as a link or title instead, or open the PDF and paste its text into the single-source box above. Anything Atlas could not get text for is added as "Needs text" so you can paste it in yourself later.')+'</h2>'+
+        '<label>Links, one per line<textarea id="bulk-links" rows="3" placeholder="https://...\nhttps://..."></textarea></label>'+
+        '<label>Paper or patent titles, one per line<textarea id="bulk-titles" rows="3" placeholder="Exact or close title — Atlas will search for it"></textarea></label>'+
+        '<label>Upload text/markdown files<input type="file" id="bulk-files" multiple accept=".txt,.md,.markdown,.csv"></label>'+
+        '<div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn primary" data-act="repobulk">Process batch</button></div></div>';
+    }else if(S.wh==='method'){
+      var ms=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind==='method'}).sort(function(a,b){return (a.name||'')<(b.name||'')?-1:1});
+      h+='<p class="hint" style="padding:0 2px">Data-processing prompts for your Map.'+help('A Script is a reusable set of instructions for your AI that lets you process your Map data in new ways — pin and isolate a group of nodes, pick a Script, and run it against just that group to see the data differently (summarize risks, flag conflicts, spot a pattern). Write one yourself, or import an article link, a paper, or a case study below and have the method it describes extracted and converted into a Script automatically — this is how you can apply someone else\'s design process (IDEO\'s, or anyone else\'s) to your own Map.')+'</p>';
+      if(!ms.length)h+='<div class="empty"><h2>No scripts yet</h2>Write your first one below, or save one straight from the Map when you isolate some nodes.</div>';
+      ms.forEach(function(a){
+        h+='<div class="wrow" data-id="'+a.id+'"><div class="wl"></div>'+
+          '<div class="wc" style="grid-column:span 3;display:flex;flex-direction:column;gap:6px"><input class="ttl" data-k="mname:'+a.id+'" value="'+esc(a.name||'')+'" placeholder="Script name" aria-label="Script name"><textarea rows="4" data-k="minstr:'+a.id+'" placeholder="Distill the method into clear, reusable instructions" style="resize:none">'+esc(a.instructions||'')+'</textarea></div>'+
+          '<div class="wc" style="text-align:right"><button class="ib" data-act="adel" aria-label="Delete">'+(S.delArm===a.id?'?':'×')+'</button></div></div>';
+      });
+      h+='<div class="add-row"><button class="btn primary" data-act="mnew">+ New script</button></div>';
+      h+='<div class="dsec" style="margin-top:14px"><h3 style="font-size:14px">Extract a script from an article, paper or case study'+help('Paste the text describing a method, process, or framework (or pull it from a source already in Repositories above). Atlas asks your AI to distill it into clear, reusable instructions — a Script — that you can then run against any group of nodes on your Map, the same way as one you wrote yourself.')+'</h3>'+
+        '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="sx-link" placeholder="Citation link (optional)"><textarea id="sx-text" rows="4" placeholder="Paste the method, process, or framework description"></textarea><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('sxtract')+'<button class="btn" data-act="sxtract"'+(S.scriptExtractBusy?' disabled':'')+'>'+(S.scriptExtractBusy?'Extracting…':'Extract script')+'</button></div></div>';
+      if(S.rdHandoff&&S.rdHandoff.type==='extract'&&S.rdHandoff.target==='script'){
+        h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="extract">Check for answer</button></div></div>';
+      }
+      if(S.scriptDraft){
+        var sd=S.scriptDraft;
+        h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><input type="text" id="sx-name" value="'+esc(sd.name||'')+'" placeholder="Script name"><textarea id="sx-instr" rows="4">'+esc(sd.instructions||'')+'</textarea><div style="display:flex;justify-content:flex-end"><button class="btn primary" data-act="sxsave">Save as script</button></div></div>';
+      }
+      h+='</div>';
     }else{
       var kind=S.wh,as=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind===kind}).sort(function(a,b){var o={Critical:0,High:1,Normal:2,None:3};return (o[a.priority||'None']-o[b.priority||'None'])||((a.name||'')<(b.name||'')?-1:1)});
       if(!as.length)h+='<div class="empty"><h2>'+(kind==='physical'?'No physical assets yet':'No suppliers yet')+'</h2>'+(kind==='physical'?'Moulds, chemicals, equipment: where they are, how many, and what you still need to buy.':'Who sold you what, how to reach them, and where it ended up.')+'</div>';
@@ -1244,10 +1623,101 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
   function whClick(act,b,id){
     if(act==='whview'){S.wh=b.dataset.v;S.delArm=null;render();return true}
+    if(act==='brandview'){S.brandView=b.dataset.v;render();return true}
+    if(act==='brandtowh'){S.view='warehouse';S.wh='digital';persist();render();return true}
+    if(act==='offadd'){
+      var ot=$('#off-text'),txt=ot?ot.value:'';
+      if(!txt||!txt.trim())return true;
+      txt.split('\n').map(function(l){return l.trim()}).filter(Boolean).forEach(function(line){
+        S.offQueue.push({id:newId('off'),text:line,added:new Date().toISOString()});
+      });
+      offSave();if(ot)ot.value='';render();toast('Saved here — will sync when you\'re online');
+      return true;
+    }
+    if(act==='offdel'){var offid=b.dataset.id;S.offQueue=S.offQueue.filter(function(o){return o.id!==offid});offSave();render();return true}
+    if(act==='offsync'){offSyncNow();return true}
     if(act==='whsync'){gs('mirrorWarehouse').then(function(u){S.whUrl=u;toast('Sheet updated');render()}).catch(function(e){toast('Could not sync: '+((e&&e.message)||e))});return true}
     if(act==='anew'){var aid=newId('w'),doc=S.wh==='physical'?{kind:'physical',name:'',location:'',qty:'',need:'Have',priority:'None',supplier:'',tag:'',notes:'',due:'',taskId:'',added:today()}:{kind:'supplier',name:'',contact:'',sells:'',purchasesUrl:'',purchases:'',stored:'',qty:'',priority:'None',tag:'',added:today()};
       S.assets[aid]=Object.assign({id:aid},doc);S.focusNew='as:'+aid;render();db.doc('assets/'+aid).set(doc).catch(function(){toast('Could not add')});wmirror();return true}
-    if(act==='adel'){if(S.delArm===id){delete S.assets[id];S.delArm=null;render();db.doc('assets/'+id).delete().catch(function(){toast('Could not delete')});wmirror()}else{S.delArm=id;render()}return true}
+    if(act==='adel'){
+      if(S.delArm===id){
+        var isRepo=S.assets[id]&&S.assets[id].kind==='repo';
+        delete S.assets[id];S.delArm=null;render();
+        if(isRepo){delete cache.assets[id];emit('assets');gs('repoDelete',id).catch(function(){toast('Could not delete')})}
+        else db.doc('assets/'+id).delete().catch(function(){toast('Could not delete')});
+        wmirror();
+      }else{S.delArm=id;render()}
+      return true;
+    }
+    if(act==='repoadd'){
+      var rtitle=$('#repo-title').value.trim(),rlink=$('#repo-link').value.trim(),rtag=$('#repo-tag').value,rtext=$('#repo-text').value.trim();
+      if(!rtext){toast('Paste some text to index first');return true}
+      b.disabled=true;toast('Indexing… this can take a little while for a long source');
+      gs('repoAdd',{title:rtitle,link:rlink,text:rtext,projects:rtag?[rtag]:[]}).then(function(r){toast('Indexed '+r.chunks+' chunk(s)'+(r.summary?': '+r.summary:''));return load(true)}).then(function(){render()}).catch(function(e){toast('Could not index: '+((e&&e.message)||e));b.disabled=false});
+      return true;
+    }
+    if(act==='repofill'){
+      var fid=b.dataset.id,ta=document.querySelector('[data-repotext="'+fid+'"]'),ftext=ta?ta.value.trim():'';
+      if(!ftext){toast('Paste some text first');return true}
+      b.disabled=true;toast('Indexing…');
+      gs('repoAddText',fid,ftext).then(function(r){toast('Indexed '+r.chunks+' chunk(s)');return load(true)}).then(function(){render()}).catch(function(e){toast('Could not index: '+((e&&e.message)||e));b.disabled=false});
+      return true;
+    }
+    if(act==='reposum'){
+      var rid=b.dataset.id;S.repoSumBusy=rid;S.repoHandoff=null;render();
+      gs('repoSummaryDoc',rid).then(function(r){
+        S.repoSumBusy=null;
+        if(r&&r.handoff){S.repoHandoff={id:rid,docId:r.docId,docUrl:r.docUrl};toast('No AI key set — opened a Doc for you');render();return}
+        if(S.assets[rid])S.assets[rid].docLink=r.docUrl;
+        toast('Notes doc written');render();
+      }).catch(function(e){S.repoSumBusy=null;toast('Could not write notes: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='repocheckhandoff'){
+      var rid2=b.dataset.id,hd2=S.repoHandoff;if(!hd2){return true}
+      gs('repoSummaryDocFinish',rid2,hd2.docId).then(function(r){
+        if(!r||!r.ready){toast('No answer in the Doc yet');return}
+        if(S.assets[rid2])S.assets[rid2].docLink=r.docUrl;
+        S.repoHandoff=null;toast('Notes doc written');render();
+      }).catch(function(e){toast('Could not check: '+((e&&e.message)||e))});
+      return true;
+    }
+    if(act==='repobulk'){
+      var blinks=($('#bulk-links').value||'').split('\n').map(function(s){return s.trim()}).filter(Boolean);
+      var btitles=($('#bulk-titles').value||'').split('\n').map(function(s){return s.trim()}).filter(Boolean);
+      var bfileInput=$('#bulk-files'),bfl=bfileInput&&bfileInput.files?Array.prototype.slice.call(bfileInput.files):[];
+      var btag=$('#repo-tag')?$('#repo-tag').value:'';
+      if(!blinks.length&&!btitles.length&&!bfl.length){toast('Add some links, titles or files first');return true}
+      b.disabled=true;toast('Processing batch… this can take a minute');
+      var readFile=function(f){return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res({name:f.name,text:String(fr.result||'')})};fr.onerror=function(){res({name:f.name,text:''})};fr.readAsText(f)})};
+      Promise.all(bfl.map(readFile)).then(function(bfiles){
+        return gs('repoBulkAdd',blinks,btitles,bfiles,btag);
+      }).then(function(r){
+        var msg=r.indexed+' indexed, '+r.queued+' queued (needs text)'+(r.errors&&r.errors.length?', '+r.errors.length+' error(s)':'');
+        toast((r.noEmbedKey?'Add an API key in Settings to index automatically. ':'')+msg);
+        return load(true);
+      }).then(function(){render()}).catch(function(e){toast('Could not process batch: '+((e&&e.message)||e));b.disabled=false});
+      return true;
+    }
+    if(act==='mnew'){var mid=newId('me'),mdoc={kind:'method',name:'',instructions:'',added:today()};S.assets[mid]=Object.assign({id:mid},mdoc);render();db.doc('assets/'+mid).set(mdoc).catch(function(){toast('Could not add')});return true}
+    if(act==='sxtract'){
+      var sxtext=$('#sx-text').value.trim(),sxlink=$('#sx-link').value.trim();
+      if(!sxtext){toast('Paste the method text first');return true}
+      b.disabled=true;S.scriptExtractBusy=true;render();
+      gs('operatorExtract',sxtext,sxlink).then(function(r){
+        S.scriptExtractBusy=false;
+        if(r&&r.handoff){S.rdHandoff={type:'extract',docId:r.docId,docUrl:r.docUrl,sourceLink:sxlink,target:'script'};toast('No AI key set — opened a Doc for you');render();return}
+        S.scriptDraft=r;render();
+      }).catch(function(e){S.scriptExtractBusy=false;toast('Could not extract: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='sxsave'){
+      var sn=$('#sx-name').value.trim(),si=$('#sx-instr').value.trim();
+      if(!sn||!si){toast('Needs a name and instructions');return true}
+      var sid2=newId('me'),sdoc={kind:'method',name:sn,instructions:si,added:today()};
+      S.assets[sid2]=Object.assign({id:sid2},sdoc);S.scriptDraft=null;render();db.doc('assets/'+sid2).set(sdoc).catch(function(){toast('Could not add')});
+      return true;
+    }
     if(act==='atask'){
       var a=S.assets[id];if(!a)return true;
       if(a.taskId&&S.items[a.taskId]){S.open=a.taskId;S.view='outline';persist();render();return true}
@@ -1264,20 +1734,388 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(act==='asup'){aWrite(id,{supplier:t.value});return true}
     if(act==='atag'){aWrite(id,{tag:t.value});return true}
     if(act==='adue'){aWrite(id,{due:t.value});return true}
-    if(k){var f=k.split(':')[0],m={aname:'name',aloc:'location',aqty:'qty',anotes:'notes',acontact:'contact',asells:'sells',apurl:'purchasesUrl',astored:'stored',apurch:'purchases'},o={};
-      if(m[f]){o[m[f]]=(f==='anotes'||f==='apurch')?t.value:t.value.trim();aWrite(id,o);t.defaultValue=t.value;render();return true}
-      if(f==='ltitle'||f==='lurl'||f==='lacct'||f==='labout'){setTimeout(wmirror,0)}}
+    if(k){var f=k.split(':')[0],m={aname:'name',aloc:'location',aqty:'qty',anotes:'notes',acontact:'contact',asells:'sells',apurl:'purchasesUrl',astored:'stored',apurch:'purchases',mname:'name',minstr:'instructions'},o={};
+      if(m[f]){o[m[f]]=(f==='anotes'||f==='apurch'||f==='minstr')?t.value:t.value.trim();aWrite(id,o);t.defaultValue=t.value;render();return true}
+      if(f==='ltitle'||f==='lurl'||f==='lacct'||f==='labout'||f==='lgroup'){setTimeout(wmirror,0)}}
     return false;
   }
+
+  /* ---------- render: R&D ---------- */
+  var RDCLS={Planned:'s-todo',Running:'s-inprogress',Blocked:'s-blocked',Done:'s-done'};
+  var RDSRC={paste:'Pasted data',file:'Uploaded file',sheet:'Google Sheet',doc:'Google Doc',experiment:'An experiment'};
+  var OPTYPES={bar:'Bar chart',line:'Line chart',scatter:'Scatter plot',linfit:'Linear fit',quadfit:'Quadratic fit',avg:'Average / stats'};
+  function rdWrite(id,p){if(!S.rd[id])return;Object.assign(S.rd[id],p);db.doc('rd/'+id).update(p).catch(function(){toast('Could not save')})}
+  function renderRD(){
+    var h='<div class="mapbar" style="margin-bottom:10px"><button class="chip-b" data-act="rdview" data-v="overview" aria-pressed="'+(S.rdView==='overview')+'">'+esc(L('rdOverview'))+'</button><button class="chip-b" data-act="rdview" data-v="analysis" aria-pressed="'+(S.rdView==='analysis')+'">'+esc(L('rdAnalysis'))+'</button><button class="chip-b" data-act="rdview" data-v="map" aria-pressed="'+(S.rdView==='map')+'">Map</button></div>';
+    if(S.rdView==='analysis')return h+renderRDAnalysis();
+    if(S.rdView==='map')return h+renderMap();
+    return h+renderRDOverview();
+  }
+  function renderBranding(){
+    var h='<div class="dsec"><h2>Branding <span class="chip" style="background:var(--amber-bg);color:var(--amber-fg)">Coming soon</span>'+help('A home for your brand presence: your branding media (from Warehouse → Digital assets), a posting queue with agents or people who can post on repeat, linking your social accounts, and analytics with a competitor tracker. Everything below is a preview of the shape — none of it is wired up yet.')+'</h2>'+
+      '<p class="hint">Your branding media already lives in Warehouse → Digital assets. <button class="btn" data-act="brandtowh">Open Warehouse → Digital assets</button></p></div>';
+    h+='<div class="mapbar" style="margin-bottom:10px"><button class="chip-b" data-act="brandview" data-v="posts" aria-pressed="'+(S.brandView==='posts')+'">New post</button><button class="chip-b" data-act="brandview" data-v="socials" aria-pressed="'+(S.brandView==='socials')+'">Link socials</button><button class="chip-b" data-act="brandview" data-v="analysis" aria-pressed="'+(S.brandView==='analysis')+'">Analysis</button></div>';
+    h+='<div class="sheet" style="opacity:.55;pointer-events:none" aria-disabled="true">';
+    if(S.brandView==='socials'){
+      h+='<p class="hint" style="padding:6px 8px">Coming soon — connect your accounts so posts and analytics can use them.</p>';
+      ['Instagram','YouTube','LinkedIn','TikTok','X / Twitter'].forEach(function(s){
+        h+='<div class="wrow"><div class="wl"></div><div class="wc" style="grid-column:span 3"><b>'+s+'</b></div><div class="wc" style="text-align:right"><button class="btn" disabled>Connect</button></div></div>';
+      });
+    }else if(S.brandView==='analysis'){
+      h+='<p class="hint" style="padding:6px 8px">Coming soon — see how each connected account is performing.</p>';
+      h+='<div class="cols cc"><span>Account</span><span>Followers</span><span>Engagement</span><span class="h-left"></span><span></span></div>';
+      ['Instagram','YouTube','LinkedIn'].forEach(function(s){h+='<div class="crow"><div class="c-title" style="padding-left:6px">'+s+'</div><div class="hint">—</div><div class="hint">—</div><div class="c-left">—</div><div></div></div>'});
+      h+='<div class="dsec" style="margin-top:14px"><h3 style="font-size:14px">Track competition'+help('Watch a competitor\'s social presence alongside your own, once this is built.')+'</h3>'+
+        '<div class="dadd" style="flex-wrap:wrap;gap:8px"><input type="text" placeholder="Competitor name" disabled><input type="text" placeholder="Their profile link" disabled><button class="btn" disabled>+ Track</button></div></div>';
+    }else{
+      h+='<p class="hint" style="padding:6px 8px">Coming soon — queue posts for your branding media and assign who (or which agent) sends them.</p>';
+      h+='<div class="cols cc"><span>Post</span><span>Repeat</span><span>Assignee</span><span class="h-left"></span><span></span></div>';
+      h+='<div class="crow"><div class="c-title" style="padding-left:6px"><input type="text" placeholder="What are you posting?" disabled></div><div><select disabled><option>One-time</option><option>Daily</option><option>Weekly</option><option>Monthly</option></select></div><div><select disabled><option>Pick an agent or person</option></select></div><div></div><div></div></div>';
+      h+='<div class="add-row"><button class="btn primary" disabled>+ New post</button></div>';
+    }
+    return h+'</div>';
+  }
+  function renderOffline(){
+    var h='<div class="dsec"><h2>Offline'+help('Jot things down here even with no signal — this is saved only in this browser (localStorage), not on Google\'s servers, until you\'re back online. The moment a connection is available, Atlas tries to sync automatically; you can also hit "Sync now" yourself. Each line becomes a real task in your Outline, then disappears from here once it\'s actually saved.')+'</h2>'+
+      '<p class="hint">'+(S.offQueue.length?S.offQueue.length+' item(s) waiting to sync.':'Nothing waiting — you\'re all synced.')+'</p></div>';
+    h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><textarea id="off-text" rows="3" placeholder="Type a to-do, a link, anything — one per line, then Add. Works with no signal."></textarea><div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn primary" data-act="offadd">+ Add</button><button class="btn" data-act="offsync"'+(S.offSyncing||!S.offQueue.length?' disabled':'')+'>'+(S.offSyncing?'Syncing…':'Sync now')+'</button></div></div>';
+    if(S.offQueue.length){
+      h+='<div class="sheet" style="margin-top:10px">';
+      S.offQueue.slice().reverse().forEach(function(o){
+        h+='<div class="wrow" data-id="'+o.id+'"><div class="wl"></div><div class="wc" style="grid-column:span 3">'+esc(o.text)+'<span class="hint"> · '+esc((o.added||'').slice(0,10))+'</span></div><div class="wc" style="text-align:right"><button class="ib" data-act="offdel" data-id="'+o.id+'" aria-label="Delete">×</button></div></div>';
+      });
+      h+='</div>';
+    }
+    h+='<p class="hint" style="margin-top:10px">Prefer Google Docs\' own offline editing? Create any Doc, turn on "Available offline" for it in Google Drive on your phone, jot freely with no signal, then paste the lines in here (or straight into Outline) once you\'re back online — Atlas can\'t read a Doc\'s content without a connection either way.</p>';
+    return h;
+  }
+  function renderRDOverview(){
+    var rs=Object.keys(S.rd).map(function(k){return S.rd[k]}).sort(function(a,b){return (a.number||'')<(b.number||'')?-1:((a.added||'')<(b.added||'')?1:-1)});
+    var h='<div class="dsec"><h2>R&amp;D'+help('Track experiments here: a short overview row for each one, with its own Google Doc for the write-up and its own Drive folder for photos or other files, created automatically when you add an experiment. Paste in a Google Photos album link or a YouTube link for test videos if you have them. Click the row to expand it. Use the Analysis tab above to dig into data from an experiment.')+'</h2>'+
+      '<p>One row per experiment. Each gets its own write-up Doc and Drive folder, made for you.</p></div>';
+    h+='<div class="sheet"><div class="cols cc"><span>Experiment</span><span>Status</span><span class="h-cdue">Number</span><span class="h-left">Added</span><span></span></div>';
+    if(!rs.length)h+='<div class="empty"><h2>No experiments yet</h2>Add your first one below — Atlas creates its Doc and Drive folder automatically.</div>';
+    rs.forEach(function(a){
+      h+='<div class="crow" data-id="'+a.id+'">'+
+        '<div class="c-title" style="padding-left:6px"><input class="ttl" data-k="rdname:'+a.id+'" value="'+esc(a.name||'')+'" placeholder="Experiment name" aria-label="Experiment name"></div>'+
+        '<div><select class="pill '+(RDCLS[a.status]||'s-todo')+'" data-act="rdstatus" aria-label="Status">'+opts(RDSTAT,a.status||'Planned')+'</select></div>'+
+        '<div class="c-cdue">'+esc(a.number||'—')+'</div>'+
+        '<div class="c-left left">'+esc(a.added||'')+'</div>'+
+        '<div class="c-act" style="opacity:1"><button class="ib" data-act="rdopen" title="Details" aria-label="Details">'+I.dots+'</button></div></div>';
+      if(S.rdOpen===a.id){
+        var armed=S.delArm===a.id;
+        h+='<div class="detail" data-id="'+a.id+'">'+
+          '<label>Summary'+help('Pulled in from the write-up Doc when you hit Sync below, or just type notes here yourself.')+'<textarea data-k="rdsummary:'+a.id+'" placeholder="What is this experiment testing?">'+esc(a.summary||'')+'</textarea></label>'+
+          '<div class="d-side">'+
+          '<label>Google Photos album link (optional)<input type="text" data-k="rdphotos:'+a.id+'" value="'+esc(a.photosLink||'')+'" placeholder="https://photos.app.goo.gl/..."></label>'+
+          '<label>YouTube link for test videos (optional)<input type="text" data-k="rdyoutube:'+a.id+'" value="'+esc(a.youtubeLink||'')+'" placeholder="https://youtube.com/..."></label>'+
+          '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">'+(a.docUrl?'<a class="chip" href="'+esc(a.docUrl)+'" target="_blank" rel="noopener">Write-up Doc</a>':'')+(a.folderUrl?'<a class="chip" href="'+esc(a.folderUrl)+'" target="_blank" rel="noopener">Drive folder</a>':'')+(isUrl(a.photosLink)?'<a class="chip" href="'+esc(a.photosLink)+'" target="_blank" rel="noopener">Photos</a>':'')+(isUrl(a.youtubeLink)?'<a class="chip" href="'+esc(a.youtubeLink)+'" target="_blank" rel="noopener">Video</a>':'')+(a.docId?'<button class="btn" data-act="rdsyncdoc" data-id="'+a.id+'"'+(S.rdSyncBusy===a.id?' disabled':'')+'>'+(S.rdSyncBusy===a.id?'Syncing…':'Sync summary from Doc')+'</button>':'')+(a.mapTaskId&&S.items[a.mapTaskId]?'<span class="chip">On the main map</span>':'<button class="btn" data-act="rdsyncmap" data-id="'+a.id+'">Sync to main map</button>')+'</div>'+
+          '</div>'+
+          '<div class="d-act"><button class="btn danger" data-act="rddel">'+(armed?'Click again to delete':'Delete')+'</button></div></div>';
+      }
+    });
+    h+='<div class="dadd" style="flex-wrap:wrap;gap:8px;margin-top:10px"><input type="text" id="rd-name" placeholder="Experiment name"><input type="text" id="rd-number" placeholder="Number (optional)" style="max-width:140px"><input type="text" id="rd-summary" placeholder="One-line summary (optional)"><button class="btn primary" data-act="rdnew"'+(S.rdBusy?' disabled':'')+'>'+(S.rdBusy?'Creating…':'+ New experiment')+'</button></div>';
+    return h+'</div>';
+  }
+  /* ---- Analysis: datasets, operators, results, synthesis ---- */
+  function svgBar(d){var W=560,H=220,pad=30,vals=d.values||[],max=Math.max.apply(null,vals.concat([0.0001])),bw=(W-2*pad)/Math.max(vals.length,1);
+    var bars=vals.map(function(v,i){var h=(v/max)*(H-2*pad),x=pad+i*bw,y=H-pad-h;return '<rect x="'+(x+2).toFixed(1)+'" y="'+y.toFixed(1)+'" width="'+(bw-4).toFixed(1)+'" height="'+h.toFixed(1)+'" fill="var(--accent)"/><text x="'+(x+bw/2).toFixed(1)+'" y="'+(H-pad+12)+'" font-size="9" text-anchor="middle" fill="var(--muted)">'+esc(String((d.labels||[])[i]||'').slice(0,10))+'</text>'}).join('');
+    return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:560px;height:auto"><line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="var(--line)"/>'+bars+'</svg>';
+  }
+  function svgLine(d){var W=560,H=220,pad=30,vals=d.values||[],max=Math.max.apply(null,vals.concat([0.0001])),min=Math.min.apply(null,vals.concat([0])),rng=(max-min)||1;
+    var pts=vals.map(function(v,i){var x=pad+(i/(Math.max(vals.length-1,1)))*(W-2*pad),y=H-pad-((v-min)/rng)*(H-2*pad);return x.toFixed(1)+','+y.toFixed(1)}).join(' ');
+    return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:560px;height:auto"><line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="var(--line)"/><polyline points="'+pts+'" fill="none" stroke="var(--accent)" stroke-width="2"/></svg>';
+  }
+  function svgScatter(d){var W=560,H=220,pad=30,pts=d.points||[],xs=pts.map(function(p){return p.x}),ys=pts.map(function(p){return p.y});
+    if(!pts.length)return '<p class="hint">No numeric points found.</p>';
+    var xmin=Math.min.apply(null,xs),xmax=Math.max.apply(null,xs),ymin=Math.min.apply(null,ys),ymax=Math.max.apply(null,ys),xr=(xmax-xmin)||1,yr=(ymax-ymin)||1;
+    function px(x){return pad+((x-xmin)/xr)*(W-2*pad)} function py(y){return H-pad-((y-ymin)/yr)*(H-2*pad)}
+    var dots=pts.map(function(p){return '<circle cx="'+px(p.x).toFixed(1)+'" cy="'+py(p.y).toFixed(1)+'" r="3" fill="var(--accent)"/>'}).join('');
+    var fitLine='';
+    if(d.fit&&d.kind==='linear'){var x1=xmin,x2=xmax,y1=d.fit.m*x1+d.fit.b,y2=d.fit.m*x2+d.fit.b;fitLine='<line x1="'+px(x1).toFixed(1)+'" y1="'+py(y1).toFixed(1)+'" x2="'+px(x2).toFixed(1)+'" y2="'+py(y2).toFixed(1)+'" stroke="var(--red-fg)" stroke-width="2"/>'}
+    else if(d.fit&&d.kind==='quadratic'){var steps=40,path='';for(var i=0;i<=steps;i++){var x=xmin+(i/steps)*(xmax-xmin),y=d.fit.a*x*x+d.fit.b*x+d.fit.c;path+=(i===0?'M':'L')+px(x).toFixed(1)+' '+py(y).toFixed(1)+' '}fitLine='<path d="'+path+'" fill="none" stroke="var(--red-fg)" stroke-width="2"/>'}
+    return '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;max-width:560px;height:auto"><line x1="'+pad+'" y1="'+(H-pad)+'" x2="'+(W-pad)+'" y2="'+(H-pad)+'" stroke="var(--line)"/><line x1="'+pad+'" y1="'+pad+'" x2="'+pad+'" y2="'+(H-pad)+'" stroke="var(--line)"/>'+dots+fitLine+'</svg>'+(d.eq?'<p class="hint">'+esc(d.eq)+'</p>':'');
+  }
+  function resultHTML(r){
+    if(r.kind==='ai')return '<div class="wc" style="grid-column:1/-1"><b>'+esc(r.operatorName)+'</b><p style="white-space:pre-wrap">'+esc(r.text||'')+'</p></div>';
+    var d=r.data||{};
+    if(r.computedType==='bar')return '<div class="wc" style="grid-column:1/-1"><b>'+esc(r.operatorName)+'</b>'+svgBar(d)+'</div>';
+    if(r.computedType==='line')return '<div class="wc" style="grid-column:1/-1"><b>'+esc(r.operatorName)+'</b>'+svgLine(d)+'</div>';
+    if(r.computedType==='scatter'||r.computedType==='linfit'||r.computedType==='quadfit')return '<div class="wc" style="grid-column:1/-1"><b>'+esc(r.operatorName)+'</b>'+svgScatter(d)+'</div>';
+    if(r.computedType==='avg')return '<div class="wc" style="grid-column:1/-1"><b>'+esc(r.operatorName)+'</b><p class="hint">n='+d.n+' · mean='+(+d.mean).toFixed(3)+' · min='+(+d.min).toFixed(3)+' · max='+(+d.max).toFixed(3)+' · stdev='+(+d.stdev).toFixed(3)+(d.column?' · column: '+esc(d.column):'')+'</p></div>';
+    return '';
+  }
+  function renderRDAnalysis(){
+    var ops=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind==='operator'});
+    var ans=Object.keys(S.an).map(function(k){return S.an[k]}).sort(function(a,b){return (a.added||'')<(b.added||'')?1:-1});
+    var exps=Object.keys(S.rd).map(function(k){return S.rd[k]});
+    var h='<div class="dsec"><h2>Analysis'+help('Point Atlas at some data — pasted numbers, an uploaded file, a Google Sheet, a Google Doc, or one of your logged experiments — then run a Methodology against it. Computed methodologies (charts, fits, stats) need numeric rows; AI methodologies work on anything, including text. Synthesize turns the latest result into a short takeaway you can send to the experiment, the outline, or its Doc.')+'</h2></div>';
+    h+='<div class="sheet"><div class="cols"><span>Analysis</span><span>Source</span><span></span></div>';
+    if(!ans.length)h+='<div class="empty"><h2>No analyses yet</h2>Add a dataset below to start.</div>';
+    ans.forEach(function(a){
+      h+='<div class="crow" data-id="'+a.id+'"><div class="c-title" style="padding-left:6px"><b>'+esc(a.title||'Untitled')+'</b></div><div class="hint">'+esc(RDSRC[a.sourceType]||a.sourceType)+'</div><div class="c-act" style="opacity:1"><button class="ib" data-act="aopen" title="Open" aria-label="Open">'+I.dots+'</button></div></div>';
+      if(S.rdaOpen===a.id){
+        var armed=S.delArm===a.id;
+        h+='<div class="detail" data-id="'+a.id+'">';
+        h+='<div class="wc" style="grid-column:1/-1"><span class="hint">'+(a.rows?a.rows.length+' row(s) of data':((a.rawText||'').length+' characters of text'))+'</span></div>';
+        h+='<div class="dadd" style="flex-wrap:wrap;gap:8px"><select id="op-pick-'+a.id+'" aria-label="Methodology">'+(ops.length?ops.map(function(o){return '<option value="'+o.id+'">'+esc(o.name||'Untitled')+(o.trainable?' (trainable script)':(o.computedType?' ('+(OPTYPES[o.computedType]||o.computedType)+')':' (AI)'))+'</option>'}).join(''):'<option value="">No methodologies yet — add one below</option>')+'</select><button class="btn primary" data-act="arun" data-id="'+a.id+'"'+(S.rdBusy2?' disabled':'')+'>'+(S.rdBusy2===a.id?'Running…':'Run methodology')+'</button></div>';
+        if(S.rdHandoff&&S.rdHandoff.type==='runOperator'&&S.rdHandoff.analysisId===a.id){
+          h+='<div class="wc" style="grid-column:1/-1"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="runOperator">Check for answer</button></div></div>';
+        }
+        (a.results||[]).slice().reverse().forEach(function(r){h+=resultHTML(r)});
+        if((a.results||[]).length){
+          h+='<div class="dadd" style="flex-wrap:wrap;gap:8px;margin-top:6px"><button class="btn" data-act="asyn" data-id="'+a.id+'"'+(S.rdSynBusy===a.id?' disabled':'')+'>'+(S.rdSynBusy===a.id?'Synthesizing…':'Synthesize latest result')+'</button></div>';
+          if(S.rdHandoff&&S.rdHandoff.type==='synthesize'&&S.rdHandoff.analysisId===a.id){
+            h+='<div class="wc" style="grid-column:1/-1"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="synthesize">Check for answer</button></div></div>';
+          }
+          if(S.rdSynDraft&&S.rdSynDraft.id===a.id){
+            h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><textarea id="syn-text-'+a.id+'" rows="3">'+esc(S.rdSynDraft.text||'')+'</textarea>'+
+              '<div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end">'+(a.rdId?'<button class="btn" data-act="synoverview" data-id="'+a.id+'">Add to experiment summary</button><button class="btn" data-act="syndoc" data-id="'+a.id+'">Add to experiment Doc</button>':'')+'<button class="btn" data-act="synmap" data-id="'+a.id+'">Add to Map as a task</button></div></div>';
+          }
+        }
+        h+='<div class="d-act"><button class="btn danger" data-act="andel" data-id="'+a.id+'">'+(armed?'Click again to delete':'Delete analysis')+'</button></div>';
+        h+='</div>';
+      }
+    });
+    h+='<div class="dsec" style="margin-top:4px"><h3 style="font-size:14px">Add a dataset</h3>'+
+      '<div class="dadd" style="flex-wrap:wrap;gap:8px"><input type="text" id="an-title" placeholder="Title (optional)"><select id="an-src" aria-label="Where is this data?">'+Object.keys(RDSRC).map(function(k){return '<option value="'+k+'">'+RDSRC[k]+'</option>'}).join('')+'</select></div>'+
+      '<div id="an-src-fields" style="margin-top:6px">'+
+      '<textarea id="an-paste" rows="4" placeholder="Paste comma or tab separated rows — first row can be headers"></textarea>'+
+      '</div>'+
+      '<div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn primary" data-act="ananew"'+(S.rdBusy3?' disabled':'')+'>'+(S.rdBusy3?'Adding…':'Add dataset')+'</button></div></div>';
+    h+='<div class="dsec" style="margin-top:4px"><h3 style="font-size:14px">Methodologies'+help('A reusable way of processing a dataset. Built-in ones (bar chart, line chart, scatter, linear or quadratic fit, average/stats) compute a real result from numeric rows. An AI methodology runs your written instructions against the data using your primary AI — use this for anything qualitative, or for a method extracted from a paper below. A trainable-script methodology (only made via "Extract a methodology from a paper" below) gives you a real Python training script instead — clicking "Run methodology" on it downloads the script plus your dataset as a CSV to train outside Atlas.')+'</h3>'+
+      (ops.length?'<div class="sheet">'+ops.map(function(o){return '<div class="wrow" data-id="'+o.id+'"><div class="wl"></div><div class="wc" style="grid-column:span 3"><b>'+esc(o.name||'Untitled')+'</b><span class="hint"> · '+(o.trainable?'Trainable script':(o.computedType?(OPTYPES[o.computedType]||o.computedType):'AI methodology'))+(o.sourceLink?' · from a source':'')+'</span></div><div class="wc" style="text-align:right">'+(o.trainable?'<button class="ib" data-act="opdlscript" data-id="'+o.id+'" title="Download script" aria-label="Download script">↓</button>':'')+'<button class="ib" data-act="opdel" data-id="'+o.id+'" aria-label="Delete">'+(S.delArm===o.id?'?':'×')+'</button></div></div>'}).join('')+'</div>':'')+
+      '<div class="dadd" style="flex-wrap:wrap;gap:8px"><input type="text" id="op-name" placeholder="Methodology name"><select id="op-kind" aria-label="Kind"><option value="computed">Computed (chart/fit/stats)</option><option value="ai">AI (your own instructions)</option></select></div>'+
+      '<div class="dadd" style="flex-wrap:wrap;gap:8px"><select id="op-type" aria-label="Chart/fit type">'+Object.keys(OPTYPES).map(function(k){return '<option value="'+k+'">'+OPTYPES[k]+'</option>'}).join('')+'</select><textarea id="op-instr" rows="2" placeholder="Instructions for the AI to apply (used only for an AI methodology)"></textarea></div>'+
+      '<div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn primary" data-act="opnew">+ New methodology</button></div></div>';
+    h+='<div class="dsec" style="margin-top:4px"><h3 style="font-size:14px">Extract a methodology from a paper'+help('Paste the text of a paper or method (or pull it from a source already in Warehouse → Repositories). "Reusable instructions" gives you a plain-language AI methodology. "Trainable script" instead asks the AI to write a complete, runnable Python script that builds and trains a real supervised model (a small neural network, or whatever the paper actually describes) on your own data, outside Atlas — Apps Script itself has no numpy or GPU to train with, so this hands you real code plus your dataset as a CSV, and you (or your AI, if it can run code) train and iterate it.')+'</h3>'+
+      '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="opx-link" placeholder="Citation link (optional)"><select id="opx-kind" aria-label="What to extract"><option value="instr">Reusable instructions (AI methodology)</option><option value="train">Trainable script (neural net / supervised model)</option></select><textarea id="opx-text" rows="4" placeholder="Paste the method description from the paper"></textarea><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('opextract')+'<button class="btn" data-act="opextract"'+(S.rdExtractBusy?' disabled':'')+'>'+(S.rdExtractBusy?'Extracting…':'Extract methodology')+'</button></div></div>';
+    if(S.rdHandoff&&S.rdHandoff.type==='extract'){
+      h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="extract">Check for answer</button></div></div>';
+    }
+    if(S.rdExtractDraft){
+      var ed=S.rdExtractDraft;
+      if(ed.script!=null){
+        h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><input type="text" id="opx-name" value="'+esc(ed.name||'')+'" placeholder="Methodology name"><p class="hint">Generated script (editable before saving):</p><textarea id="opx-script" rows="10" style="font:12px/1.4 var(--font-mono,monospace)">'+esc(ed.script||'')+'</textarea><div style="display:flex;justify-content:flex-end;gap:8px"><button class="btn" data-act="opxpreview">Preview / download</button><button class="btn primary" data-act="opxsave" data-trainable="1">Save as methodology</button></div></div>';
+      } else {
+        h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><input type="text" id="opx-name" value="'+esc(ed.name||'')+'" placeholder="Methodology name"><textarea id="opx-instr" rows="4">'+esc(ed.instructions||'')+'</textarea><div style="display:flex;justify-content:flex-end"><button class="btn primary" data-act="opxsave">Save as methodology</button></div></div>';
+      }
+    }
+    h+='</div>';
+    return h;
+  }
+  function rdClick(act,b,id){
+    if(act==='rdview'){
+      var prevV=S.rdView;S.rdView=b.dataset.v;S.delArm=null;
+      if(S.rdView==='map'&&S.mapLayer!=='rd'){S.rdPrevLayer=S.mapLayer||'tasks';S.mapLayer='rd';M.pos={};M3.pos={}}
+      else if(prevV==='map'&&S.rdView!=='map'&&S.rdPrevLayer){S.mapLayer=S.rdPrevLayer;S.rdPrevLayer=null}
+      render();return true;
+    }
+    if(act==='rdopen'){S.rdOpen=S.rdOpen===id?null:id;S.delArm=null;render();return true}
+    if(act==='rddel'){
+      if(S.delArm===id){delete S.rd[id];S.rdOpen=null;S.delArm=null;render();db.doc('rd/'+id).delete().catch(function(){toast('Could not delete')})}
+      else{S.delArm=id;render()}
+      return true;
+    }
+    if(act==='rdnew'){
+      var nname=$('#rd-name').value.trim(),nnum=$('#rd-number').value.trim(),nsum=$('#rd-summary').value.trim();
+      if(!nname){toast('Give the experiment a name first');var rnf=$('#rd-name');if(rnf){rnf.focus();rnf.style.outline='2px solid var(--red-fg)';setTimeout(function(){rnf.style.outline=''},1500)}return true}
+      b.disabled=true;S.rdBusy=true;render();
+      gs('rdCreate',nname,nnum,nsum).then(function(r){S.rdBusy=false;cache.rd[r.id]=r;emit('rd');toast('Experiment created, with its Doc and folder');render()}).catch(function(e){S.rdBusy=false;toast('Could not create: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='rdsyncmap'){
+      var sid9=b.dataset.id,exp9=S.rd[sid9];if(!exp9)return true;
+      if(exp9.mapTaskId&&S.items[exp9.mapTaskId]){toast('Already on the main map');return true}
+      var tid9=addItem('',exp9.name||'Untitled experiment','');
+      S.items[tid9].links=[sid9];
+      db.doc('items/'+tid9).update({links:[sid9]}).catch(function(){});
+      rdWrite(sid9,{mapTaskId:tid9});
+      toast('Added to the main map, linked to this experiment');render();
+      return true;
+    }
+    if(act==='rdsyncdoc'){
+      var sid=b.dataset.id;S.rdSyncBusy=sid;render();
+      gs('rdSyncFromDoc',sid).then(function(r){S.rdSyncBusy=null;S.rd[sid]=r;cache.rd[sid]=r;emit('rd');toast('Summary pulled in from the Doc');render()}).catch(function(e){S.rdSyncBusy=null;toast('Could not sync: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='aopen'){S.rdaOpen=S.rdaOpen===id?null:id;S.delArm=null;S.rdSynDraft=null;render();return true}
+    if(act==='andel'){var aid=b.dataset.id;
+      if(S.delArm===aid){delete S.an[aid];S.rdaOpen=null;S.delArm=null;render();db.doc('an/'+aid).delete().catch(function(){toast('Could not delete')})}
+      else{S.delArm=aid;render()}
+      return true;
+    }
+    if(act==='ananew'){
+      var atitle=$('#an-title').value.trim(),asrc=$('#an-src').value,apaste=$('#an-paste')?$('#an-paste').value:'',alink=$('#an-link')?$('#an-link').value.trim():'',aexp=$('#an-exp')?$('#an-exp').value:'';
+      var afileInput=$('#an-file');
+      b.disabled=true;S.rdBusy3=true;render();
+      var proceed=function(pasteText){
+        gs('analysisCreate',atitle,asrc,asrc==='sheet'||asrc==='doc'?alink:'',pasteText,aexp).then(function(r){S.rdBusy3=false;cache.an[r.id]=r;emit('an');toast('Dataset added');render()}).catch(function(e){S.rdBusy3=false;toast('Could not add: '+((e&&e.message)||e));render()});
+      };
+      if(asrc==='file'&&afileInput&&afileInput.files&&afileInput.files[0]){
+        var fr=new FileReader();fr.onload=function(){proceed(String(fr.result||''))};fr.onerror=function(){S.rdBusy3=false;toast('Could not read that file');render()};fr.readAsText(afileInput.files[0]);
+      }else proceed(apaste);
+      return true;
+    }
+    if(act==='arun'){
+      var aid2=b.dataset.id,sel=$('#op-pick-'+aid2),opId=sel?sel.value:'';
+      if(!opId){toast('Add a methodology first');return true}
+      var selOp=S.assets[opId];
+      if(selOp&&selOp.trainable){
+        var ds2=S.an[aid2];
+        if(!ds2||!ds2.rows||!ds2.rows.length){toast('This methodology trains on numeric rows — this analysis is text-based, so there is nothing to export as a CSV');return true}
+        var csvOut=ds2.rows.map(function(r){return r.map(csvCell).join(',')}).join('\n');
+        saveFile((selOp.name||'methodology').replace(/[^\w.-]+/g,'_')+'.py',selOp.script||'# (no script saved)','Then download the dataset below and run: python '+(selOp.name||'methodology').replace(/[^\w.-]+/g,'_')+'.py '+(ds2.title||'data').replace(/[^\w.-]+/g,'_')+'.csv');
+        setTimeout(function(){saveFile((ds2.title||'data').replace(/[^\w.-]+/g,'_')+'.csv',csvOut,'Run the script above against this file to train.')},300);
+        return true;
+      }
+      S.rdBusy2=aid2;render();
+      gs('analysisRunOperator',aid2,opId).then(function(r){
+        S.rdBusy2=false;
+        if(r&&r.handoff){S.rdHandoff={type:'runOperator',analysisId:aid2,operatorId:opId,docId:r.docId,docUrl:r.docUrl};toast('No AI key set — opened a Doc for you');render();return}
+        S.an[aid2].results=S.an[aid2].results||[];S.an[aid2].results.push(r);cache.an[aid2]=S.an[aid2];emit('an');render();
+      }).catch(function(e){S.rdBusy2=false;toast('Could not run: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='checkhandoff'){
+      var hk=b.dataset.kind,hd=S.rdHandoff;
+      if(!hd){return true}
+      if(hk==='synthesize'){
+        gs('analysisSynthesizeFinish',hd.docId).then(function(r){
+          if(!r||!r.ready){toast('No answer in the Doc yet');return}
+          S.rdSynDraft={id:hd.analysisId,text:r.takeaway};S.rdHandoff=null;toast('Got it');render();
+        }).catch(function(e){toast('Could not check: '+((e&&e.message)||e))});
+      } else if(hk==='runOperator'){
+        gs('analysisRunOperatorFinish',hd.analysisId,hd.operatorId,hd.docId).then(function(r){
+          if(!r||!r.ready){toast('No answer in the Doc yet');return}
+          S.an[hd.analysisId].results=S.an[hd.analysisId].results||[];S.an[hd.analysisId].results.push(r.result);cache.an[hd.analysisId]=S.an[hd.analysisId];emit('an');S.rdHandoff=null;toast('Result added');render();
+        }).catch(function(e){toast('Could not check: '+((e&&e.message)||e))});
+      } else if(hk==='extract'){
+        var finFn=hd.trainable?'operatorExtractTrainableFinish':'operatorExtractFinish';
+        gs(finFn,hd.docId,hd.sourceLink||'').then(function(r){
+          if(!r||!r.ready){toast('No answer in the Doc yet');return}
+          if(hd.target==='script'){S.scriptDraft={name:r.name,instructions:r.instructions,sourceLink:r.sourceLink}}
+          else{S.rdExtractDraft=hd.trainable?{name:r.name,script:r.script,sourceLink:r.sourceLink}:{name:r.name,instructions:r.instructions,sourceLink:r.sourceLink}}
+          S.rdHandoff=null;toast('Got it');render();
+        }).catch(function(e){toast('Could not check: '+((e&&e.message)||e))});
+      }
+      return true;
+    }
+    if(act==='asyn'){
+      var aid3=b.dataset.id;S.rdSynBusy=aid3;render();
+      gs('analysisSynthesize',aid3).then(function(r){
+        S.rdSynBusy=false;
+        if(r&&r.handoff){S.rdHandoff={type:'synthesize',analysisId:aid3,docId:r.docId,docUrl:r.docUrl};toast('No AI key set — opened a Doc for you');render();return}
+        S.rdSynDraft={id:aid3,text:r.takeaway};render();
+      }).catch(function(e){S.rdSynBusy=false;toast('Could not synthesize: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='synoverview'){
+      var aid4=b.dataset.id,a4=S.an[aid4],txt4=$('#syn-text-'+aid4)?$('#syn-text-'+aid4).value:'';
+      if(!a4||!a4.rdId){toast('No linked experiment');return true}
+      var exp4=S.rd[a4.rdId];rdWrite(a4.rdId,{summary:((exp4&&exp4.summary)||'')+(exp4&&exp4.summary?'\n\n':'')+txt4});
+      toast('Added to the experiment summary');S.rdSynDraft=null;render();return true;
+    }
+    if(act==='syndoc'){
+      var aid5=b.dataset.id,a5=S.an[aid5],txt5=$('#syn-text-'+aid5)?$('#syn-text-'+aid5).value:'';
+      if(!a5||!a5.rdId){toast('No linked experiment');return true}
+      gs('rdAppendToDoc',a5.rdId,txt5).then(function(){toast('Added to the Doc');S.rdSynDraft=null;render()}).catch(function(e){toast('Could not add: '+((e&&e.message)||e))});
+      return true;
+    }
+    if(act==='synmap'){
+      var aid6=b.dataset.id,a6=S.an[aid6],txt6=$('#syn-text-'+aid6)?$('#syn-text-'+aid6).value:'';
+      gs('promoteCombo','',(a6&&a6.title||'Finding')+' — takeaway',txt6,[]).then(function(){toast('Added to the outline');return load(true)}).then(function(){S.rdSynDraft=null;render()}).catch(function(e){toast('Could not add: '+((e&&e.message)||e))});
+      return true;
+    }
+    if(act==='opdel'){var oid=b.dataset.id;
+      if(S.delArm===oid){delete S.assets[oid];S.delArm=null;render();db.doc('assets/'+oid).delete().catch(function(){toast('Could not delete')})}
+      else{S.delArm=oid;render()}
+      return true;
+    }
+    if(act==='opnew'){
+      var opname=$('#op-name').value.trim(),opkind=$('#op-kind').value,optype=$('#op-type').value,opinstr=$('#op-instr').value.trim();
+      if(!opname){toast('Give the methodology a name first');var onf=$('#op-name');if(onf){onf.focus();onf.style.outline='2px solid var(--red-fg)';setTimeout(function(){onf.style.outline=''},1500)}return true}
+      if(opkind==='ai'&&!opinstr){toast('Write instructions for an AI methodology');var oif=$('#op-instr');if(oif){oif.focus();oif.style.outline='2px solid var(--red-fg)';setTimeout(function(){oif.style.outline=''},1500)}return true}
+      var oid2=newId('op'),odoc={kind:'operator',name:opname,computedType:opkind==='computed'?optype:'',instructions:opkind==='ai'?opinstr:'',sourceLink:'',added:today()};
+      S.assets[oid2]=Object.assign({id:oid2},odoc);render();db.doc('assets/'+oid2).set(odoc).catch(function(){toast('Could not add')});
+      return true;
+    }
+    if(act==='opextract'){
+      var xtext=$('#opx-text').value.trim(),xlink=$('#opx-link').value.trim(),xkind=$('#opx-kind')?$('#opx-kind').value:'instr';
+      if(!xtext){toast('Paste the method text first');return true}
+      b.disabled=true;S.rdExtractBusy=true;render();
+      var xfn=xkind==='train'?'operatorExtractTrainable':'operatorExtract';
+      gs(xfn,xtext,xlink).then(function(r){
+        S.rdExtractBusy=false;
+        if(r&&r.handoff){S.rdHandoff={type:'extract',docId:r.docId,docUrl:r.docUrl,sourceLink:xlink,trainable:xkind==='train'};toast('No AI key set — opened a Doc for you');render();return}
+        S.rdExtractDraft=r;render();
+      }).catch(function(e){S.rdExtractBusy=false;toast('Could not extract: '+((e&&e.message)||e));render()});
+      return true;
+    }
+    if(act==='opxpreview'){
+      var ps=$('#opx-script'),pn=$('#opx-name');
+      saveFile(((pn&&pn.value.trim())||'methodology').replace(/[^\w.-]+/g,'_')+'.py',(ps&&ps.value)||'','');
+      return true;
+    }
+    if(act==='opxsave'){
+      var dn=$('#opx-name').value.trim();
+      var isTrain=b.dataset.trainable==='1';
+      if(isTrain){
+        var dscript=($('#opx-script')&&$('#opx-script').value.trim())||'';
+        if(!dn||!dscript){toast('Needs a name and a script');return true}
+        var oidT=newId('op'),odocT={kind:'operator',name:dn,computedType:'',instructions:'',trainable:true,script:dscript,sourceLink:(S.rdExtractDraft&&S.rdExtractDraft.sourceLink)||'',added:today()};
+        S.assets[oidT]=Object.assign({id:oidT},odocT);S.rdExtractDraft=null;render();db.doc('assets/'+oidT).set(odocT).catch(function(){toast('Could not add')});
+        return true;
+      }
+      var di=$('#opx-instr').value.trim();
+      if(!dn||!di){toast('Needs a name and instructions');return true}
+      var oid3=newId('op'),odoc2={kind:'operator',name:dn,computedType:'',instructions:di,sourceLink:(S.rdExtractDraft&&S.rdExtractDraft.sourceLink)||'',added:today()};
+      S.assets[oid3]=Object.assign({id:oid3},odoc2);S.rdExtractDraft=null;render();db.doc('assets/'+oid3).set(odoc2).catch(function(){toast('Could not add')});
+      return true;
+    }
+    if(act==='opdlscript'){
+      var dop=S.assets[b.dataset.id];
+      if(!dop)return true;
+      saveFile((dop.name||'methodology').replace(/[^\w.-]+/g,'_')+'.py',dop.script||'# (no script saved)','');
+      return true;
+    }
+    return false;
+  }
+  function rdChange(t,act,k,id){
+    if(act==='rdstatus'){rdWrite(id,{status:t.value});render();return true}
+    if(t.id==='an-src'){
+      var fields=$('#an-src-fields'),v=t.value;
+      if(fields){
+        if(v==='paste')fields.innerHTML='<textarea id="an-paste" rows="4" placeholder="Paste comma or tab separated rows — first row can be headers"></textarea>';
+        else if(v==='file')fields.innerHTML='<input type="file" id="an-file" accept=".txt,.csv,.tsv,.md">';
+        else if(v==='sheet')fields.innerHTML='<input type="text" id="an-link" placeholder="Paste the Google Sheet link">';
+        else if(v==='doc')fields.innerHTML='<input type="text" id="an-link" placeholder="Paste the Google Doc link">';
+        else if(v==='experiment'){var exps=Object.keys(S.rd).map(function(k2){return S.rd[k2]});fields.innerHTML='<select id="an-exp" aria-label="Experiment">'+(exps.length?exps.map(function(e){return '<option value="'+e.id+'">'+esc(e.name||'Untitled')+'</option>'}).join(''):'<option value="">No experiments yet</option>')+'</select>'}
+      }
+      return true;
+    }
+    if(k){var f=k.split(':')[0],m={rdname:'name',rdsummary:'summary',rdphotos:'photosLink',rdyoutube:'youtubeLink'};
+      if(m[f]){var o={};o[m[f]]=t.value.trim();rdWrite(id,o);t.defaultValue=t.value;render();return true}}
+    return false;
+  }
+
   /* Settings, notifications, pause */
   function paintSettings(){
     var el=$('#set-ov');if(!el)return;
     var c=cfgd(),h='<div class="setbox"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0;font-family:var(--font-display)">Settings</h2><button class="btn" data-sa="close">Close</button></div>';
-    h+='<h3>AI accounts (API keys)</h3><p class="hint">Keys are saved in your own Google account (Script Properties) and are never sent back to this page. A ChatGPT Plus or Claude Pro chat subscription is separate from API credit: agents need an API key with credit on it.</p>';
+    h+='<h3>Rename this app</h3><p class="hint">This is the same tracker, just with your own names on it — handy if you want to reuse this setup for a different project. Leave a field blank to keep the default shown as its placeholder.</p>';
+    h+='<div class="srow"><b style="min-width:120px">App name</b><input type="text" id="lbl-appName" value="'+esc((c.labels||{}).appName||'')+'" placeholder="'+esc(LBLDEF.appName)+'"></div>';
+    [['navOutline','Outline tab'],['navMap','Map tab'],['navCalendar','Calendar tab'],['navDisc','Discovery tab'],['navCanvas','Canvas tab'],['navTeam','Team tab'],['navWarehouse','Warehouse tab'],['navRd','R&D tab'],['rdOverview','R&D → Overview chip'],['rdAnalysis','R&D → Analysis chip']].forEach(function(row){
+      h+='<div class="srow"><b style="min-width:120px">'+esc(row[1])+'</b><input type="text" id="lbl-'+row[0]+'" value="'+esc((c.labels||{})[row[0]]||'')+'" placeholder="'+esc(LBLDEF[row[0]])+'"></div>';
+    });
+    h+='<div class="srow"><button class="btn primary" data-sa="savelabels">Save names</button><button class="btn" data-sa="resetlabels">Reset to defaults</button></div>';
+    h+='<h3>Usage level</h3><p class="hint">Caps how many tokens any single AI call can use, and whether agents may run at all. Most people can leave this on Medium and ignore everything below.</p><div class="srow" style="gap:6px">'+Object.keys(LEVELS).map(function(lk){return '<button class="btn'+(c.level===lk?' primary':'')+'" data-sa="setlevel" data-lv="'+lk+'">'+esc(LEVELS[lk].label)+'</button>'}).join('')+'</div><p class="hint">'+esc(LEVELS[c.level].hint)+'</p>';
+    h+='<h3 style="margin-top:28px">Settings for nerds</h3>';
+    h+='<h4>AI accounts (API keys)</h4><p class="hint">Keys are saved in your own Google account (Script Properties) and are never sent back to this page. A ChatGPT Plus or Claude Pro chat subscription is separate from API credit: agents need an API key with credit on it. Gemini has a real free tier if you want a $0 option for Low/Medium use.</p>';
     Object.keys(PROV).forEach(function(p){
       h+='<div class="srow"><b>'+esc(PROV[p].label)+'</b><span class="chip" style="'+(S.keys[p]?'':'background:var(--hover);color:var(--muted)')+'">'+(S.keys[p]?'Key saved':'No key')+'</span><input type="password" id="key-'+p+'" placeholder="Paste API key" autocomplete="off"><button class="btn primary" data-sa="savekey" data-p="'+p+'">Save</button>'+(S.keys[p]?'<button class="btn" data-sa="clearkey" data-p="'+p+'">Remove</button>':'')+'</div>';
     });
-    h+='<h3>Primary AI</h3><div class="srow"><select id="pr-prov">'+Object.keys(PROV).map(function(p){return '<option value="'+p+'"'+(p===(c.primary||{}).provider?' selected':'')+'>'+esc(PROV[p].label)+'</option>'}).join('')+'</select><input type="text" id="pr-model" value="'+esc((c.primary||{}).model||'')+'" placeholder="model name"><button class="btn primary" data-sa="saveprimary">Set as primary</button></div><p class="hint">The primary AI writes your Brief me summary and powers the chat window in the corner.</p><label class="srow" style="flex-direction:column;align-items:stretch;gap:4px"><span class="hint">About you (optional, sent to the AI so the chat knows you)</span><textarea id="about-me" rows="3" placeholder="e.g. I run a small materials startup. I get distracted by new ideas and want help staying on the main task.">'+esc(c.about||'')+'</textarea></label><div><button class="btn" data-sa="saveabout">Save</button></div>';
+    h+='<h3>Primary AI</h3><div class="srow"><select id="pr-prov">'+Object.keys(PROV).map(function(p){return '<option value="'+p+'"'+(p===(c.primary||{}).provider?' selected':'')+'>'+esc(PROV[p].label)+'</option>'}).join('')+'</select><input type="text" id="pr-model" value="'+esc((c.primary||{}).model||'')+'" placeholder="model name"><button class="btn primary" data-sa="saveprimary">Set as primary</button></div><p class="hint">The primary AI writes your Brief me summary and powers the chat window in the corner. No API key set? R&amp;D → Analysis steps that need an AI (Synthesize, AI methodologies, extracting a methodology from a paper) will open a Google Doc instead — paste the prompt into any AI, or share the Doc with one that can edit Google Docs directly, write its answer in, then click "Check for answer" back in Atlas.</p><label class="srow" style="flex-direction:column;align-items:stretch;gap:4px"><span class="hint">About you (optional, sent to the AI so the chat knows you)</span><textarea id="about-me" rows="3" placeholder="e.g. I run a small materials startup. I get distracted by new ideas and want help staying on the main task.">'+esc(c.about||'')+'</textarea></label><div><button class="btn" data-sa="saveabout">Save</button></div>';
     h+='<h3>Token limits (yours, not the provider\'s)</h3>';
     Object.keys(PROV).forEach(function(p){var b=(c.budgets||{})[p]||{};h+='<div class="srow"><b>'+esc(PROV[p].label)+'</b><input type="number" min="0" id="bd-'+p+'" value="'+(b.day||0)+'" placeholder="per day"><input type="number" min="0" id="bw-'+p+'" value="'+(b.week||0)+'" placeholder="per week"><span class="hint">tokens per day / per week, 0 = none</span></div>'});
     h+='<div><button class="btn primary" data-sa="savebudget">Save limits</button></div>';
@@ -1303,7 +2141,14 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(a==='savekey'){var v=$('#key-'+p).value.trim();if(!v){toast('Paste the key first');return}
       gs('saveKey',p,v).then(function(k){S.keys=k;$('#key-'+p).value='';toast('Key saved');paintSettings()}).catch(function(x){toast((x&&x.message)||'Could not save the key')})}
     else if(a==='clearkey'){gs('clearKey',p).then(function(k){S.keys=k;toast('Key removed');paintSettings()})}
+    else if(a==='savelabels'){
+      var lk=Object.keys(LBLDEF),nl={};
+      lk.forEach(function(k){var f=$('#lbl-'+k);if(f){var v=f.value.trim();if(v)nl[k]=v}});
+      saveCfg({labels:nl});applyLabels();toast('Names saved');paintSettings();
+    }
+    else if(a==='resetlabels'){saveCfg({labels:{}});applyLabels();toast('Back to the default names');paintSettings()}
     else if(a==='saveprimary'){saveCfg({primary:{provider:$('#pr-prov').value,model:$('#pr-model').value.trim()}});toast('Primary AI set')}
+    else if(a==='setlevel'){saveCfg({level:b.dataset.lv});paintSettings();toast('Usage level: '+LEVELS[b.dataset.lv].label)}
     else if(a==='addfolder'){var fv=$('#fold-in').value.trim();if(!fv){toast('Paste a folder link first');return}gs('addFolder',fv).then(function(l){S.folders=l;toast('Folder added');paintSettings();chatPaint()}).catch(function(x){toast((x&&x.message)||'Could not add that folder')})}
     else if(a==='rmfolder'){gs('removeFolder',b.dataset.f).then(function(l){S.folders=l;toast('Folder removed');paintSettings();chatPaint()})}
     else if(a==='starter'){gs('addStarter').then(function(n){toast(n?('Added '+n+' items'):'Already added');return load(true)}).then(function(){render()}).catch(function(x){toast('Could not add: '+((x&&x.message)||x))})}
@@ -1326,7 +2171,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
 
   /* ---------- chat companion ---------- */
-  var CH={open:false,msgs:[],busy:false,loaded:false,useF:false};
+  var CH={open:false,msgs:[],busy:false,loaded:false,useF:false,useR:false};
   try{CH.open=localStorage.getItem('chat-open')==='1'}catch(e){}
   function chatPaint(){
     var bx=$('#chat-box'),bt=$('#chat-fab');if(!bx)return;
@@ -1340,6 +2185,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     $('#chat-sub').textContent=(PROV[pr.provider]?PROV[pr.provider].label:'No AI set')+(pr.model?' · '+pr.model:'');
     $('#chat-send').disabled=CH.busy;
     var fw=$('#chat-fw');fw.style.display=S.folders.length?'flex':'none';$('#chat-f-on').checked=CH.useF;
+    var rw=$('#chat-rw');if(rw){var hasRepo=Object.keys(S.assets).some(function(k){return S.assets[k].kind==='repo'});rw.style.display=hasRepo?'flex':'none';$('#chat-r-on').checked=CH.useR}
   }
   function chatLoad(){
     if(CH.loaded)return;CH.loaded=true;
@@ -1350,12 +2196,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function chatSend(txt){
     txt=(txt||'').trim();if(!txt||CH.busy)return;
     CH.msgs.push({role:'user',text:txt});CH.busy=true;$('#chat-in').value='';chatPaint();
-    gs('chatSend',txt,CH.useF&&S.folders.length>0).then(function(r){CH.busy=false;if(r&&r.ok)CH.msgs=r.msgs;else{CH.msgs.pop();toast((r&&r.error)||'Chat failed');$('#chat-in').value=txt}chatPaint()}).catch(function(e){CH.busy=false;CH.msgs.pop();$('#chat-in').value=txt;toast('Chat failed: '+((e&&e.message)||e));chatPaint()});
+    gs('chatSend',txt,CH.useF&&S.folders.length>0,CH.useR).then(function(r){CH.busy=false;if(r&&r.ok)CH.msgs=r.msgs;else{CH.msgs.pop();toast((r&&r.error)||'Chat failed');$('#chat-in').value=txt}chatPaint()}).catch(function(e){CH.busy=false;CH.msgs.pop();$('#chat-in').value=txt;toast('Chat failed: '+((e&&e.message)||e));chatPaint()});
   }
   (function(){
     var d=document.createElement('div');
     d.innerHTML='<button class="chat-fab" id="chat-fab" aria-label="Open chat">Chat</button>'+
-      '<div class="chat-box" id="chat-box" style="display:none"><div class="chat-h"><div><b>Assistant</b><div class="sub" id="chat-sub"></div></div><div style="display:flex;gap:6px"><button class="btn" data-ca="clear">Clear</button><button class="btn" data-ca="min">Hide</button></div></div><div class="chat-log" id="chat-log"></div><label id="chat-fw" class="hint" style="display:none;align-items:center;gap:6px;padding:6px 12px;border-top:1px solid var(--line)"><input type="checkbox" id="chat-f-on"> Include my folders (sends file names and the text of a few files to the AI)</label><div class="chat-f"><textarea id="chat-in" rows="2" placeholder="Message… (Enter to send)"></textarea><button class="btn primary" id="chat-send" data-ca="send">Send</button></div></div>';
+      '<div class="chat-box" id="chat-box" style="display:none"><div class="chat-h"><div><b>Assistant</b><div class="sub" id="chat-sub"></div></div><div style="display:flex;gap:6px"><button class="btn" data-ca="clear">Clear</button><button class="btn" data-ca="min">Hide</button></div></div><div class="chat-log" id="chat-log"></div><label id="chat-fw" class="hint" style="display:none;align-items:center;gap:6px;padding:6px 12px;border-top:1px solid var(--line)"><input type="checkbox" id="chat-f-on"> Include my folders (sends file names and the text of a few files to the AI)</label><label id="chat-rw" class="hint" style="display:none;align-items:center;gap:6px;padding:6px 12px;border-top:1px solid var(--line)"><input type="checkbox" id="chat-r-on"> Search my repositories (sends the most relevant passages to the AI)</label><div class="chat-f"><textarea id="chat-in" rows="2" placeholder="Message… (Enter to send)"></textarea><button class="btn primary" id="chat-send" data-ca="send">Send</button></div></div>';
     document.body.appendChild(d);
     d.addEventListener('click',function(e){
       if(e.target.id==='chat-fab'){chatOpen(true);return}
@@ -1365,7 +2211,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       else if(a==='q')chatSend(b.dataset.q);
       else if(a==='clear'){gs('chatClear').then(function(){CH.msgs=[];chatPaint()}).catch(function(){toast('Could not clear')})}
     });
-    d.addEventListener('change',function(e){if(e.target.id==='chat-f-on')CH.useF=e.target.checked});
+    d.addEventListener('change',function(e){if(e.target.id==='chat-f-on')CH.useF=e.target.checked;if(e.target.id==='chat-r-on')CH.useR=e.target.checked});
     d.addEventListener('keydown',function(e){if(e.target.id==='chat-in'&&e.key==='Enter'&&!e.shiftKey){e.preventDefault();chatSend(e.target.value)}});
     if(CH.open)chatLoad();
   })();
@@ -1411,7 +2257,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
         }else h+='<p class="hint">No new tasks suggested.</p>';
       }
       var rel=linkedIds(NT.id).map(function(x){return node(x)}).filter(Boolean);
-      if(rel.length)h+='<h3>Related tasks</h3>'+rel.map(function(r){return '<div class="srow"><span style="flex:1">'+esc(r.isComp?'Competition: '+title(r):pathOf(r).concat([r.title]).join(' › '))+'</span></div>'}).join('')+'<div><button class="btn" data-na2="gomap">Show these on the map</button></div>';
+      if(rel.length)h+='<h3>Related tasks</h3>'+rel.map(function(r){return '<div class="srow"><span style="flex:1">'+esc(r.isComp?'Opportunity: '+title(r):pathOf(r).concat([r.title]).join(' › '))+'</span></div>'}).join('')+'<div><button class="btn" data-na2="gomap">Show these on the map</button></div>';
       h+='<h3>Prefer your own page?</h3><div class="srow"><input type="text" id="nt-link" placeholder="Paste a link to any Doc, section or page"><button class="btn" data-na2="link">Use this link</button></div>';
     }
     el.innerHTML=h+'</div>';
@@ -1552,22 +2398,30 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   },true);
 
   /* ---------- render: main ---------- */
-  var VIEWS=['outline','map','calendar','comps','upcoming','disc','canvas','team','warehouse'];
+  var VIEWS=['outline','map','calendar','disc','canvas','team','warehouse','rd','branding','offline'];
   function render(){
     if(!S.ready)return;
     var a=document.activeElement;
-    if(a&&a.dataset&&a.dataset.k&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA')&&a.value!==a.defaultValue){pendingRender=true;return}
+    var isTextish=a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA')&&a.type!=='checkbox'&&a.type!=='radio'&&a.id!=='q';
+    if(isTextish&&((a.dataset&&a.dataset.k&&a.value!==a.defaultValue)||(!(a.dataset&&a.dataset.k)&&a.value))){pendingRender=true;return}
+    applyLabels();
     if(M.drag&&M.drag.moved)return;
     var fk=a&&a.dataset&&a.dataset.k,ss=a&&a.selectionStart,se=a&&a.selectionEnd;
-    if(S.focus&&S.view==='disc')S.view='outline';
-    counts();gcUI();chrome();
-    var fb=$('#focus-btn');fb.textContent='Focus: '+(S.focus?'on':'off');fb.setAttribute('aria-pressed',S.focus);fb.className='btn'+(S.focus?' primary':'');$('#tab-disc').style.display=S.focus?'none':'';
+    if(S.focus.disc&&S.view==='disc')S.view='outline';
+    if(S.focus.rd&&S.view==='rd')S.view='outline';
+    counts();ticker();sideUp();paintAreaFilter();gcUI();chrome();
+    var fcd=$('#focus-disc'),fcr=$('#focus-rd'),fsum=$('#focus-summary');
+    if(fcd)fcd.checked=!!S.focus.disc;if(fcr)fcr.checked=!!S.focus.rd;
+    if(fsum)fsum.className='btn'+((S.focus.disc||S.focus.rd)?' primary':'');
+    $('#tab-disc').style.display=S.focus.disc?'none':'';
+    var tabRdEl=$('#tab-rd');if(tabRdEl)tabRdEl.style.display=S.focus.rd?'none':'';
     VIEWS.forEach(function(v){var el=$('#tab-'+(v==='comps'?'comps':v));if(el)el.setAttribute('aria-selected',S.view===v)});
     $('#tools').style.display=S.view==='outline'?'':'none';
     $('#f-all').setAttribute('aria-pressed',S.flt==='all');$('#f-active').setAttribute('aria-pressed',S.flt==='active');
     $('#f-over').setAttribute('aria-pressed',S.flt==='overdue');$('#f-hide').setAttribute('aria-pressed',S.hideDone);
     var sy=window.scrollY;
-    var html=S.view==='map'?renderMap():S.view==='calendar'?renderCal():S.view==='comps'?renderComps():S.view==='upcoming'?renderUpcoming():S.view==='disc'?renderDisc():S.view==='team'?renderTeam():S.view==='canvas'?renderCanvas():S.view==='warehouse'?renderWarehouse():renderOutline();
+    var html=S.view==='map'?renderMap():S.view==='calendar'?renderCal():S.view==='disc'?renderDisc():S.view==='team'?renderTeam():S.view==='canvas'?renderCanvas():S.view==='warehouse'?renderWarehouse():S.view==='rd'?renderRD():S.view==='branding'?renderBranding():S.view==='offline'?renderOffline():renderOutline();
+    if(S.bang)html+=bangModal();
     $('#view').innerHTML=html;if(S.view==='canvas'&&typeof cvArrows==='function')cvArrows();
     window.scrollTo(0,sy);
     if(S.focusNew){
@@ -1602,8 +2456,29 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       gs('approveActions',runId,[ix],act==='actok').then(function(){return load(true)}).then(function(){toast(act==='actok'?'Applied':'Rejected');render()}).catch(function(e){toast('Could not apply: '+((e&&e.message)||e))});
       return true;
     }
-    if(act==='lnew'){var lid=newId('l');S.dir[lid]={id:lid,title:'',url:'',account:'',about:'',tag:'',added:today()};S.focusNew='lk:'+lid;render();db.doc('dir/'+lid).set({title:'',url:'',account:'',about:'',tag:'',added:today()}).catch(function(){toast('Could not add')});return true}
+    if(act==='lnew'){var lid=newId('l');S.dir[lid]={id:lid,title:'',url:'',account:'',about:'',tag:'',group:'',added:today()};S.focusNew='lk:'+lid;render();db.doc('dir/'+lid).set({title:'',url:'',account:'',about:'',tag:'',group:'',added:today()}).catch(function(){toast('Could not add')});return true}
     if(act==='ldel'){if(S.delArm===id){delete S.dir[id];S.delArm=null;render();db.doc('dir/'+id).delete().catch(function(){toast('Could not delete')})}else{S.delArm=id;render()}return true}
+    if(act==='costart'){
+      var pid=$('#co-proj').value,email=$('#co-email').value.trim();
+      if(!pid){toast('Pick a project first');return true}
+      if(!email){toast('Type their email address');return true}
+      b.disabled=true;
+      gs('coCreateStart',pid,email).then(function(r){toast('Shared. Send them this Sheet link to join: '+r.sheetId);return load(true)}).then(function(){render()}).catch(function(e){toast('Could not start collab: '+((e&&e.message)||e));b.disabled=false});
+      return true;
+    }
+    if(act==='cojoin'){
+      var link=$('#co-join').value.trim();
+      if(!link){toast('Paste the Sheet link first');return true}
+      b.disabled=true;
+      gs('coCreateJoin',link).then(function(r){toast('Joined "'+r.title+'"');return load(true)}).then(function(){render()}).catch(function(e){toast('Could not join: '+((e&&e.message)||e));b.disabled=false});
+      return true;
+    }
+    if(act==='coleave'){
+      if(S.delArm!=='co:'+id){S.delArm='co:'+id;render();return true}
+      S.delArm=null;
+      gs('coLeave',id).then(function(){return load(true)}).then(function(){toast('Left the shared project');render()}).catch(function(e){toast('Could not leave: '+((e&&e.message)||e))});
+      return true;
+    }
     return false;
   }
   function teamChange(t,act,k,id){
@@ -1615,7 +2490,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(act==='agadmin'){if(t.checked){t.checked=false;S.adminArm=id;render()}else{agWrite(id,{admin:false});render()}return true}
     if(act==='ltag'){dirWrite(id,{tag:t.value});render();return true}
     if(k){
-      var f=k.split(':')[0],ag={agname:'name',agbrief:'brief',agmodel:'model',agsheet:'sheetUrl'},nm={agbd:'budgetDay',agbw:'budgetWeek'},ln={ltitle:'title',lurl:'url',lacct:'account',labout:'about'},o={};
+      var f=k.split(':')[0],ag={agname:'name',agbrief:'brief',agmodel:'model',agsheet:'sheetUrl'},nm={agbd:'budgetDay',agbw:'budgetWeek'},ln={ltitle:'title',lurl:'url',lacct:'account',labout:'about',lgroup:'group'},o={};
       if(ag[f]){o[ag[f]]=f==='agbrief'?t.value:t.value.trim();agWrite(id,o);t.defaultValue=t.value;render();return true}
       if(nm[f]){o[nm[f]]=Math.max(0,+t.value||0);agWrite(id,o);t.defaultValue=t.value;return true}
       if(ln[f]){o[ln[f]]=f==='labout'?t.value:t.value.trim();dirWrite(id,o);t.defaultValue=t.value;render();return true}
@@ -1644,7 +2519,10 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(day&&!e.target.closest('a')){S.selDay=day.dataset.day;render();return}
     var b=e.target.closest('[data-act]');if(!b)return;
     var act=b.dataset.act,id=idOf(b);
-    if(discClick(act,b,id)||teamClick(act,b,id)||whClick(act,b,id)||cvClick(act,b,id))return;
+    if(act==='bangshow'){e.stopPropagation();bangShow(b.dataset.kind,id);return}
+    if(act==='bangclose'){e.stopPropagation();S.bang=null;render();return}
+    if(act==='bangcopy'){e.stopPropagation();var bt=$('#bang-text');if(bt){bt.focus();bt.select();try{document.execCommand('copy')}catch(ex){}if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(bt.value).catch(function(){})}toast('Copied — paste it into your AI');return}
+    if(discClick(act,b,id)||teamClick(act,b,id)||whClick(act,b,id)||cvClick(act,b,id)||rdClick(act,b,id))return;
     if(act==='toggle'){if(kidsOf(id).length){S.collapsed[id]=!S.collapsed[id];persist();render()}}
     else if(act==='add'){addItem(id)}
     else if(act==='addto'){addItem(b.dataset.pid)}
@@ -1660,11 +2538,31 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(act==='concal'){setFields(id,{onCal:S.comps[id].onCal===false});render()}
     else if(act==='cdel'){if(S.delArm===id)removeComp(id);else{S.delArm=id;render()}}
     else if(act==='addcomp'){addComp('','')}
+    else if(act==='oppupdate'){
+      S.oppBusy=id;S.oppHandoff=null;render();
+      gs('oppUpdateDates',id).then(function(r){
+        S.oppBusy=null;
+        if(r&&r.handoff){S.oppHandoff={id:id,docId:r.docId,docUrl:r.docUrl};toast('No AI key set — opened a Doc for you');render();return}
+        if(r&&r.date){setFields(id,{deadline:r.date});toast('Deadline updated to '+r.date);render()}
+        else{toast('Could not find a clear date (got: "'+String((r&&r.raw)||'').slice(0,80)+'"). Set it manually below.');render()}
+      }).catch(function(x){S.oppBusy=null;toast('Could not check: '+((x&&x.message)||x));render()});
+    }
+    else if(act==='oppcheckhandoff'){
+      var hd=S.oppHandoff;if(!hd){return}
+      gs('oppUpdateDatesFinish',hd.id,hd.docId).then(function(r){
+        S.oppHandoff=null;
+        if(r&&r.date){setFields(hd.id,{deadline:r.date});toast('Deadline updated to '+r.date);render()}
+        else{toast('No clear answer yet in the Doc (got: "'+String((r&&r.raw)||'').slice(0,80)+'"). Try again once it\'s filled in, or set it manually.');render()}
+      }).catch(function(x){toast('Could not check: '+((x&&x.message)||x))});
+    }
     else if(act==='rmlink'){toggleLink(id,b.dataset.to);render()}
     else if(act==='showmap'){S.mapSel=id;S.mapProj='';S.view='map';persist();render()}
+    else if(act==='cocreate'){S.coJump=id;S.view='team';persist();render()}
     else if(act==='calprev'){if(--S.calM<0){S.calM=11;S.calY--}render()}
     else if(act==='calnext'){if(++S.calM>11){S.calM=0;S.calY++}render()}
     else if(act==='caltoday'){var n0=new Date();S.calY=n0.getFullYear();S.calM=n0.getMonth();S.selDay=today();render()}
+    else if(act==='calview'){S.calView=b.dataset.v;persist();render()}
+    else if(act==='upflt'){S.upFlt=b.dataset.v;render()}
     else if(act==='caladd'){
       var ti=$('#cal-title'),par=$('#cal-parent').value,txt=ti.value.trim();
       if(!txt){toast('Type a title first');ti.focus();return}
@@ -1678,25 +2576,68 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(act==='map3d'){S.map3d=!S.map3d;persist();render()}
     else if(act==='map3dspin'){M3.spin=!M3.spin;render()}
     else if(act==='mapstart'){S.linkFrom=S.mapSel;render()}
-    else if(act==='mapopen'){var nn=node(S.mapSel);if(nn){if(nn.isComp){S.copen=nn.id;S.view='comps'}else{S.open=nn.id;S.view='outline';var p=nn;while(p.parent&&S.items[p.parent]){p=S.items[p.parent];S.collapsed[p.id]=false}}persist();render()}}
+    else if(act==='mapopen'){var nn=node(S.mapSel);if(nn){if(nn.isComp){S.copen=nn.id;S.view='calendar';S.calView='opps'}else if(nn.kind==='rd'){S.view='rd';S.rdView='overview';S.rdOpen=nn.id}else{S.open=nn.id;S.view='outline';var p=nn;while(p.parent&&S.items[p.parent]){p=S.items[p.parent];S.collapsed[p.id]=false}}persist();render()}}
+    else if(act==='mappin'){
+      var pid2=S.mapSel,ix=S.mapPins.indexOf(pid2);
+      if(ix>-1)S.mapPins.splice(ix,1);else S.mapPins.push(pid2);
+      render();
+    }
+    else if(act==='mappinclear'){S.mapPins=[];render()}
+    else if(act==='mapisolate'){
+      if(S.mapPins.length<1){toast('Pin at least one node first');return}
+      S.mapIso=S.mapPins.slice();M.pos={};M3.pos={};
+      gs('comboGet',S.mapIso).then(function(c){S.combo=c;render()}).catch(function(){S.combo={note:''};render()});
+      render();
+    }
+    else if(act==='mapexitiso'){S.mapIso=null;S.mapPins=[];S.mapIndirect=false;S.combo=null;M.pos={};M3.pos={};render()}
+    else if(act==='mapindirect'){S.mapIndirect=!S.mapIndirect;M.pos={};M3.pos={};render()}
+    else if(act==='combosave'){
+      var note=$('#combo-note').value;
+      gs('comboSave',S.mapIso,note).then(function(){S.combo=S.combo||{};S.combo.note=note;toast('Saved')}).catch(function(e){toast('Could not save: '+((e&&e.message)||e))});
+    }
+    else if(act==='comborun'){
+      var methodId=$('#combo-method').value;
+      if(!methodId){toast('Pick a script first');return}
+      var bundle=(S.mapIso||[]).map(function(nid){var n=node(nid);if(!n)return'';return '- '+title(n)+(n.summary?': '+n.summary:'')+(n.notes?' | notes: '+String(n.notes).slice(0,300):'')+(n.link?' | '+n.link:'')}).join('\n');
+      b.disabled=true;S.comboBusy=true;render();
+      gs('runMethod',methodId,S.mapIso,bundle).then(function(r){
+        S.comboBusy=false;
+        if(r&&r.ok){var merged=($('#combo-note')?$('#combo-note').value:(S.combo&&S.combo.note)||'')+(S.combo&&S.combo.note?'\n\n':'')+r.text;
+          S.combo=S.combo||{};S.combo.note=merged;
+          gs('comboSave',S.mapIso,merged).then(function(){render()});
+        }else{toast((r&&r.error)||'Could not run the script');render()}
+      }).catch(function(e){S.comboBusy=false;toast('Could not run: '+((e&&e.message)||e));render()});
+    }
+    else if(act==='combopromote'){
+      var ptitle=$('#combo-title').value.trim()||'Finding from isolated nodes';
+      var pparent=$('#combo-parent').value,pnotes=(S.combo&&S.combo.note)||($('#combo-note')?$('#combo-note').value:'');
+      gs('promoteCombo',pparent,ptitle,pnotes,S.mapIso||[]).then(function(){toast('Added, linked to all isolated nodes');return load(true)}).then(function(){render()}).catch(function(e){toast('Could not add: '+((e&&e.message)||e))});
+    }
     else if(act==='planmd'){saveFile('plan.md',planMd(),'plan.md saved. Drop it into an Obsidian vault.')}
   });
   view.addEventListener('change',function(e){
     var t=e.target,act=t.dataset.act,k=t.dataset.k,id=idOf(t);
-    if(discChange(t,act,k,id)||whChange(t,act,k,id)||cvChange(t,act,k,id)||teamChange(t,act,k,id))return;
+    if(discChange(t,act,k,id)||whChange(t,act,k,id)||cvChange(t,act,k,id)||teamChange(t,act,k,id)||rdChange(t,act,k,id))return;
     if(act==='done')changeItem(id,{done:t.checked});
     else if(act==='status')changeItem(id,{status:t.value});
     else if(act==='priority'){setFields(id,{priority:t.value});render()}
     else if(act==='owner'){ownerChange(id,t.value)}
     else if(act==='due'){setFields(id,{due:t.value});render()}
+    else if(act==='start'){setFields(id,{start:t.value});render()}
     else if(act==='cstatus'){setFields(id,{status:t.value});render()}
     else if(act==='cdue'){setFields(id,{deadline:t.value});render()}
+    else if(act==='ctype'){setFields(id,{type:t.value});render()}
+    else if(t.id==='opps-toggle'){S.oppsOn=t.checked;render()}
+    else if(t.id==='area-flt-sel'){S.areaFlt=t.value;render()}
     else if(act==='addlink'){if(t.value){toggleLink(id,t.value);render()}}
     else if(act==='mapproj'){S.mapProj=t.value;render()}
+    else if(act==='mapstatus'){S.mapStatus=t.value;render()}
+    else if(act==='maplayer'){S.mapLayer=t.value;render()}
     else if(t.id==='cal-parent'){S.calParent=t.value}
     else if(k){
       var f=k.split(':')[0];
       if(f==='ttl')setFields(id,{title:t.value.trim()});
+      else if(f==='area')setFields(id,{area:t.value.trim()});
       else if(f==='notes')setFields(id,{notes:t.value});
       else if(f==='link')setFields(id,{link:t.value.trim()});
       else if(f==='cname')setFields(id,{name:t.value.trim()});
@@ -1707,7 +2648,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       if(f!=='caltitle'){t.defaultValue=t.value;render()}
     }
   });
-  view.addEventListener('focusout',function(){setTimeout(function(){if(pendingRender){var a=document.activeElement;if(!(a&&a.dataset&&a.dataset.k&&a.value!==a.defaultValue)){pendingRender=false;render()}}},0)});
+  view.addEventListener('focusout',function(){setTimeout(function(){if(pendingRender){var a=document.activeElement;var isTextish=a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA')&&a.type!=='checkbox'&&a.type!=='radio'&&a.id!=='q';var stillEditing=isTextish&&((a.dataset&&a.dataset.k&&a.value!==a.defaultValue)||(!(a.dataset&&a.dataset.k)&&a.value));if(!stillEditing){pendingRender=false;render()}}},0)});
   view.addEventListener('keydown',function(e){
     if(e.key==='Enter'&&e.target.classList.contains('ttl'))e.target.blur();
     if(e.key==='Enter'&&e.target.dataset.enter){var eb=document.querySelector('[data-act="'+e.target.dataset.enter+'"]');if(eb)eb.click()}
@@ -1770,7 +2711,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     return !!n.due&&!n.done&&!!n.parent&&!kidsOf(n.id).length;
   }
   function gcDate(n){return n.isComp?n.deadline:n.due}
-  function gcTitle(n){return n.isComp?'Competition deadline: '+title(n):'['+rootOf(n).title+'] '+n.title}
+  function gcTitle(n){return n.isComp?'Opportunity deadline: '+title(n):'['+rootOf(n).title+'] '+n.title}
   function gcDesc(n){
     var bits=[];
     if(n.isComp){if(n.status)bits.push('Status: '+n.status);if(n.prize)bits.push('Prize: '+n.prize);if(n.fee)bits.push('Fee: '+n.fee);if(isUrl(n.url))bits.push(n.url)}
@@ -1824,7 +2765,18 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     gcUI();
   });
   $('#gc-now').addEventListener('click',gcSyncAll);
-  $('#focus-btn').addEventListener('click',function(){S.focus=!S.focus;if(S.focus&&S.view==='disc')S.view='outline';persist();render();toast(S.focus?'Focus on. Discovery is hidden.':'Focus off')});
+  $('#ticker-wrap').addEventListener('click',function(){S.view='calendar';S.calView='list';persist();render()});
+  $('#side-up-tab').addEventListener('click',function(){S.sideUpOpen=!S.sideUpOpen;persist();sideUp()});
+  $('#side-up-body').addEventListener('click',function(e){
+    var r=e.target.closest('.side-up-row');if(!r)return;
+    var kind=r.dataset.kind,rid=r.dataset.id;
+    if(kind==='c'){S.copen=rid;S.view='calendar';S.calView='opps'}
+    else{S.open=rid;S.view='outline'}
+    persist();render();
+  });
+  document.addEventListener('click',function(e){document.querySelectorAll('details.help[open],details.focusmenu[open]').forEach(function(d){if(!d.contains(e.target))d.removeAttribute('open')})});
+  $('#focus-disc').addEventListener('change',function(e){S.focus.disc=e.target.checked;if(S.focus.disc&&S.view==='disc')S.view='outline';persist();render();toast(S.focus.disc?'Discovery hidden':'Discovery shown')});
+  $('#focus-rd').addEventListener('change',function(e){S.focus.rd=e.target.checked;if(S.focus.rd&&S.view==='rd')S.view='outline';persist();render();toast(S.focus.rd?'R&D hidden':'R&D shown')});
 
   $('#today').textContent=new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   S.selDay=today();
@@ -1839,21 +2791,29 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   db=null;var APPN='Atlas';
   /* ---------- boot ---------- */
   $('#view').innerHTML='<div class="sheet"><div class="empty"><h2>Loading your tracker</h2>One moment.</div></div>';
-  var COLS=['items','comps','disc','agents','runs','dir','notes','cfg','chat','assets','canvas'],cache={},subs={},sig={},inflight=0;COLS.forEach(function(c){cache[c]={};subs[c]=[];sig[c]=''});
+  var COLS=['items','comps','disc','agents','runs','dir','notes','cfg','chat','assets','canvas','rd','an'],cache={},subs={},sig={},inflight=0;COLS.forEach(function(c){cache[c]={};subs[c]=[];sig[c]=''});
   function emit(col){
     var s=JSON.stringify(cache[col]);if(s===sig[col])return;sig[col]=s;
     var docs=Object.keys(cache[col]).map(function(id){return {id:id,data:function(){return JSON.parse(JSON.stringify(cache[col][id]))}}});
     subs[col].forEach(function(f){f({docs:docs})});
   }
   function remote(col,id,fn){inflight++;return fn().then(function(r){inflight--;return r},function(e){inflight--;throw e})}
+  /* Co-Create: items under a shared project root live in an external Sheet, not the local one. */
+  function coShareAt(id){var n=cache.items[id],guard=0;while(n){if(n.coShare)return n.coShare;if(!n.parent)return null;n=cache.items[n.parent];if(guard++>20)return null}return null}
+  function coShareFor(id){var n=cache.items[id];if(!n||!n.parent)return null;return coShareAt(n.parent)}
   db={
     collection:function(col){return {onSnapshot:function(ok){subs[col].push(ok);if(sig[col])ok({docs:[]});emit(col)}}},
     doc:function(path){
       var p=path.split('/'),col=p[0],id=p[1];
       return {
-        set:function(d){cache[col][id]=JSON.parse(JSON.stringify(d));emit(col);return remote(col,id,function(){return gs('saveDoc',col,id,JSON.stringify(cache[col][id]))})},
-        update:function(d){cache[col][id]=Object.assign(cache[col][id]||{},JSON.parse(JSON.stringify(d)));emit(col);return remote(col,id,function(){return gs('saveDoc',col,id,JSON.stringify(cache[col][id]))})},
-        delete:function(){delete cache[col][id];emit(col);return remote(col,id,function(){return gs('deleteDoc',col,id)})}
+        set:function(d){cache[col][id]=JSON.parse(JSON.stringify(d));emit(col);
+          var cs=(col==='items'&&d.parent)?coShareAt(d.parent):null;
+          return remote(col,id,function(){return cs?gs('coSaveDoc',cs.sheetId,id,JSON.stringify(cache[col][id])):gs('saveDoc',col,id,JSON.stringify(cache[col][id]))})},
+        update:function(d){cache[col][id]=Object.assign(cache[col][id]||{},JSON.parse(JSON.stringify(d)));emit(col);
+          var cs=col==='items'?coShareFor(id):null;
+          return remote(col,id,function(){return cs?gs('coSaveDoc',cs.sheetId,id,JSON.stringify(cache[col][id])):gs('saveDoc',col,id,JSON.stringify(cache[col][id]))})},
+        delete:function(){var cs=col==='items'?coShareFor(id):null;delete cache[col][id];emit(col);
+          return remote(col,id,function(){return cs?gs('coDeleteDoc',cs.sheetId,id):gs('deleteDoc',col,id)})}
       };
     }
   };
@@ -1867,11 +2827,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   db.collection('items').onSnapshot(function(snap){rebuild(snap.docs);S.ready=true;render()});
   db.collection('comps').onSnapshot(function(snap){rebuildComps(snap.docs);render()});
   db.collection('disc').onSnapshot(function(snap){rebuildDisc(snap.docs);render()});
-  ['agents','runs','dir','notes','cfg','assets','canvas'].forEach(function(c){db.collection(c).onSnapshot(function(snap){rebuildGen(c,snap.docs);render()})});
+  ['agents','runs','dir','notes','cfg','assets','canvas','rd','an'].forEach(function(c){db.collection(c).onSnapshot(function(snap){rebuildGen(c,snap.docs);render()})});
   gs('keyStatus').then(function(k){S.keys=k;render()}).catch(function(){});
   load(true).then(function(){
     var lastErr=0;
-    setInterval(function(){if(!document.hidden&&!inflight)load(false).catch(function(){})},20000);
+    if(navigator.onLine!==false&&S.offQueue.length)offSyncNow();
+    setInterval(function(){if(!document.hidden&&!inflight)load(false).then(function(){if(navigator.onLine!==false&&S.offQueue.length&&!S.offSyncing)offSyncNow()}).catch(function(){})},20000);
     if(sigEmpty())return;
   }).catch(function(e){$('#view').innerHTML='<div class="sheet"><div class="empty"><h2>Could not load the data</h2>'+esc((e&&e.message)||e)+'</div></div>'});
   function sigEmpty(){return false}
