@@ -74,6 +74,34 @@ a{color:var(--accent)}
 .side-up-when{color:var(--muted);font-size:11px;flex:none}
 .side-up-empty{padding:10px;color:var(--muted)}
 @media (max-width:760px){.side-up{display:none}}
+.tm-board{display:flex;gap:12px;overflow-x:auto;padding-bottom:8px;align-items:flex-start}
+.tm-col{flex:0 0 300px;min-width:300px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px}
+.tm-col h3{margin:0 0 8px;font-size:13px;display:flex;align-items:center;gap:6px;color:var(--ink)}
+.tm-col h3 small{color:var(--muted);font-weight:400}
+.tm-col-body{display:flex;flex-direction:column;gap:8px;max-height:72vh;overflow-y:auto}
+.tm-empty{color:var(--muted);font-size:12px;padding:8px 2px}
+.tm-container{border:1px dashed var(--line);border-radius:8px;padding:7px}
+.tm-container-head{margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.tm-container-body{display:flex;flex-direction:column;gap:6px;padding-left:4px}
+.tm-container .tm-container{margin-top:2px}
+.tm-card{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:8px}
+.tm-card-top{display:flex;align-items:flex-start;gap:7px}
+.tm-card-title{flex:1;text-align:left;background:none;border:none;padding:0;margin:0;font-size:13px;color:var(--ink);cursor:pointer;line-height:1.3}
+.tm-card-title:hover{text-decoration:underline}
+.tm-container-head .tm-card-title{font-weight:600}
+.tm-card-meta{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:6px 0;font-size:11px;color:var(--muted)}
+.tm-proj{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.tm-due{flex:none;padding:1px 6px;border-radius:999px;background:var(--grey-bg);color:var(--grey-fg)}
+.tm-due.over{background:var(--red-bg);color:var(--red-fg)}
+.tm-card select.pill{width:100%;margin-bottom:5px}
+.tm-movemenu{position:relative;display:inline-block;flex:none}
+.tm-movemenu summary{list-style:none;cursor:pointer}
+.tm-movemenu summary::-webkit-details-marker{display:none}
+.tm-movebtn{display:flex;align-items:center;justify-content:center;width:18px;height:18px;color:var(--muted);border-radius:4px}
+.tm-movebtn:hover{background:var(--surface);color:var(--ink)}
+.tm-movepop{position:absolute;z-index:40;top:22px;right:0;min-width:160px;max-width:240px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:4px;box-shadow:0 6px 20px rgba(0,0,0,.2);display:flex;flex-direction:column}
+.tm-moveopt{text-align:left;background:none;border:none;padding:6px 8px;border-radius:5px;font-size:12px;color:var(--ink);cursor:pointer}
+.tm-moveopt:hover{background:var(--bg)}
 .ticker-wrap{margin-top:12px;max-width:1120px;margin-left:auto;margin-right:auto;overflow:hidden;white-space:nowrap;border-top:1px solid rgba(255,255,255,.15);cursor:pointer}
 .ticker-wrap.empty{opacity:.6}
 .ticker{display:inline-block;padding:7px 0;animation:tickscroll 38s linear infinite}
@@ -153,11 +181,40 @@ input.date.soon{color:var(--amber-fg);font-weight:600}
 
 .detail{display:grid;grid-template-columns:2fr 1fr;gap:14px;padding:12px 16px 16px;border-bottom:1px solid var(--line);background:var(--hover)}
 .detail label{display:flex;flex-direction:column;gap:4px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.sec{display:flex;flex-direction:column;gap:4px}
+.sec-head{display:flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:none;border:none;padding:2px 0;margin:0;cursor:pointer;text-align:left;width:100%;font-family:inherit}
+.sec-head:hover{color:var(--ink)}
+.sec-arrow{width:10px;flex:none;font-size:9px;line-height:1;color:var(--muted)}
+.sec-body{display:flex;flex-direction:column;gap:6px}
 .detail textarea,.detail input[type=text]{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 10px;font-size:13.5px;text-transform:none;letter-spacing:0;color:var(--ink);width:100%}
 .detail textarea{min-height:84px;resize:vertical}
 .d-side{display:flex;flex-direction:column;gap:10px;min-width:0}
 .d-meta{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);display:flex;flex-direction:column;gap:2px}
 .d-act{grid-column:1/-1;display:flex;gap:8px;flex-wrap:wrap}
+.cl-wrap{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.cl-head{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink)}
+.cl-rows{display:flex;flex-direction:column;gap:4px}
+.cl-row{display:flex;align-items:center;gap:8px}
+.cl-text{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:6px 8px;font-size:13px;color:var(--ink)}
+.cl-done{text-decoration:line-through;color:var(--muted)}
+.cl-foot{display:flex}
+.parts-wrap{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--line);padding-top:10px}
+.parts-head{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink)}
+.parts-rows{display:flex;flex-direction:column;gap:6px}
+.part-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.part-row input[type=text],.part-row input[type=number]{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 7px;font-size:12.5px;color:var(--ink)}
+.part-name{flex:1 1 140px;min-width:100px}
+.part-qty{width:52px}
+.part-price{width:84px}
+.part-link{border:1px solid var(--line);background:var(--bg);border-radius:6px;padding:5px 7px;font-size:12px;color:var(--ink);max-width:150px}
+.part-name-linked,.part-price-linked{font-size:12.5px;color:var(--ink);padding:5px 2px}
+.part-name-linked{flex:1 1 140px;min-width:100px;font-weight:600}
+.part-price-linked{width:84px;color:var(--muted)}
+.parts-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.parts-total{font-size:12px;color:var(--muted)}
+.parts-total b{color:var(--ink);font-size:13px}
+.acct-group{margin-bottom:14px}
+.acct-part-line{display:flex;gap:8px;flex-wrap:wrap;padding-left:8px;font-family:var(--font-mono)}
 
 .add-row{display:flex;padding:8px 12px}
 .add-row .btn{border-style:dashed;color:var(--muted)}
@@ -265,6 +322,8 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 .ev.t{background:var(--accent-soft);color:var(--accent)}
 .ev.o{background:var(--red-bg);color:var(--red-fg)}
 .ev.c{background:var(--amber-bg);color:var(--amber-fg)}
+.ev.h{background:var(--purple-bg,#efe3fb);color:var(--purple-fg,#6a3fb5);font-weight:600}
+.cal-day.hol{background:var(--purple-bg,#efe3fb22)}
 .ev.d{text-decoration:line-through;opacity:.6}
 .ev-more{font-size:11px;color:var(--muted)}
 .daypanel{margin-top:12px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
@@ -342,7 +401,13 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
 @media (max-width:720px){.lrow{grid-template-columns:1fr}}
 
 .cv{position:relative;height:min(74vh,760px);overflow:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);background-image:radial-gradient(var(--line) 1px,transparent 1px);background-size:22px 22px}
+.cv.cv-max{height:min(92vh,1800px)}
 .cv-surface{position:relative;width:3200px;height:2200px}.cv-svg{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;color:var(--muted)}
+.cv-surface.cv-compact .cvn{width:130px}
+.cv-surface.cv-compact .cvx{width:160px}
+.cv-surface.cv-compact .cv-h{padding:2px 4px;font-size:9px}
+.cv-surface.cv-compact .cvn textarea{font-size:11px;padding:4px 6px}
+.cv-surface.cv-compact .cv-b{font-size:11px;padding:4px 6px}
 .cv-empty{position:absolute;left:60px;top:60px;max-width:360px;color:var(--muted)}
 .cvn{position:absolute;width:210px;border:1px solid rgba(0,0,0,.12);border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.12);color:#16211b}
 .cvn textarea{width:100%;border:0;background:transparent;resize:none;padding:6px 8px;color:inherit;font:inherit}
@@ -381,11 +446,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       <button class="tab" role="tab" id="tab-canvas" aria-selected="false" data-view="canvas">Canvas</button>
       <button class="tab" role="tab" id="tab-team" aria-selected="false" data-view="team">Team</button>
       <button class="tab" role="tab" id="tab-warehouse" aria-selected="false" data-view="warehouse">Warehouse</button>
+      <button class="tab" role="tab" id="tab-accounts" aria-selected="false" data-view="accounts">Accounts</button>
       <button class="tab" role="tab" id="tab-rd" aria-selected="false" data-view="rd">R&amp;D</button>
       <button class="tab soon" role="tab" id="tab-branding" aria-selected="false" data-view="branding" title="Coming soon">Branding</button>
       <button class="tab" role="tab" id="tab-offline" aria-selected="false" data-view="offline">Offline</button>
     </div>
-    <div class="tools" id="gc"><button class="btn" id="pause-btn" aria-pressed="false" title="Master switch: pauses every agent at once">Agents: live</button><button class="btn" id="bell-btn">Alerts</button><button class="btn" id="set-btn">Settings</button><details class="focusmenu" id="focus-menu" title="Hide a tab and stay on the main work"><summary class="btn" id="focus-summary">Focus</summary><div class="help-pop" style="width:220px"><label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer"><input type="checkbox" id="focus-disc"> Hide Discovery (Ideas)</label><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="focus-rd"> Hide R&amp;D</label></div></details><span class="hint" id="gc-msg"></span><button class="btn" id="gc-now" hidden>Sync now</button><button class="btn" id="gc-btn" aria-pressed="false">Google Calendar: off</button></div>
+    <div class="tools" id="gc"><button class="btn" id="pause-btn" aria-pressed="false" title="Master switch: pauses every agent at once">Agents: live</button><button class="btn" id="bell-btn">Alerts</button><button class="btn" id="set-btn">Settings</button><details class="focusmenu" id="focus-menu" title="Hide a tab and stay on the main work"><summary class="btn" id="focus-summary">Focus</summary><div class="help-pop" style="width:220px"><label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer"><input type="checkbox" id="focus-disc"> Hide Discovery (Ideas)</label><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" id="focus-rd"> Hide R&amp;D</label></div></details><span class="hint" id="gc-msg"></span><button class="btn" id="gc-now" hidden>Sync now</button><button class="btn" id="gc-btn" aria-pressed="false">Google Calendar: off</button><button class="btn" id="theme-btn" title="Cycle Auto / Light / Dark — Auto follows your system setting">Theme: Auto</button></div>
     <div class="tools" id="tools">
       <input class="search" id="q" type="search" placeholder="Search tasks" aria-label="Search tasks">
       <div class="chips">
@@ -395,6 +461,9 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
         <button class="chip-b" id="f-hide" aria-pressed="false" data-hide="1">Hide done</button>
         <select id="area-flt-sel" aria-label="Filter by project area" style="margin-left:4px"></select>
         <datalist id="area-list"></datalist>
+        <span style="flex:1"></span>
+        <button class="chip-b" id="ov-list" data-ov="list" aria-pressed="true">List</button>
+        <button class="chip-b" id="ov-board" data-ov="board" aria-pressed="false" title="Board view — one column per project, with each project's containers (like a milestone) nested inside, and its tasks inside those">Board</button>
       </div>
     </div>
   </div>
@@ -416,16 +485,24 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   var now0=new Date();
   var S={items:{},kids:{},comps:{},view:'outline',open:null,copen:null,q:'',flt:'all',hideDone:false,collapsed:{},ready:false,delArm:null,focusNew:null,
          calY:now0.getFullYear(),calM:now0.getMonth(),calView:'month',upFlt:'all',oppsOn:true,oppBusy:null,oppHandoff:null,areaFlt:'',repoSumBusy:null,repoHandoff:null,bang:null,sideUpOpen:true,sync:false,syncState:'',syncMsg:'',selDay:null,calParent:'',mapProj:'',mapSub:true,mapSel:null,linkFrom:null,disc:{},dopen:null,focus:{disc:false,rd:false},map3d:true,
-         mapLayer:'tasks',mapPins:[],mapIso:null,mapIndirect:false,combo:null,comboBusy:false};
+         mapLayer:'tasks',mapPins:[],mapIso:null,mapIndirect:false,combo:null,comboBusy:false,theme:'auto',outlineView:'list',partBusy:{},partHandoff:{},secOpen:{},cvCompact:false,cvMax:false,holidays:{},holImportBusy:false,holYear:new Date().getFullYear()};
   var db=null,pendingRender=false,chains={},toastT=null;
   var M={pos:{},view:{x:-450,y:-300,w:900,h:600},drag:null};
   var $=function(s){return document.querySelector(s)};
 
   try{var sv=JSON.parse(localStorage.getItem('atlas-ui')||'{}');if(sv.sync)S.sync=true;
-    if(sv.collapsed)S.collapsed=sv.collapsed; if(sv.view)S.view=sv.view; if(sv.hideDone)S.hideDone=true;if(sv.focus){S.focus=typeof sv.focus==='boolean'?{disc:sv.focus,rd:false}:Object.assign({disc:false,rd:false},sv.focus)}if(sv.map3d===false)S.map3d=false;if(sv.calView)S.calView=sv.calView;if(sv.sideUpOpen===false)S.sideUpOpen=false;
+    if(sv.collapsed)S.collapsed=sv.collapsed; if(sv.secOpen)S.secOpen=sv.secOpen; if(sv.cvCompact)S.cvCompact=true; if(sv.cvMax)S.cvMax=true; if(sv.view)S.view=sv.view; if(sv.hideDone)S.hideDone=true;if(sv.focus){S.focus=typeof sv.focus==='boolean'?{disc:sv.focus,rd:false}:Object.assign({disc:false,rd:false},sv.focus)}if(sv.map3d===false)S.map3d=false;if(sv.calView)S.calView=sv.calView;if(sv.sideUpOpen===false)S.sideUpOpen=false;if(sv.theme)S.theme=sv.theme;if(sv.outlineView)S.outlineView=sv.outlineView;
     if(S.view==='upcoming'){S.view='calendar';S.calView='list'}
-    if(S.view==='comps'){S.view='calendar';S.calView='opps'}}catch(e){}
-  function persist(){try{localStorage.setItem('atlas-ui',JSON.stringify({collapsed:S.collapsed,view:S.view,hideDone:S.hideDone,sync:S.sync,focus:S.focus,map3d:S.map3d,calView:S.calView,sideUpOpen:S.sideUpOpen}))}catch(e){}}
+    if(S.view==='comps'){S.view='calendar';S.calView='opps'}
+    if(S.view==='taskmgr'){S.view='outline';S.outlineView='board'}}catch(e){}
+  function persist(){try{localStorage.setItem('atlas-ui',JSON.stringify({collapsed:S.collapsed,secOpen:S.secOpen,cvCompact:S.cvCompact,cvMax:S.cvMax,view:S.view,hideDone:S.hideDone,sync:S.sync,focus:S.focus,map3d:S.map3d,calView:S.calView,sideUpOpen:S.sideUpOpen,theme:S.theme,outlineView:S.outlineView}))}catch(e){}}
+  function applyTheme(){
+    var t=S.theme||'auto';
+    if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);
+    else document.documentElement.removeAttribute('data-theme');
+    var btn=$('#theme-btn');if(btn)btn.textContent='Theme: '+(t==='auto'?'Auto':t==='light'?'Light':'Dark');
+  }
+  applyTheme();
   offLoad();
   window.addEventListener('online',function(){offSyncNow()});
 
@@ -435,8 +512,22 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
      already has — or the user themselves — can do the same job a direct API call would have done. Mirrors the system
      prompts Code.gs sends for the same features, so the manual result should land close to what the API would give. */
   var REPO_SUMMARY_PROMPT_='Write a thorough, readable research note in your own words about the source below, for a personal research repository — think of it as the note I would write for my own future memory. Cover: what the source is, its core method or argument, the key findings or claims, and anything useful to my own project work. Plain prose with short paragraphs, not a bullet list, unless the source itself is structured as one. Do not invent facts that are not actually in the text below. Reply with ONLY the note itself.';
-  var METHOD_EXTRACT_PROMPT_='Extract ONE reusable analysis method from the text below, for my personal research or project tool. Reply with ONLY JSON: {"name":"short name","instructions":"clear, reusable step-by-step instructions for applying this method to a new dataset, as a simplified or flow-chart style description, not prose. Include the formula if the method has one."}. Do not invent a method that is not actually described in the text.';
+  var METHOD_EXTRACT_PROMPT_='Extract the underlying LOGICAL PATTERN from the text below — not a restatement of its domain-specific steps with the nouns swapped, but the reusable structure underneath, the way a person strips a method down to its logic so they can apply it somewhere completely unrelated. Every domain-specific term in the source should become the general role it plays in the pattern instead — e.g. not "protein backbone" but "candidate structure," not "wet-lab test" but "cheap real-world validation step." Reply with ONLY JSON: {"name":"short name for the PATTERN itself, not the domain it came from","instructions":"the abstracted, domain-neutral steps of the pattern, as a flow-chart style list of imperative steps, not prose. Include the underlying formula or decision rule only if the text actually gives one, generalized the same way."}. Do not invent structure that is not actually implied by the text — generalize what is really there, do not add new logic.';
   var TRAINABLE_PROMPT_='Write a single, complete, self-contained Python 3 script that implements the method described below as a TRAINABLE supervised learning model (a small neural network trained with gradient descent, or another real supervised technique if that is what the text actually describes) — for someone with a plain Python install plus numpy, and scikit-learn only if genuinely useful. No GPU, no deep learning framework, no internet access, no other dependencies.\nRequirements: a command-line interface (python script.py train.csv [--epochs N] [--resume weights.json] [--evaluate other.csv] [--out weights.json]); read a CSV with a header row, treating the LAST numeric column as the label/target unless the text clearly says otherwise; a model structure drawn from the method actually described, never an invented unrelated architecture; a real loss function, printing loss each epoch; save trained weights to JSON and support resuming from one via --resume; --evaluate loads saved weights and reports metrics on a second CSV without retraining. Reply with ONLY a single python code block containing the whole script.';
+  function readFileAsText_(f){return new Promise(function(res){var fr=new FileReader();fr.onload=function(){res(String(fr.result||''))};fr.onerror=function(){res('')};fr.readAsText(f)})}
+  function readFileAsBase64_(f){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){var s=String(fr.result||'');var i=s.indexOf(',');res(i>=0?s.slice(i+1):s)};fr.onerror=function(){rej(new Error('Could not read that file'))};fr.readAsDataURL(f)})}
+  function resolveSourceText_(pastedText,fileInput,link){
+    pastedText=(pastedText||'').trim();link=(link||'').trim();
+    if(pastedText)return Promise.resolve({text:pastedText,source:'pasted'});
+    var f=fileInput&&fileInput.files&&fileInput.files[0];
+    if(f){
+      var isPdf=/\.pdf$/i.test(f.name);
+      if(isPdf)return readFileAsBase64_(f).then(function(b64){return gs('pdfExtractText',b64,f.name)}).then(function(r){return {text:r.text,source:'file',fileTitle:r.title}});
+      return readFileAsText_(f).then(function(t){if(!t.trim())throw new Error('That file looks empty.');return {text:t,source:'file',fileTitle:f.name}});
+    }
+    if(link)return gs('extractFetchLink',link).then(function(r){return {text:r.text,source:'link',fileTitle:r.title}});
+    return Promise.reject(new Error('Paste the method text, upload a paper, or add a link first'));
+  }
   function bang(kind,id){return '<button class="ib bang-ib" data-act="bangshow" data-kind="'+kind+'"'+(id?' data-id="'+id+'"':'')+' title="No API key? Get a ready prompt to paste into any AI instead" aria-label="Copy a prompt for this — no API key needed">!</button>'}
   function bangModal(){
     var b=S.bang;if(!b)return '';
@@ -459,16 +550,22 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       return;
     }
     if(kind==='opextract'){
-      var xtext=($('#opx-text')&&$('#opx-text').value.trim())||'',xlink=($('#opx-link')&&$('#opx-link').value.trim())||'',xkind=$('#opx-kind')?$('#opx-kind').value:'instr';
-      if(!xtext){toast('Paste the method text first');return}
-      S.bang={title:xkind==='train'?'Prompt: build a trainable model':'Prompt: extract a methodology',link:xlink,prompt:(xkind==='train'?TRAINABLE_PROMPT_:METHOD_EXTRACT_PROMPT_)+'\n\n'+xtext};
-      render();return;
+      var xtext=($('#opx-text')&&$('#opx-text').value.trim())||'',xlink=($('#opx-link')&&$('#opx-link').value.trim())||'',xkind=$('#opx-kind')?$('#opx-kind').value:'instr',xfile=$('#opx-file');
+      toast('Getting the text…');
+      resolveSourceText_(xtext,xfile,xlink).then(function(r){
+        S.bang={title:xkind==='train'?'Prompt: build a trainable model':'Prompt: extract a methodology',link:xlink,prompt:(xkind==='train'?TRAINABLE_PROMPT_:METHOD_EXTRACT_PROMPT_)+'\n\n'+r.text};
+        render();
+      }).catch(function(e){toast((e&&e.message)||String(e))});
+      return;
     }
     if(kind==='sxtract'){
-      var sxtext=($('#sx-text')&&$('#sx-text').value.trim())||'',sxlink=($('#sx-link')&&$('#sx-link').value.trim())||'';
-      if(!sxtext){toast('Paste the method text first');return}
-      S.bang={title:'Prompt: extract a script',link:sxlink,prompt:METHOD_EXTRACT_PROMPT_+'\n\n'+sxtext};
-      render();return;
+      var sxtext=($('#sx-text')&&$('#sx-text').value.trim())||'',sxlink=($('#sx-link')&&$('#sx-link').value.trim())||'',sxfile=$('#sx-file');
+      toast('Getting the text…');
+      resolveSourceText_(sxtext,sxfile,sxlink).then(function(r){
+        S.bang={title:'Prompt: extract a script',link:sxlink,prompt:METHOD_EXTRACT_PROMPT_+'\n\n'+r.text};
+        render();
+      }).catch(function(e){toast((e&&e.message)||String(e))});
+      return;
     }
   }
   function pad(n){return (n<10?'0':'')+n}
@@ -638,13 +735,14 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     Object.keys(S.comps).forEach(function(k){if(k!==exclude)out.push([k,'Opportunity: '+title(S.comps[k])])});
     return out;
   }
-  function linkBox(n){
+  function linkBoxBody(n){
     var ids=linkedIds(n.id);
-    var h='<label>Linked to<span class="linkbox"><select data-act="addlink" aria-label="Link to another item"><option value="">Link to another step or competition</option>'+
+    var h='<span class="linkbox"><select data-act="addlink" aria-label="Link to another item"><option value="">Link to another step or competition</option>'+
       linkOptions(n.id).map(function(o){return '<option value="'+o[0]+'">'+esc(o[1])+'</option>'}).join('')+'</select>';
     if(ids.length)h+='<span class="lchips">'+ids.map(function(x){var m=node(x);return '<span class="lchip">'+esc(title(m))+'<button data-act="rmlink" data-to="'+x+'" aria-label="Remove link">×</button></span>'}).join('')+'</span>';
-    return h+'</span></label>';
+    return h+'</span>';
   }
+  function linkBox(n){return '<label>Linked to'+linkBoxBody(n)+'</label>'}
 
   /* ---------- filters ---------- */
   function selfMatch(n){
@@ -811,14 +909,123 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     h+='<div class="c-act"><button class="ib" data-act="add" title="Add sub-item" aria-label="Add sub-item">'+I.plus+'</button><button class="ib" data-act="detail" title="Details" aria-label="Details">'+I.dots+'</button></div>';
     return h+'</div>';
   }
+  /* ---------- parts & cost (a simple per-task BOM with a live, tick-to-include total) ---------- */
+  function money(v){return '₹'+(Math.round((v||0)*100)/100).toLocaleString('en-IN')}
+  function rootOf(n){var r=n;while(r&&r.parent&&S.items[r.parent])r=S.items[r.parent];return r}
+  function partEff(p){
+    var a=p.assetId&&S.assets[p.assetId];
+    return a?{name:a.name,price:(a.price!=null&&a.price!=='')?+a.price:null,linked:a}:{name:p.name,price:p.price,linked:null};
+  }
+  function partsTotal(n){return (n.parts||[]).reduce(function(s,p){var e=partEff(p);return s+(p.checked?(+e.price||0)*(+(p.qty!=null?p.qty:1)||0):0)},0)}
+  function partSet(taskId,partId,patch){
+    var n=S.items[taskId];if(!n)return;
+    var parts=(n.parts||[]).map(function(p){return p.id===partId?Object.assign({},p,patch):p});
+    setFields(taskId,{parts:parts});
+  }
+  function partAdd(taskId){
+    var n=S.items[taskId];if(!n)return;
+    var parts=(n.parts||[]).concat([{id:newId('p'),name:'',qty:1,price:null,checked:true,priceSrc:'',assetId:''}]);
+    setFields(taskId,{parts:parts});render();
+  }
+  function partDel(taskId,partId){
+    var n=S.items[taskId];if(!n)return;
+    setFields(taskId,{parts:(n.parts||[]).filter(function(p){return p.id!==partId})});
+    delete S.partBusy[partId];delete S.partHandoff[partId];
+    render();
+  }
+  function assetPartOpts(cur){
+    var as=Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.kind==='physical'}).sort(function(a,b){return (a.name||'').toLowerCase()<(b.name||'').toLowerCase()?-1:1});
+    return '<option value=""'+(cur?'':' selected')+'>Free text</option>'+as.map(function(a){return '<option value="'+a.id+'"'+(a.id===cur?' selected':'')+'>'+esc(a.name||'Unnamed')+(a.price!=null&&a.price!==''?' — '+money(+a.price):'')+'</option>'}).join('');
+  }
+  function assetBadge(a){
+    if(!a)return '';
+    var sup=a.supplier&&S.assets[a.supplier]?S.assets[a.supplier].name:'';
+    return '<div class="hint" style="flex-basis:100%;padding-left:4px">Linked to Warehouse'+(sup?' · Supplier: '+esc(sup):'')+' · '+(a.need==='Need to buy'?'<b style="color:var(--red-fg)">need to buy</b>':esc(a.need||'Have'))+(a.location?' · at '+esc(a.location):'')+'</div>';
+  }
+  function partsHTML(n){
+    var parts=n.parts||[];
+    var rows=parts.map(function(p){
+      var hd=S.partHandoff[p.id];
+      var linked=p.assetId&&S.assets[p.assetId];
+      var eff=partEff(p);
+      return '<div class="part-row">'+
+          '<input type="checkbox" data-act="partchk" data-pid="'+p.id+'"'+(p.checked?' checked':'')+' aria-label="Include in total">'+
+          '<select class="part-link" data-act="partasset" data-pid="'+p.id+'" aria-label="Link to a Warehouse physical asset">'+assetPartOpts(p.assetId)+'</select>'+
+          (linked
+            ? '<span class="part-name part-name-linked" title="Linked to a Warehouse physical asset — edit name/price there">'+esc(linked.name||'Unnamed')+'</span>'
+            : '<input type="text" class="part-name" data-k="partname:'+p.id+'" value="'+esc(p.name||'')+'" placeholder="Part name">')+
+          '<input type="number" class="part-qty" data-k="partqty:'+p.id+'" value="'+(p.qty!=null?p.qty:1)+'" min="0" step="1" aria-label="Qty">'+
+          (linked
+            ? '<span class="part-price part-price-linked">'+(eff.price!=null?money(eff.price):'—')+'</span>'
+            : '<input type="number" class="part-price" data-k="partprice:'+p.id+'" value="'+(p.price!=null?p.price:'')+'" min="0" step="0.01" placeholder="Price ₹" aria-label="Price in rupees">')+
+          (linked?'':'<button class="btn" data-act="partfetch" data-pid="'+p.id+'"'+(S.partBusy[p.id]?' disabled':'')+'>'+(S.partBusy[p.id]?'Fetching…':'Fetch price')+'</button>')+
+          (!linked&&p.priceSrc?'<a class="chip" href="'+esc(p.priceSrc)+'" target="_blank" rel="noopener" title="Where this estimate came from">source</a>':'')+
+          (!linked?'<button class="btn" data-act="partpromote" data-pid="'+p.id+'" title="Save this as a Warehouse physical asset, so its price and supplier can be shared and linked from any task">Save as asset</button>':'')+
+          '<button class="ib" data-act="partdel" data-pid="'+p.id+'" aria-label="Remove part">×</button>'+
+        '</div>'+
+        (linked?assetBadge(linked):'')+
+        (hd?'<div class="wc" style="flex-basis:100%"><p class="hint">No AI key is set, so Atlas opened a Doc with a ready prompt instead of calling an API. Paste it into any AI with web search, write the price under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(hd.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="partfetchhandoff" data-pid="'+p.id+'">Check for answer</button></div></div>':'');
+    }).join('');
+    return '<div class="parts-wrap" style="grid-column:1/-1">'+
+      '<div class="parts-head"><b>Parts &amp; cost</b>'+help('A running BOM for this task. Tick whichever parts apply to what you’re costing right now — the parts this build shares with others, plus its own — and the total below updates live as you tick. Link a part to a Warehouse physical asset to pull its price, supplier and stock status from one shared record that stays in sync everywhere it\'s used; otherwise type a name and price freely, or estimate with "Fetch price" — an AI web search for a current India price, not a guaranteed lowest price, always check the source link before trusting it.')+'</div>'+
+      '<div class="parts-rows">'+(rows||'<div class="tm-empty">No parts yet</div>')+'</div>'+
+      '<div class="parts-foot"><button class="btn" data-act="partadd">+ Add part</button><span class="parts-total">Total (ticked): <b>'+money(partsTotal(n))+'</b></span></div>'+
+    '</div>';
+  }
+  function clSet(taskId,itemId,patch){
+    var n=S.items[taskId];if(!n)return;
+    var list=(n.checklist||[]).map(function(c){return c.id===itemId?Object.assign({},c,patch):c});
+    setFields(taskId,{checklist:list});
+  }
+  function clAdd(taskId){
+    var n=S.items[taskId];if(!n)return;
+    var list=(n.checklist||[]).concat([{id:newId('c'),text:'',done:false}]);
+    setFields(taskId,{checklist:list});render();
+  }
+  function clDel(taskId,itemId){
+    var n=S.items[taskId];if(!n)return;
+    setFields(taskId,{checklist:(n.checklist||[]).filter(function(c){return c.id!==itemId})});
+    render();
+  }
+  function checklistHTML(n){
+    var list=n.checklist||[];
+    var done=list.filter(function(c){return c.done}).length;
+    var rows=list.map(function(c){
+      return '<div class="cl-row">'+
+          '<input type="checkbox" data-act="clchk" data-cid="'+c.id+'"'+(c.done?' checked':'')+' aria-label="Done">'+
+          '<input type="text" class="cl-text'+(c.done?' cl-done':'')+'" data-k="clname:'+c.id+'" value="'+esc(c.text||'')+'" placeholder="Quick to-do">'+
+          '<button class="ib" data-act="cldel" data-cid="'+c.id+'" aria-label="Remove item">×</button>'+
+        '</div>';
+    }).join('');
+    return '<div class="cl-wrap" style="grid-column:1/-1">'+
+      '<div class="cl-head"><b>To-do</b>'+help('A lightweight checklist for a task\'s small steps that don\'t need their own Outline row with a status, priority and due date — just text and a checkbox. For anything that\'s really its own piece of work, add it as a proper sub-task instead.')+(list.length?'<span class="hint" style="margin-left:auto">'+done+'/'+list.length+' done</span>':'')+'</div>'+
+      '<div class="cl-rows">'+(rows||'<div class="tm-empty">No items yet</div>')+'</div>'+
+      '<div class="cl-foot"><button class="btn" data-act="cladd">+ Add item</button></div>'+
+    '</div>';
+  }
+  function secOpenState(tid,key){var v=S.secOpen[tid+':'+key];return v!==false}
+  function sec(tid,key,label,helpHtml,body){
+    var open=secOpenState(tid,key);
+    return '<div class="sec'+(open?'':' sec-closed')+'">'+
+      '<button type="button" class="sec-head" data-act="sectoggle" data-sec="'+key+'" aria-expanded="'+open+'"><span class="sec-arrow">'+(open?'▾':'▸')+'</span><span class="sec-label">'+esc(label)+'</span></button>'+(helpHtml||'')+
+      (open?'<div class="sec-body">'+body+'</div>':'')+
+    '</div>';
+  }
   function detailHTML(n){
     var armed=S.delArm===n.id,cnt=descendants(n).length+1;
     return '<div class="detail" data-id="'+n.id+'">'+
       '<label>Notes<textarea data-k="notes:'+n.id+'" placeholder="Steps, decisions, what you are waiting on">'+esc(n.notes||'')+'</textarea></label>'+
-      '<div class="d-side"><label>Link (Drive folder or Doc)<input type="text" data-k="link:'+n.id+'" value="'+esc(n.link||'')+'" placeholder="https://drive.google.com/..."></label>'+
-      (n.parent?'<label>Start date (optional'+help('Only used to draw a multi-day bar on Calendar → Gantt. Leave blank and the bar is just a single day, at the deadline.')+')<input type="date" data-act="start" value="'+esc(n.start||'')+'" aria-label="Start date"></label>':'')+
-      linkBox(n)+assetsBlock(n)+
+      '<div class="d-side">'+
+      sec(n.id,'link','Link (Drive folder or Doc)','','<input type="text" data-k="link:'+n.id+'" value="'+esc(n.link||'')+'" placeholder="https://drive.google.com/...">')+
+      sec(n.id,'versions','Versions',help('A separate Google Doc just for this task, for pasting each new version as you iterate — code, CAD, a draft, whatever this task goes through revisions of. Distinct from the Notes doc above, which mirrors your whole project under one shared doc. Nothing is pre-filled beyond a dated heading for your first version; you paste the rest in yourself.'),
+        (n.versionsDocUrl?'<span style="display:flex;gap:6px;align-items:center"><a class="chip" href="'+esc(n.versionsDocUrl)+'" target="_blank" rel="noopener">Open versions doc</a></span>'
+          :'<span style="display:flex;gap:6px;align-items:center"><button class="btn" data-act="versionsdoc" data-id="'+n.id+'"'+(S.versionsDocBusy===n.id?' disabled':'')+'>'+(S.versionsDocBusy===n.id?'Creating…':'+ New versions doc')+'</button></span>'))+
+      (n.parent?sec(n.id,'start','Start date (optional)',help('Only used to draw a multi-day bar on Calendar → Gantt. Leave blank and the bar is just a single day, at the deadline.'),'<input type="date" class="date" data-act="start" value="'+esc(n.start||'')+'" aria-label="Start date">'):'')+
+      sec(n.id,'linked','Linked to','',linkBoxBody(n))+
+      assetsBlock(n)+
       '<div class="d-meta"><span>Added '+esc(n.added||'-')+'</span><span>Started '+esc(n.started||'-')+'</span><span>Finished '+esc(n.finished||'-')+'</span></div></div>'+
+      checklistHTML(n)+
+      partsHTML(n)+
       '<div class="d-act">'+
         '<button class="btn primary" data-act="ntopen">Notes doc</button><button class="btn" data-act="up">Move up</button><button class="btn" data-act="down">Move down</button>'+
         '<button class="btn" data-act="indent">Nest under previous</button><button class="btn" data-act="outdent">Move out a level</button>'+
@@ -846,6 +1053,72 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     }else h+=out.join('');
     h+='<div class="add-row"><button class="btn primary" data-act="addproj">+ New project</button></div></div>';
     return h;
+  }
+
+  /* ---------- render: Task Manager (Board by project, nested containers) ---------- */
+  function renderTaskMgr(){
+    var projects=kidsOf('').filter(function(n){
+      if(!areaOk(n))return false;
+      if(S.q)return tmMatches(n,S.q.toLowerCase());
+      return true;
+    });
+    if(!projects.length){
+      return Object.keys(S.items).length
+        ? '<div class="empty"><h2>Nothing matches</h2>Clear the search or filters to see everything.</div>'
+        : '<div class="empty"><h2>No projects yet</h2>Add a project in List view, then switch back to Board to see it laid out here.</div>';
+    }
+    var h='<div class="tm-board">';
+    projects.forEach(function(p){
+      var body=tmGroup(p,p);
+      h+='<div class="tm-col"><h3>'+esc(p.title||'Untitled project')+'</h3><div class="tm-col-body">'+(body||'<div class="tm-empty">No tasks yet</div>')+'</div></div>';
+    });
+    h+='</div>';
+    return h;
+  }
+  // true if n's own title matches q, or any descendant's does (so a matching sub-task keeps its parent containers visible)
+  function tmMatches(n,q){
+    if((n.title||'').toLowerCase().indexOf(q)>=0)return true;
+    return kidsOf(n.id).some(function(c){return tmMatches(c,q)});
+  }
+  // walks n's children: a child with its own children renders as a nested container (title + its children inside),
+  // a childless child renders as a plain card. Recurses, so containers can nest containers.
+  function tmGroup(proj,n){
+    var h='';
+    kidsOf(n.id).forEach(function(c){
+      if(S.q&&!tmMatches(c,S.q.toLowerCase()))return;
+      if(kidsOf(c.id).length){
+        h+='<div class="tm-container" data-id="'+c.id+'">'+
+             '<div class="tm-container-head"><button class="tm-card-title" data-act="tmopen">'+esc(c.title||'Untitled')+'</button>'+tmMoveMenu(proj,c)+'</div>'+
+             '<div class="tm-container-body">'+tmGroup(proj,c)+'</div>'+
+           '</div>';
+      }else{
+        h+=tmCard(proj,c);
+      }
+    });
+    return h;
+  }
+  function tmCard(proj,n){
+    return '<div class="tm-card" data-id="'+n.id+'">'+
+        '<div class="tm-card-top"><input type="checkbox" class="chk" data-act="done" aria-label="Done"'+(n.done?' checked':'')+'><button class="tm-card-title" data-act="tmopen">'+esc(n.title||'Untitled')+'</button>'+tmMoveMenu(proj,n)+'</div>'+
+        (n.due?'<div class="tm-card-meta"><span class="tm-due'+(isOverdue(n)?' over':'')+'">'+esc(dateLabel(n.due))+'</span></div>':'')+
+        '<select class="pill s-'+slug(n.status||'todo')+'" data-act="status" aria-label="Status">'+opts(STATUS,n.status||'To do')+'</select>'+
+      '</div>';
+  }
+  // a tiny ▾ that opens a small popover of valid move targets — every other container in this project plus its
+  // top level — excluding where n already is, n itself, and n's own descendants (can't move a container into its child)
+  function tmMoveMenu(proj,n){
+    var descIds=descendants(n).map(function(d){return d.id}),out=[];
+    function consider(id,label){if(id===n.parent||id===n.id||descIds.indexOf(id)>=0)return;out.push({id:id,label:label})}
+    consider(proj.id,(proj.title||'Project')+' — top level');
+    (function walk(p,prefix){
+      kidsOf(p.id).forEach(function(c){
+        if(kidsOf(c.id).length&&c.id!==n.id&&descIds.indexOf(c.id)<0){consider(c.id,prefix+(c.title||'Untitled'));walk(c,prefix+'— ')}
+      });
+    })(proj,'');
+    if(!out.length)return '';
+    return '<details class="tm-movemenu"><summary class="tm-movebtn" title="Move to…">'+I.chev+'</summary><div class="tm-movepop">'+
+      out.map(function(t){return '<button type="button" class="tm-moveopt" data-act="tmmoveto" data-pid="'+t.id+'">'+esc(t.label)+'</button>'}).join('')+
+    '</div></details>';
   }
 
   /* ---------- render: calendar > list (formerly Upcoming) ---------- */
@@ -957,6 +1230,11 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     var h='<div class="chips cal-sub" style="margin-bottom:10px">'+
       ['month','list','gantt','opps'].map(function(k){return '<button class="chip-b" data-act="calview" data-v="'+k+'" aria-pressed="'+(v===k)+'">'+(k==='month'?'Month':k==='list'?'List':k==='gantt'?'Gantt':'Opportunities')+'</button>'}).join('');
     if(v==='month'||v==='gantt')h+='<label style="display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);margin-left:4px"><input type="checkbox" id="opps-toggle"'+(S.oppsOn?' checked':'')+'> Show opportunities</label>';
+    if(v==='month'){
+      h+='<span class="grow"></span><input type="number" id="hol-year" data-act="holyear" data-enter="holimport" value="'+S.holYear+'" aria-label="Year" style="width:76px">'+
+        '<button class="btn" data-act="holimport"'+(S.holImportBusy?' disabled':'')+' title="Pulls India\'s national public holidays for that year from Google\'s public holiday calendar and marks them on Month">'+(S.holImportBusy?'Importing…':'Import Indian holidays')+'</button>';
+      if(Object.keys(S.holidays).length)h+='<button class="btn" data-act="holclear" title="Remove every imported holiday">Clear holidays</button>';
+    }
     return h+'</div>';
   }
   function calEvents(){return events().filter(function(e){return S.oppsOn!==false||e.kind!=='c'})}
@@ -967,22 +1245,25 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(v==='opps')return calSwitcher()+renderOpps();
     var y=S.calY,m=S.calM,first=new Date(y,m,1),off=(first.getDay()+6)%7,start=new Date(y,m,1-off);
     var ev={};calEvents().forEach(function(e){(ev[e.date]=ev[e.date]||[]).push(e)});
+    var hol={};Object.keys(S.holidays).forEach(function(k){var hd=S.holidays[k];(hol[hd.date]=hol[hd.date]||[]).push(hd)});
     var t=today();
     var h=calSwitcher();
     h+='<div class="cal-head"><h2>'+first.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</h2>'+
       '<button class="btn" data-act="calprev" aria-label="Previous month">‹</button><button class="btn" data-act="caltoday">Today</button><button class="btn" data-act="calnext" aria-label="Next month">›</button></div>';
     h+='<div class="cal-grid">'+['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].map(function(d){return '<div class="cal-dow">'+d+'</div>'}).join('');
     for(var i=0;i<42;i++){
-      var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i),ds=fmt(d),list=ev[ds]||[];
-      h+='<div class="cal-day'+(d.getMonth()!==m?' other':'')+(ds===t?' today':'')+(ds===S.selDay?' sel':'')+'" data-day="'+ds+'"><span class="dn">'+d.getDate()+'</span>';
+      var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i),ds=fmt(d),list=ev[ds]||[],hs=hol[ds]||[];
+      h+='<div class="cal-day'+(d.getMonth()!==m?' other':'')+(ds===t?' today':'')+(ds===S.selDay?' sel':'')+(hs.length?' hol':'')+'" data-day="'+ds+'"><span class="dn">'+d.getDate()+'</span>';
+      hs.forEach(function(hd){h+='<div class="ev h" title="Indian holiday">'+esc(hd.title)+'</div>'});
       list.slice(0,3).forEach(function(e){h+='<div class="ev '+(e.kind==='c'?'c':(e.date<t&&!e.done?'o':'t'))+(e.done?' d':'')+'">'+esc(title(e.node))+'</div>'});
       if(list.length>3)h+='<div class="ev-more">+'+(list.length-3)+' more</div>';
       h+='</div>';
     }
     h+='</div>';
     if(S.selDay){
-      var list2=ev[S.selDay]||[];
+      var list2=ev[S.selDay]||[],hs2=hol[S.selDay]||[];
       h+='<div class="daypanel"><h3>'+esc(dateLabel(S.selDay))+'</h3>';
+      hs2.forEach(function(hd){h+='<p class="hint" style="color:var(--amber-fg,#b58a00)">'+esc(hd.title)+' — Indian holiday</p>'});
       if(!list2.length)h+='<p class="hint" style="margin:0 0 10px">Nothing due. Add something below and it lands on this day.</p>';
       list2.forEach(function(e){h+='<div class="day-item"><div><b>'+esc(title(e.node))+'</b><br><span>'+esc(e.node.isComp?'Opportunity · '+e.node.status:pathOf(e.node).join(' › '))+'</span></div><a href="'+esc(gcal(e.node))+'" target="_blank" rel="noopener">Add to Google Calendar</a></div>'});
       var po=[];(function walk(pid,dd){kidsOf(pid).forEach(function(n){if(dd<=1)po.push(n);if(dd<1)walk(n.id,dd+1)})})('',0);
@@ -1513,9 +1794,19 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   /* R&D: experiments overview */
   S.rd={};S.rdOpen=null;S.rdBusy=false;S.an={};S.rdView='overview';S.rdaOpen=null;S.rdBusy2=null;S.rdBusy3=false;S.rdSynBusy=null;S.rdSynDraft=null;S.rdExtractBusy=false;S.rdExtractDraft=null;S.rdSyncBusy=null;S.rdHandoff=null;S.scriptDraft=null;S.scriptExtractBusy=false;
   S.brandView='posts';
-  var PLITE=['None','Normal','High','Critical'],NEED=['Have','Need to buy','Running low'],DTYPE=['Doc','Sheet','Folder','Photos','Video','Other'];
+  var PLITE=['None','Normal','High','Critical'],NEED=['Have','Need to buy','Running low','Check'],DTYPE=['Doc','Sheet','Folder','Photos','Video','Other'];
   function dirFor(id){return Object.keys(S.dir).map(function(k){return S.dir[k]}).filter(function(d){return d.tag===id&&isUrl(d.url)})}
-  function assetsFor(id){return Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.tag===id})}
+  function assetsFor(id){return Object.keys(S.assets).map(function(k){return S.assets[k]}).filter(function(a){return a.tag===id||(Array.isArray(a.tags)&&a.tags.indexOf(id)>=0)})}
+  function tagOptsMulti(curArr){
+    curArr=curArr||[];
+    var h='<optgroup label="Tracker (shows on the map)">';
+    Object.keys(S.items).map(function(k){return S.items[k]}).sort(function(a,b){return pathOf(a).join('/')+a.title<pathOf(b).join('/')+b.title?-1:1}).forEach(function(n){
+      h+='<option value="'+n.id+'"'+(curArr.indexOf(n.id)>=0?' selected':'')+'>'+esc(pathOf(n).concat([n.title||'Untitled']).join(' › '))+'</option>'});
+    h+='</optgroup><optgroup label="Discovery">';
+    dlist('topic').forEach(function(t){h+='<option value="d:'+t.id+'"'+(curArr.indexOf('d:'+t.id)>=0?' selected':'')+'>'+esc('Topic: '+(t.name||'Untitled'))+'</option>'});
+    dlist('learn').forEach(function(l){h+='<option value="d:'+l.id+'"'+(curArr.indexOf('d:'+l.id)>=0?' selected':'')+'>'+esc('Video: '+(l.title||l.url||'Untitled'))+'</option>'});
+    return h+'</optgroup>';
+  }
   function tagOpts(cur){
     var h='<option value=""'+(cur?'':' selected')+'>No tag</option><optgroup label="Tracker (shows on the map)">';
     Object.keys(S.items).map(function(k){return S.items[k]}).sort(function(a,b){return pathOf(a).join('/')+a.title<pathOf(b).join('/')+b.title?-1:1}).forEach(function(n){
@@ -1590,7 +1881,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       });
       h+='<div class="add-row"><button class="btn primary" data-act="mnew">+ New script</button></div>';
       h+='<div class="dsec" style="margin-top:14px"><h3 style="font-size:14px">Extract a script from an article, paper or case study'+help('Paste the text describing a method, process, or framework (or pull it from a source already in Repositories above). Atlas asks your AI to distill it into clear, reusable instructions — a Script — that you can then run against any group of nodes on your Map, the same way as one you wrote yourself.')+'</h3>'+
-        '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="sx-link" placeholder="Citation link (optional)"><textarea id="sx-text" rows="4" placeholder="Paste the method, process, or framework description"></textarea><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('sxtract')+'<button class="btn" data-act="sxtract"'+(S.scriptExtractBusy?' disabled':'')+'>'+(S.scriptExtractBusy?'Extracting…':'Extract script')+'</button></div></div>';
+        '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="sx-link" placeholder="Citation link (optional — fetched automatically if no text or file is given)"><textarea id="sx-text" rows="4" placeholder="Paste the method, process, or framework description (or upload the paper below — handy for paywalled links)"></textarea><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><label class="hint" style="display:flex;align-items:center;gap:6px;cursor:pointer">Or upload a paper<input type="file" id="sx-file" accept=".pdf,.txt,.md,.markdown" style="max-width:220px"></label><span class="hint" id="sx-file-name" style="flex:1"></span></div><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('sxtract')+'<button class="btn" data-act="sxtract"'+(S.scriptExtractBusy?' disabled':'')+'>'+(S.scriptExtractBusy?'Extracting…':'Extract script')+'</button></div></div>';
       if(S.rdHandoff&&S.rdHandoff.type==='extract'&&S.rdHandoff.target==='script'){
         h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="extract">Check for answer</button></div></div>';
       }
@@ -1606,14 +1897,14 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
         if(kind==='physical'){
           h+='<div class="wrow" data-id="'+a.id+'"><div class="wl">'+lite(a.priority)+'<select data-act="aprio" aria-label="Priority">'+opts(PLITE,a.priority||'None')+'</select></div>'+
             '<div class="wc"><input class="ttl" data-k="aname:'+a.id+'" value="'+esc(a.name||'')+'" placeholder="Item, e.g. Silicone moulds" aria-label="Item"><input type="text" data-k="aloc:'+a.id+'" value="'+esc(a.location||'')+'" placeholder="Stored at (key): lab shelf 2, home cupboard…" aria-label="Stored at"></div>'+
-            '<div class="wc"><div style="display:flex;gap:6px"><input type="text" data-k="aqty:'+a.id+'" value="'+esc(a.qty||'')+'" placeholder="Qty" aria-label="Quantity" style="width:90px"><select data-act="aneed" aria-label="Status">'+opts(NEED,a.need||'Have')+'</select></div><select data-act="asup" aria-label="Supplier">'+supOpts(a.supplier)+'</select></div>'+
+            '<div class="wc"><div style="display:flex;gap:6px"><input type="text" data-k="aqty:'+a.id+'" value="'+esc(a.qty||'')+'" placeholder="Qty" aria-label="Quantity" style="width:70px"><input type="number" data-k="aprice:'+a.id+'" value="'+esc(a.price!=null?a.price:'')+'" placeholder="Price ₹" min="0" step="0.01" aria-label="Price in rupees" style="width:90px"><select data-act="aneed" aria-label="Status">'+opts(NEED,a.need||'Have')+'</select></div><select data-act="asup" aria-label="Supplier">'+supOpts(a.supplier)+'</select></div>'+
             '<div class="wc"><select data-act="atag" aria-label="Belongs to">'+tagOpts(a.tag)+'</select><div style="display:flex;gap:6px"><input type="date" data-act="adue" value="'+esc(a.due||'')+'" aria-label="Task date" style="flex:1"><button class="btn'+(a.taskId&&S.items[a.taskId]?'':' primary')+'" data-act="atask">'+(a.taskId&&S.items[a.taskId]?'In outline':'Make task')+'</button></div></div>'+
             '<div class="wc"><textarea rows="2" data-k="anotes:'+a.id+'" placeholder="Notes" style="resize:none">'+esc(a.notes||'')+'</textarea><div style="text-align:right"><button class="ib" data-act="adel" aria-label="Delete">'+(S.delArm===a.id?'?':'×')+'</button></div></div></div>';
         }else{
           h+='<div class="wrow" data-id="'+a.id+'"><div class="wl">'+lite(a.priority)+'<select data-act="aprio" aria-label="Priority">'+opts(PLITE,a.priority||'None')+'</select></div>'+
             '<div class="wc"><input class="ttl" data-k="aname:'+a.id+'" value="'+esc(a.name||'')+'" placeholder="Supplier name" aria-label="Supplier"><input type="text" data-k="acontact:'+a.id+'" value="'+esc(a.contact||'')+'" placeholder="Contact: phone, email, address" aria-label="Contact"></div>'+
             '<div class="wc"><input type="text" data-k="asells:'+a.id+'" value="'+esc(a.sells||'')+'" placeholder="What they sell" aria-label="Sells"><input type="text" data-k="apurl:'+a.id+'" value="'+esc(a.purchasesUrl||'')+'" placeholder="Link to purchases sub-page in a Sheet" aria-label="Purchases link"></div>'+
-            '<div class="wc"><div style="display:flex;gap:6px"><input type="text" data-k="astored:'+a.id+'" value="'+esc(a.stored||'')+'" placeholder="Stored at (key)" aria-label="Stored at"><input type="text" data-k="aqty:'+a.id+'" value="'+esc(a.qty||'')+'" placeholder="Qty" aria-label="Quantity" style="width:80px"></div><select data-act="atag" aria-label="Belongs to">'+tagOpts(a.tag)+'</select></div>'+
+            '<div class="wc"><div style="display:flex;gap:6px"><input type="text" data-k="astored:'+a.id+'" value="'+esc(a.stored||'')+'" placeholder="Stored at (key)" aria-label="Stored at"><input type="text" data-k="aqty:'+a.id+'" value="'+esc(a.qty||'')+'" placeholder="Qty" aria-label="Quantity" style="width:80px"></div><select data-act="atags" multiple size="3" aria-label="Belongs to — pick as many projects/products as apply">'+tagOptsMulti(a.tags||(a.tag?[a.tag]:[]))+'</select></div>'+
             '<div class="wc"><textarea rows="2" data-k="apurch:'+a.id+'" placeholder="Purchases: what, when, how much" style="resize:none">'+esc(a.purchases||'')+'</textarea><div style="display:flex;gap:6px;justify-content:flex-end">'+(isUrl(a.purchasesUrl)?'<a class="chip" href="'+esc(a.purchasesUrl)+'" target="_blank" rel="noopener">Purchases</a>':'')+'<button class="ib" data-act="adel" aria-label="Delete">'+(S.delArm===a.id?'?':'×')+'</button></div></div></div>';
         }
       });
@@ -1637,7 +1928,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(act==='offdel'){var offid=b.dataset.id;S.offQueue=S.offQueue.filter(function(o){return o.id!==offid});offSave();render();return true}
     if(act==='offsync'){offSyncNow();return true}
     if(act==='whsync'){gs('mirrorWarehouse').then(function(u){S.whUrl=u;toast('Sheet updated');render()}).catch(function(e){toast('Could not sync: '+((e&&e.message)||e))});return true}
-    if(act==='anew'){var aid=newId('w'),doc=S.wh==='physical'?{kind:'physical',name:'',location:'',qty:'',need:'Have',priority:'None',supplier:'',tag:'',notes:'',due:'',taskId:'',added:today()}:{kind:'supplier',name:'',contact:'',sells:'',purchasesUrl:'',purchases:'',stored:'',qty:'',priority:'None',tag:'',added:today()};
+    if(act==='anew'){var aid=newId('w'),doc=S.wh==='physical'?{kind:'physical',name:'',location:'',qty:'',need:'Have',priority:'None',supplier:'',tag:'',notes:'',due:'',taskId:'',price:'',added:today()}:{kind:'supplier',name:'',contact:'',sells:'',purchasesUrl:'',purchases:'',stored:'',qty:'',priority:'None',tag:'',added:today()};
       S.assets[aid]=Object.assign({id:aid},doc);S.focusNew='as:'+aid;render();db.doc('assets/'+aid).set(doc).catch(function(){toast('Could not add')});wmirror();return true}
     if(act==='adel'){
       if(S.delArm===id){
@@ -1701,10 +1992,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     }
     if(act==='mnew'){var mid=newId('me'),mdoc={kind:'method',name:'',instructions:'',added:today()};S.assets[mid]=Object.assign({id:mid},mdoc);render();db.doc('assets/'+mid).set(mdoc).catch(function(){toast('Could not add')});return true}
     if(act==='sxtract'){
-      var sxtext=$('#sx-text').value.trim(),sxlink=$('#sx-link').value.trim();
-      if(!sxtext){toast('Paste the method text first');return true}
+      var sxtext=$('#sx-text').value.trim(),sxlink=$('#sx-link').value.trim(),sxfile=$('#sx-file');
       b.disabled=true;S.scriptExtractBusy=true;render();
-      gs('operatorExtract',sxtext,sxlink).then(function(r){
+      resolveSourceText_(sxtext,sxfile,sxlink).then(function(r){
+        if(r.source==='file')toast('Read "'+(r.fileTitle||'the file')+'" — extracting…');
+        return gs('operatorExtract',r.text,sxlink);
+      }).then(function(r){
         S.scriptExtractBusy=false;
         if(r&&r.handoff){S.rdHandoff={type:'extract',docId:r.docId,docUrl:r.docUrl,sourceLink:sxlink,target:'script'};toast('No AI key set — opened a Doc for you');render();return}
         S.scriptDraft=r;render();
@@ -1733,11 +2026,50 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(act==='aneed'){aWrite(id,{need:t.value});render();return true}
     if(act==='asup'){aWrite(id,{supplier:t.value});return true}
     if(act==='atag'){aWrite(id,{tag:t.value});return true}
+    if(act==='atags'){var vals=Array.prototype.slice.call(t.selectedOptions).map(function(o){return o.value}).filter(Boolean);aWrite(id,{tags:vals,tag:vals[0]||''});return true}
     if(act==='adue'){aWrite(id,{due:t.value});return true}
-    if(k){var f=k.split(':')[0],m={aname:'name',aloc:'location',aqty:'qty',anotes:'notes',acontact:'contact',asells:'sells',apurl:'purchasesUrl',astored:'stored',apurch:'purchases',mname:'name',minstr:'instructions'},o={};
+    if(k){var f=k.split(':')[0],m={aname:'name',aloc:'location',aqty:'qty',aprice:'price',anotes:'notes',acontact:'contact',asells:'sells',apurl:'purchasesUrl',astored:'stored',apurch:'purchases',mname:'name',minstr:'instructions'},o={};
       if(m[f]){o[m[f]]=(f==='anotes'||f==='apurch'||f==='minstr')?t.value:t.value.trim();aWrite(id,o);t.defaultValue=t.value;render();return true}
       if(f==='ltitle'||f==='lurl'||f==='lacct'||f==='labout'||f==='lgroup'){setTimeout(wmirror,0)}}
     return false;
+  }
+
+  /* ---------- render: Accounts (Bill of Materials) ---------- */
+  function renderAccounts(){
+    var withParts=Object.keys(S.items).map(function(k){return S.items[k]}).filter(function(n){return n.parts&&n.parts.length});
+    var h='<div class="dsec"><h2>Accounts'+help('A rollup of every task\'s Parts & cost list from Outline, grouped by project, with running totals. Nothing lives here that isn\'t already in Outline or Warehouse — this is a combined view over that same data, the same way Map is a view over your task tree. Link a part to a Warehouse physical asset (from its Parts & cost section in Outline) to see its supplier and stock status here too.')+'</h2><p>Bill of materials across every project: what\'s been costed, what it\'s linked to in Warehouse, and the running totals.</p>';
+    if(!withParts.length){
+      h+='<div class="empty"><h2>Nothing costed yet</h2>Open any task in Outline and use its Parts &amp; cost section — rows added there show up here automatically.</div></div>';
+      return h;
+    }
+    var byRoot={};
+    withParts.forEach(function(n){var r=rootOf(n);if(!byRoot[r.id])byRoot[r.id]={root:r,tasks:[]};byRoot[r.id].tasks.push(n)});
+    var grand=0;
+    h+=Object.keys(byRoot).map(function(k){return byRoot[k]}).sort(function(a,b){return (a.root.title||'')<(b.root.title||'')?-1:1}).map(function(grp){
+      var projTotal=0;
+      var body=grp.tasks.map(function(n){
+        var t=partsTotal(n);projTotal+=t;grand+=t;
+        var lines=(n.parts||[]).map(function(p){
+          var linked=p.assetId&&S.assets[p.assetId];
+          var eff=partEff(p);
+          var sup=linked&&linked.supplier&&S.assets[linked.supplier]?S.assets[linked.supplier].name:'';
+          return '<div class="acct-part-line hint">'+
+            '<span style="flex:1">'+(p.checked?'':'<s style="opacity:.55">')+esc((linked?linked.name:p.name)||'Unnamed')+(p.checked?'':'</s>')+'</span>'+
+            '<span>×'+(p.qty!=null?p.qty:1)+'</span>'+
+            '<span>'+(eff.price!=null?money(eff.price):'—')+'</span>'+
+            '<span>'+(linked?((sup?'Supplier: '+esc(sup)+' · ':'')+(linked.need==='Need to buy'?'<b style="color:var(--red-fg)">need to buy</b>':esc(linked.need||'Have'))):'Free text')+'</span>'+
+          '</div>';
+        }).join('');
+        return '<div class="wrow" data-id="'+n.id+'" style="grid-template-columns:1fr"><div class="wc" style="flex-direction:column;align-items:stretch;gap:4px">'+
+          '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px"><button class="tm-card-title" data-act="tmopen">'+esc(pathOf(n).concat([n.title||'Untitled']).join(' › '))+'</button><b>'+money(t)+'</b></div>'+
+          lines+
+        '</div></div>';
+      }).join('');
+      return '<div class="acct-group"><h3 style="font-size:14px;margin:0 0 6px">'+esc(grp.root.title||'Untitled project')+'</h3>'+body+
+        '<div style="text-align:right;padding:4px 2px;font-size:12px;color:var(--muted)">Project total: <b style="color:var(--ink)">'+money(projTotal)+'</b></div></div>';
+    }).join('');
+    h+='<div style="text-align:right;padding:8px 2px;font-size:14px;border-top:1px solid var(--line)">Grand total: <b>'+money(grand)+'</b></div></div>';
+    return h;
   }
 
   /* ---------- render: R&D ---------- */
@@ -1889,7 +2221,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       '<div class="dadd" style="flex-wrap:wrap;gap:8px"><select id="op-type" aria-label="Chart/fit type">'+Object.keys(OPTYPES).map(function(k){return '<option value="'+k+'">'+OPTYPES[k]+'</option>'}).join('')+'</select><textarea id="op-instr" rows="2" placeholder="Instructions for the AI to apply (used only for an AI methodology)"></textarea></div>'+
       '<div style="display:flex;justify-content:flex-end;margin-top:6px"><button class="btn primary" data-act="opnew">+ New methodology</button></div></div>';
     h+='<div class="dsec" style="margin-top:4px"><h3 style="font-size:14px">Extract a methodology from a paper'+help('Paste the text of a paper or method (or pull it from a source already in Warehouse → Repositories). "Reusable instructions" gives you a plain-language AI methodology. "Trainable script" instead asks the AI to write a complete, runnable Python script that builds and trains a real supervised model (a small neural network, or whatever the paper actually describes) on your own data, outside Atlas — Apps Script itself has no numpy or GPU to train with, so this hands you real code plus your dataset as a CSV, and you (or your AI, if it can run code) train and iterate it.')+'</h3>'+
-      '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="opx-link" placeholder="Citation link (optional)"><select id="opx-kind" aria-label="What to extract"><option value="instr">Reusable instructions (AI methodology)</option><option value="train">Trainable script (neural net / supervised model)</option></select><textarea id="opx-text" rows="4" placeholder="Paste the method description from the paper"></textarea><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('opextract')+'<button class="btn" data-act="opextract"'+(S.rdExtractBusy?' disabled':'')+'>'+(S.rdExtractBusy?'Extracting…':'Extract methodology')+'</button></div></div>';
+      '<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px"><input type="text" id="opx-link" placeholder="Citation link (optional — fetched automatically if no text or file is given)"><select id="opx-kind" aria-label="What to extract"><option value="instr">Reusable instructions (AI methodology)</option><option value="train">Trainable script (neural net / supervised model)</option></select><textarea id="opx-text" rows="4" placeholder="Paste the method description from the paper (or upload it below — handy for paywalled links)"></textarea><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><label class="hint" style="display:flex;align-items:center;gap:6px;cursor:pointer">Or upload a paper<input type="file" id="opx-file" accept=".pdf,.txt,.md,.markdown" style="max-width:220px"></label><span class="hint" id="opx-file-name" style="flex:1"></span></div><div style="display:flex;justify-content:flex-end;align-items:center;gap:4px">'+bang('opextract')+'<button class="btn" data-act="opextract"'+(S.rdExtractBusy?' disabled':'')+'>'+(S.rdExtractBusy?'Extracting…':'Extract methodology')+'</button></div></div>';
     if(S.rdHandoff&&S.rdHandoff.type==='extract'){
       h+='<div class="dadd" style="flex-direction:column;align-items:stretch;gap:6px;margin-top:8px"><p class="hint">No AI key is set, so Atlas opened a Doc instead of calling an API. Paste the prompt into any AI (or edit the Doc yourself), write the answer under "YOUR ANSWER", then come back and check.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><a class="chip" href="'+esc(S.rdHandoff.docUrl)+'" target="_blank" rel="noopener">Open the Doc</a><button class="btn primary" data-act="checkhandoff" data-kind="extract">Check for answer</button></div></div>';
     }
@@ -2041,11 +2373,13 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       return true;
     }
     if(act==='opextract'){
-      var xtext=$('#opx-text').value.trim(),xlink=$('#opx-link').value.trim(),xkind=$('#opx-kind')?$('#opx-kind').value:'instr';
-      if(!xtext){toast('Paste the method text first');return true}
+      var xtext=$('#opx-text').value.trim(),xlink=$('#opx-link').value.trim(),xkind=$('#opx-kind')?$('#opx-kind').value:'instr',xfile=$('#opx-file');
       b.disabled=true;S.rdExtractBusy=true;render();
       var xfn=xkind==='train'?'operatorExtractTrainable':'operatorExtract';
-      gs(xfn,xtext,xlink).then(function(r){
+      resolveSourceText_(xtext,xfile,xlink).then(function(r){
+        if(r.source==='file')toast('Read "'+(r.fileTitle||'the file')+'" — extracting…');
+        return gs(xfn,r.text,xlink);
+      }).then(function(r){
         S.rdExtractBusy=false;
         if(r&&r.handoff){S.rdHandoff={type:'extract',docId:r.docId,docUrl:r.docUrl,sourceLink:xlink,trainable:xkind==='train'};toast('No AI key set — opened a Doc for you');render();return}
         S.rdExtractDraft=r;render();
@@ -2299,8 +2633,8 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
   function renderCanvas(){
     var h='<div class="mapbar"><button class="btn primary" data-act="cvnote">+ Sticky</button><button class="btn" data-act="cvtext">+ Text</button><button class="btn'+(S.cvArrow?' primary':'')+'" data-act="cvarrow">'+(S.cvArrow==='pick'?'Arrow: click a card, then another':S.cvArrow?'Arrow: now click the target':'+ Arrow')+'</button>'+(S.cvSelArrow&&S.canvas[S.cvSelArrow]?'<button class="btn" data-act="cvarrowdel">Delete selected arrow</button>':'')+'<select id="cv-task" data-act="cvtask" aria-label="Pull in a task"><option value="">Pull in a task…</option>'+
-      Object.keys(S.items).map(function(k){return S.items[k]}).filter(function(n){return n.parent&&!n.done}).sort(function(a,b){return pathOf(a).join('/')+a.title<pathOf(b).join('/')+b.title?-1:1}).map(function(n){return '<option value="'+n.id+'">'+esc(pathOf(n).concat([n.title||'Untitled']).join(' › '))+'</option>'}).join('')+'</select><span class="grow"></span><span class="hint">Drag by the bar on top. A sticky can become a real task when you are ready.</span></div>';
-    h+='<div class="cv" id="cv"><div class="cv-surface"><svg class="cv-svg" id="cv-svg" width="3200" height="2200"><defs><marker id="cv-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg>';
+      Object.keys(S.items).map(function(k){return S.items[k]}).filter(function(n){return n.parent&&!n.done}).sort(function(a,b){return pathOf(a).join('/')+a.title<pathOf(b).join('/')+b.title?-1:1}).map(function(n){return '<option value="'+n.id+'">'+esc(pathOf(n).concat([n.title||'Untitled']).join(' › '))+'</option>'}).join('')+'</select><span class="grow"></span><button class="chip-b" data-act="cvcompact" aria-pressed="'+S.cvCompact+'" title="Shrink stickies so more fit on screen">'+(S.cvCompact?'Compact: on':'Compact')+'</button><button class="chip-b" data-act="cvmax" aria-pressed="'+S.cvMax+'" title="Give the canvas most of the screen">'+(S.cvMax?'Maximize: on':'Maximize')+'</button><span class="hint">Drag by the bar on top. A sticky can become a real task when you are ready.</span></div>';
+    h+='<div class="cv'+(S.cvMax?' cv-max':'')+'" id="cv"><div class="cv-surface'+(S.cvCompact?' cv-compact':'')+'"><svg class="cv-svg" id="cv-svg" width="3200" height="2200"><defs><marker id="cv-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs></svg>';
     var ids=Object.keys(S.canvas).filter(function(k){return S.canvas[k].kind!=='arrow'});
     if(!ids.length)h+='<div class="cv-empty">Dump anything here. Press + Sticky, or pull in a task from above. Nothing on this board is a commitment.</div>';
     ids.forEach(function(k){
@@ -2318,6 +2652,8 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     return h+'</div></div>';
   }
   function cvClick(act,b,id){
+    if(act==='cvcompact'){S.cvCompact=!S.cvCompact;persist();render();return true}
+    if(act==='cvmax'){S.cvMax=!S.cvMax;persist();render();return true}
     if(act==='cvnote'){cvAdd('note');return true}
     if(act==='cvtext'){cvAdd('text');return true}
     if(act==='cvcolor'){var c=S.canvas[id];if(c){cvWrite(id,{color:((c.color||0)+1)%CVCOL.length});render()}return true}
@@ -2398,12 +2734,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   },true);
 
   /* ---------- render: main ---------- */
-  var VIEWS=['outline','map','calendar','disc','canvas','team','warehouse','rd','branding','offline'];
+  var VIEWS=['outline','map','calendar','disc','canvas','team','warehouse','accounts','rd','branding','offline'];
   function render(){
     if(!S.ready)return;
     var a=document.activeElement;
     var isTextish=a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA')&&a.type!=='checkbox'&&a.type!=='radio'&&a.id!=='q';
-    if(isTextish&&((a.dataset&&a.dataset.k&&a.value!==a.defaultValue)||(!(a.dataset&&a.dataset.k)&&a.value))){pendingRender=true;return}
+    if(isTextish&&(a.type==='date'||(a.dataset&&a.dataset.k&&a.value!==a.defaultValue)||(!(a.dataset&&a.dataset.k)&&a.value))){pendingRender=true;return}
     applyLabels();
     if(M.drag&&M.drag.moved)return;
     var fk=a&&a.dataset&&a.dataset.k,ss=a&&a.selectionStart,se=a&&a.selectionEnd;
@@ -2419,8 +2755,11 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     $('#tools').style.display=S.view==='outline'?'':'none';
     $('#f-all').setAttribute('aria-pressed',S.flt==='all');$('#f-active').setAttribute('aria-pressed',S.flt==='active');
     $('#f-over').setAttribute('aria-pressed',S.flt==='overdue');$('#f-hide').setAttribute('aria-pressed',S.hideDone);
+    var ovb=S.outlineView==='board';
+    var ovl2=$('#ov-list'),ovb2=$('#ov-board');if(ovl2)ovl2.setAttribute('aria-pressed',!ovb);if(ovb2)ovb2.setAttribute('aria-pressed',ovb);
+    ['#f-all','#f-active','#f-over','#f-hide'].forEach(function(sel){var el=$(sel);if(el)el.style.display=ovb?'none':''});
     var sy=window.scrollY;
-    var html=S.view==='map'?renderMap():S.view==='calendar'?renderCal():S.view==='disc'?renderDisc():S.view==='team'?renderTeam():S.view==='canvas'?renderCanvas():S.view==='warehouse'?renderWarehouse():S.view==='rd'?renderRD():S.view==='branding'?renderBranding():S.view==='offline'?renderOffline():renderOutline();
+    var html=S.view==='map'?renderMap():S.view==='calendar'?renderCal():S.view==='disc'?renderDisc():S.view==='team'?renderTeam():S.view==='canvas'?renderCanvas():S.view==='warehouse'?renderWarehouse():S.view==='accounts'?renderAccounts():S.view==='rd'?renderRD():S.view==='branding'?renderBranding():S.view==='offline'?renderOffline():S.view==='outline'?(S.outlineView==='board'?renderTaskMgr():renderOutline()):renderOutline();
     if(S.bang)html+=bangModal();
     $('#view').innerHTML=html;if(S.view==='canvas'&&typeof cvArrows==='function')cvArrows();
     window.scrollTo(0,sy);
@@ -2435,6 +2774,18 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   function dirWrite(id,p){if(!S.dir[id])return;Object.assign(S.dir[id],p);db.doc('dir/'+id).update(p).catch(function(){toast('Could not save')})}
   function teamClick(act,b,id){
     if(act==='ntopen'){ntOpen(id);return true}
+    if(act==='versionsdoc'){
+      var cdn=S.items[id];if(!cdn)return true;
+      S.versionsDocBusy=id;render();
+      gs('taskVersionsDoc',id).then(function(r){
+        S.versionsDocBusy=null;
+        if(S.items[id])S.items[id].versionsDocUrl=r.url;
+        render();
+        if(r.created)toast('Versions doc created');
+        if(r.url)window.open(r.url,'_blank');
+      }).catch(function(e){S.versionsDocBusy=null;toast('Could not create the doc: '+((e&&e.message)||e));render()});
+      return true;
+    }
     if(act==='agnew'){newAgent();return true}
     if(act==='agopen'){S.teamOpen=S.teamOpen===id?null:id;S.delArm=null;S.adminArm=null;render();return true}
     if(act==='agrun'){runAgentUI(id);return true}
@@ -2499,6 +2850,11 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   }
   $('#pause-btn').addEventListener('click',function(){saveCfg({pause:!cfgd().pause});toast(cfgd().pause?'All agents paused':'Agents live')});
   $('#set-btn').addEventListener('click',openSettings);
+  $('#theme-btn').addEventListener('click',function(){
+    var order=['auto','light','dark'];
+    S.theme=order[(order.indexOf(S.theme||'auto')+1)%order.length];
+    persist();applyTheme();
+  });
   $('#bell-btn').addEventListener('click',function(e){e.stopPropagation();S.notesOpen=!S.notesOpen;chrome()});
   $('#notes-panel').addEventListener('click',function(e){
     e.stopPropagation();
@@ -2528,6 +2884,43 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(act==='addto'){addItem(b.dataset.pid)}
     else if(act==='addproj'){addItem('')}
     else if(act==='detail'){S.open=S.open===id?null:id;S.delArm=null;render()}
+    else if(act==='sectoggle'){var sk=id+':'+b.dataset.sec;S.secOpen[sk]=!secOpenState(id,b.dataset.sec);persist();render()}
+    else if(act==='tmopen'){S.open=id;S.view='outline';S.outlineView='list';persist();render()}
+    else if(act==='tmmoveto'){var newPid=b.dataset.pid;if(newPid){setFields(id,{parent:newPid,order:maxOrder(newPid)+1});reload()}}
+    else if(act==='cladd'){clAdd(id)}
+    else if(act==='cldel'){clDel(id,b.dataset.cid)}
+    else if(act==='partadd'){partAdd(id)}
+    else if(act==='partdel'){partDel(id,b.dataset.pid)}
+    else if(act==='partpromote'){
+      var ppid=b.dataset.pid,ppn=S.items[id];if(!ppn)return;
+      var part=(ppn.parts||[]).filter(function(p){return p.id===ppid})[0];
+      if(!part||!(part.name||'').trim()){toast('Name the part first');return}
+      var paid=newId('w'),padoc={kind:'physical',name:part.name.trim(),location:'',qty:'',need:'Have',priority:'None',supplier:'',tag:'',notes:'',due:'',taskId:'',price:part.price!=null?part.price:'',added:today()};
+      S.assets[paid]=Object.assign({id:paid},padoc);
+      db.doc('assets/'+paid).set(padoc).catch(function(){toast('Could not add')});wmirror();
+      partSet(id,ppid,{assetId:paid});
+      toast('Saved to Warehouse — now linked');render();
+    }
+    else if(act==='partfetch'){
+      var pfid=b.dataset.pid,pfn=S.items[id];if(!pfn)return;
+      var part=(pfn.parts||[]).filter(function(p){return p.id===pfid})[0];
+      if(!part||!(part.name||'').trim()){toast('Name the part first');return}
+      S.partBusy[pfid]=true;render();
+      gs('fetchPartPrice',part.name).then(function(r){
+        delete S.partBusy[pfid];
+        if(r&&r.handoff){S.partHandoff[pfid]={taskId:id,docId:r.docId,docUrl:r.docUrl};toast('No AI key set — opened a Doc for you');render();return}
+        if(r&&r.price!=null){partSet(id,pfid,{price:r.price,priceSrc:r.source||''});toast('Estimated ₹'+r.price+(r.source?' — check the source link':''));render()}
+        else{toast('Could not find a clear price (got: "'+String((r&&r.raw)||'').slice(0,80)+'"). Enter it manually.');render()}
+      }).catch(function(x){delete S.partBusy[pfid];toast('Could not fetch: '+((x&&x.message)||x));render()});
+    }
+    else if(act==='partfetchhandoff'){
+      var phid=b.dataset.pid,hd=S.partHandoff[phid];if(!hd)return;
+      gs('fetchPartPriceFinish',hd.docId).then(function(r){
+        delete S.partHandoff[phid];
+        if(r&&r.price!=null){partSet(hd.taskId,phid,{price:r.price,priceSrc:r.source||''});toast('Estimated ₹'+r.price);render()}
+        else{toast('No clear answer yet in the Doc (got: "'+String((r&&r.raw)||'').slice(0,80)+'"). Try again once it\'s filled in.');render()}
+      }).catch(function(x){toast('Could not check: '+((x&&x.message)||x))});
+    }
     else if(act==='up'){move(id,-1)}
     else if(act==='down'){move(id,1)}
     else if(act==='indent'){indent(id)}
@@ -2562,6 +2955,23 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(act==='calnext'){if(++S.calM>11){S.calM=0;S.calY++}render()}
     else if(act==='caltoday'){var n0=new Date();S.calY=n0.getFullYear();S.calM=n0.getMonth();S.selDay=today();render()}
     else if(act==='calview'){S.calView=b.dataset.v;persist();render()}
+    else if(act==='holimport'){
+      var hy=$('#hol-year'),yr=hy?(+hy.value||S.holYear):S.holYear;
+      S.holImportBusy=true;render();
+      gs('importIndianHolidays',yr).then(function(list){
+        S.holImportBusy=false;
+        (list||[]).forEach(function(hd){
+          var hid='hol_'+hd.date;
+          S.holidays[hid]=Object.assign({id:hid},hd);
+          db.doc('holidays/'+hid).set(hd).catch(function(){});
+        });
+        render();toast((list&&list.length)?'Imported '+list.length+' holidays for '+yr:'No holidays found for '+yr);
+      }).catch(function(e){S.holImportBusy=false;render();toast('Could not import: '+((e&&e.message)||e))});
+    }
+    else if(act==='holclear'){
+      Object.keys(S.holidays).forEach(function(k){db.doc('holidays/'+k).delete().catch(function(){})});
+      S.holidays={};render();toast('Holidays cleared');
+    }
     else if(act==='upflt'){S.upFlt=b.dataset.v;render()}
     else if(act==='caladd'){
       var ti=$('#cal-title'),par=$('#cal-parent').value,txt=ti.value.trim();
@@ -2617,9 +3027,17 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   });
   view.addEventListener('change',function(e){
     var t=e.target,act=t.dataset.act,k=t.dataset.k,id=idOf(t);
+    if(t.id==='sx-file'||t.id==='opx-file'){
+      var fnEl=$('#'+t.id+'-name'),f=t.files&&t.files[0];
+      if(fnEl)fnEl.textContent=f?('Selected: '+f.name):'';
+      return;
+    }
     if(discChange(t,act,k,id)||whChange(t,act,k,id)||cvChange(t,act,k,id)||teamChange(t,act,k,id)||rdChange(t,act,k,id))return;
     if(act==='done')changeItem(id,{done:t.checked});
     else if(act==='status')changeItem(id,{status:t.value});
+    else if(act==='clchk'){clSet(id,t.dataset.cid,{done:t.checked});render()}
+    else if(act==='partchk'){partSet(id,t.dataset.pid,{checked:t.checked});render()}
+    else if(act==='partasset'){partSet(id,t.dataset.pid,{assetId:t.value||''});render()}
     else if(act==='priority'){setFields(id,{priority:t.value});render()}
     else if(act==='owner'){ownerChange(id,t.value)}
     else if(act==='due'){setFields(id,{due:t.value});render()}
@@ -2630,6 +3048,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else if(t.id==='opps-toggle'){S.oppsOn=t.checked;render()}
     else if(t.id==='area-flt-sel'){S.areaFlt=t.value;render()}
     else if(act==='addlink'){if(t.value){toggleLink(id,t.value);render()}}
+    else if(act==='holyear'){S.holYear=+t.value||S.holYear;t.defaultValue=t.value}
     else if(act==='mapproj'){S.mapProj=t.value;render()}
     else if(act==='mapstatus'){S.mapStatus=t.value;render()}
     else if(act==='maplayer'){S.mapLayer=t.value;render()}
@@ -2645,6 +3064,10 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
       else if(f==='curl')setFields(id,{url:t.value.trim()});
       else if(f==='cfee')setFields(id,{fee:t.value.trim()});
       else if(f==='cprize')setFields(id,{prize:t.value.trim()});
+      else if(f==='clname')clSet(id,k.split(':')[1],{text:t.value.trim()});
+      else if(f==='partname')partSet(id,k.split(':')[1],{name:t.value.trim()});
+      else if(f==='partqty')partSet(id,k.split(':')[1],{qty:Math.max(0,+t.value||0)});
+      else if(f==='partprice')partSet(id,k.split(':')[1],{price:t.value===''?null:Math.max(0,+t.value||0)});
       if(f!=='caltitle'){t.defaultValue=t.value;render()}
     }
   });
@@ -2655,11 +3078,12 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     if(e.key==='Enter'&&e.target.id==='cal-title'){var b=$('[data-act="caladd"]');if(b)b.click()}
     if(e.key==='Escape'&&e.target.dataset.k){e.target.value=e.target.defaultValue;e.target.blur()}});
   document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-view],[data-flt],[data-hide]');
+    var t=e.target.closest('[data-view],[data-flt],[data-hide],[data-ov]');
     if(!t)return;
     if(t.dataset.view){S.view=t.dataset.view;persist();render()}
     else if(t.dataset.flt){S.flt=t.dataset.flt;render()}
     else if(t.dataset.hide){S.hideDone=!S.hideDone;persist();render()}
+    else if(t.dataset.ov){S.outlineView=t.dataset.ov;persist();render()}
   });
   $('#q').addEventListener('input',function(e){S.q=e.target.value.trim().toLowerCase();render()});
 
@@ -2774,7 +3198,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
     else{S.open=rid;S.view='outline'}
     persist();render();
   });
-  document.addEventListener('click',function(e){document.querySelectorAll('details.help[open],details.focusmenu[open]').forEach(function(d){if(!d.contains(e.target))d.removeAttribute('open')})});
+  document.addEventListener('click',function(e){document.querySelectorAll('details.help[open],details.focusmenu[open],details.tm-movemenu[open]').forEach(function(d){if(!d.contains(e.target))d.removeAttribute('open')})});
   $('#focus-disc').addEventListener('change',function(e){S.focus.disc=e.target.checked;if(S.focus.disc&&S.view==='disc')S.view='outline';persist();render();toast(S.focus.disc?'Discovery hidden':'Discovery shown')});
   $('#focus-rd').addEventListener('change',function(e){S.focus.rd=e.target.checked;if(S.focus.rd&&S.view==='rd')S.view='outline';persist();render();toast(S.focus.rd?'R&D hidden':'R&D shown')});
 
@@ -2827,7 +3251,7 @@ text.lbl.p{font-family:var(--font-display);font-weight:700;font-size:14px}
   db.collection('items').onSnapshot(function(snap){rebuild(snap.docs);S.ready=true;render()});
   db.collection('comps').onSnapshot(function(snap){rebuildComps(snap.docs);render()});
   db.collection('disc').onSnapshot(function(snap){rebuildDisc(snap.docs);render()});
-  ['agents','runs','dir','notes','cfg','assets','canvas','rd','an'].forEach(function(c){db.collection(c).onSnapshot(function(snap){rebuildGen(c,snap.docs);render()})});
+  ['agents','runs','dir','notes','cfg','assets','canvas','rd','an','holidays'].forEach(function(c){db.collection(c).onSnapshot(function(snap){rebuildGen(c,snap.docs);render()})});
   gs('keyStatus').then(function(k){S.keys=k;render()}).catch(function(){});
   load(true).then(function(){
     var lastErr=0;
