@@ -22,10 +22,15 @@ function doGet() {
     .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
 
+var KNOWN_SHEET_ID = '1dss_reVdybws-caU3UlU-toLvyP7ksgAPhJ6gvcAuqs'; // fallback so a missing/wrong Script Property never silently spins up a new empty sheet.
+
 function store_() {
   var props = PropertiesService.getScriptProperties();
   var id = props.getProperty('SHEET_ID'), ss;
   if (id) { try { ss = SpreadsheetApp.openById(id); } catch (e) { ss = null; } }
+  if (!ss && KNOWN_SHEET_ID) {
+    try { ss = SpreadsheetApp.openById(KNOWN_SHEET_ID); if (ss) props.setProperty('SHEET_ID', ss.getId()); } catch (e) { ss = null; }
+  }
   if (!ss) {
     ss = SpreadsheetApp.create(APP + ' Data');
     props.setProperty('SHEET_ID', ss.getId());
@@ -40,6 +45,22 @@ function store_() {
     if (!ss.getSheetByName(n)) ss.insertSheet(n).getRange(1, 1, 1, 2).setValues([['id', 'json']]);
   });
   return ss;
+}
+
+/** Daily safety net: copies the live Atlas Data sheet into an "Atlas Backups" folder, keeps the last 14.
+ *  Set up once: in the Apps Script editor, click the clock icon (Triggers) -> Add Trigger ->
+ *  function: autoBackup -> event source: Time-driven -> Day timer (pick any hour) -> Save. */
+function autoBackup() {
+  var ss = store_();
+  var folders = DriveApp.getFoldersByName(APP + ' Backups');
+  var folder = folders.hasNext() ? folders.next() : DriveApp.createFolder(APP + ' Backups');
+  var stamp = Utilities.formatDate(new Date(), TZ, 'yyyy-MM-dd_HH-mm');
+  DriveApp.getFileById(ss.getId()).makeCopy(APP + ' Data backup ' + stamp, folder);
+  var files = folder.getFiles(), list = [];
+  while (files.hasNext()) list.push(files.next());
+  list.sort(function (a, b) { return b.getDateCreated() - a.getDateCreated(); });
+  list.slice(14).forEach(function (f) { f.setTrashed(true); });
+  return { backups: Math.min(list.length, 14) };
 }
 
 function loadAll() {
@@ -391,7 +412,7 @@ function operatorExtract(sourceText, sourceLink) {
   var cfg = cfg_(), pr = cfg.primary || {};
   var text = String(sourceText || '').slice(0, 12000);
   if (text.length < 40) throw new Error('Paste more of the paper’s text describing the method.');
-  var sys = 'Extract ONE reusable analysis method from this text, for a personal research or project tool. Reply with ONLY JSON: {"name":"short name","instructions":"clear, reusable step-by-step instructions for applying this method to a new dataset, as a simplified or flow-chart style description, not prose. Include the formula if the method has one."}. Never invent a method that is not actually described in the text.';
+  var sys = 'Extract the underlying LOGICAL PATTERN from this text — not a restatement of its domain-specific steps with the nouns swapped, but the reusable structure underneath, the way a person strips a method down to its logic so they can apply it somewhere completely unrelated. Every domain-specific term in the source (a chemical, biological, technical or field-specific word) should become the general role it plays in the pattern instead — e.g. not "protein backbone" but "candidate structure," not "wet-lab test" but "cheap real-world validation step," not "quantum chemistry data" but "domain-specific prior knowledge." Reply with ONLY JSON: {"name":"short name for the PATTERN itself, not the domain it came from","instructions":"the abstracted, domain-neutral steps of the pattern, as a flow-chart style list of imperative steps, not prose. Include the underlying formula or decision rule only if the text actually gives one, generalized the same way."}. Never invent structure that is not actually implied by the text — generalize what is really there, do not add new logic.';
   if (!pr.provider || !pr.model) {
     var h = handoffCreate_('Extract method', sys + '\n\nReply with ONLY the JSON object, nothing else.', text);
     return { handoff: true, docId: h.docId, docUrl: h.docUrl };
@@ -504,6 +525,44 @@ function oppUpdateDatesFinish(compId, docId) {
   var date = extractDate_(answer);
   return date ? { date: date } : { raw: answer };
 }
+function extractPrice_(text) {
+  var t = String(text || '');
+  if (/unknown/i.test(t.trim())) return null;
+  var m = t.match(/(?:₹|rs\.?|inr)\s*([\d,]+(?:\.\d+)?)/i);
+  if (!m) m = t.match(/([\d,]+(?:\.\d+)?)\s*(?:₹|rs\.?|inr)/i);
+  if (!m) m = t.match(/([\d][\d,]*(?:\.\d+)?)/);
+  if (!m) return null;
+  var n = parseFloat(m[1].replace(/,/g, ''));
+  return isFinite(n) && n > 0 ? n : null;
+}
+function extractSourceUrl_(text) {
+  var m = String(text || '').match(/https?:\/\/[^\s)"'<>]+/);
+  return m ? m[0] : '';
+}
+// Not a live price-comparison engine (nothing in Apps Script can replicate a shopping extension's scraped
+// database) — this asks an AI to do one real web search and report back a plausible current India price plus
+// where it found it, same honesty level as oppUpdateDates' deadline lookup above. Always a ballpark, never
+// a guaranteed lowest price; the UI surfaces the source link so the user can check it themselves.
+function fetchPartPrice(partName) {
+  partName = String(partName || '').trim();
+  if (!partName) throw new Error('Name the part first.');
+  var cfg = cfg_(), pr = cfg.primary || {};
+  var sys = 'You help estimate costs for a personal hardware/materials project in India. Find a realistic current retail price in India (INR) for the part or material named below — search the web if you can, and prefer an actual product listing over a generic estimate. Reply with ONLY two lines: the price as plain INR numerals with no currency symbol and no commas (e.g. 1250), then on the second line one real source URL you found it from. If you genuinely cannot find a specific price, reply with just the single word UNKNOWN.';
+  var user = 'Part or material: ' + partName;
+  if (!pr.provider || !pr.model) {
+    var h = handoffCreate_('Price check: ' + partName, sys, user);
+    return { handoff: true, docId: h.docId, docUrl: h.docUrl };
+  }
+  var r = ai_(pr.provider, pr.model, sys, user, true, 200);
+  var price = extractPrice_(r.text), src = extractSourceUrl_(r.text);
+  return price != null ? { price: price, source: src } : { raw: r.text };
+}
+function fetchPartPriceFinish(docId) {
+  var answer = handoffReadAnswer_(docId);
+  if (!answer) return { raw: '' };
+  var price = extractPrice_(answer), src = extractSourceUrl_(answer);
+  return price != null ? { price: price, source: src } : { raw: answer };
+}
 function coCreateJoin(sheetLinkOrId) {
   var m = String(sheetLinkOrId || '').match(/[-\w]{25,}/);
   if (!m) throw new Error('Paste the Sheet link your collaborator sent you.');
@@ -568,6 +627,40 @@ function gcalUpsert(o) {
 function gcalDelete(eventId) {
   try { var ev = cal_().getEventById(eventId); if (ev) ev.deleteEvent(); } catch (e) {}
   return true;
+}
+
+function importIndianHolidays(year) {
+  year = +year || new Date().getFullYear();
+  var calId = 'en.indian#holiday@group.v.calendar.google.com';
+  var start = new Date(year, 0, 1), end = new Date(year, 11, 31, 23, 59, 59);
+  var items = [];
+  // Try the plain CalendarApp first — works if this calendar is already in the user's own
+  // Google Calendar list ("Other calendars"). It silently can't see public calendars that
+  // aren't subscribed to, which is the common failure, so the Advanced Service below is the
+  // real path and doesn't require subscribing to anything first.
+  try {
+    var hc = CalendarApp.getCalendarById(calId);
+    if (hc) items = hc.getEvents(start, end).map(function (e) {
+      var d = e.getAllDayStartDate ? e.getAllDayStartDate() : e.getStartTime();
+      return { date: Utilities.formatDate(d, TZ, 'yyyy-MM-dd'), title: e.getTitle() || 'Holiday' };
+    });
+  } catch (e) { items = []; }
+  if (!items.length) {
+    try {
+      var resp = Calendar.Events.list(calId, {
+        timeMin: start.toISOString(), timeMax: end.toISOString(),
+        singleEvents: true, maxResults: 2500, orderBy: 'startTime'
+      });
+      items = (resp.items || []).map(function (e) {
+        var ds = (e.start && (e.start.date || (e.start.dateTime || '').slice(0, 10))) || '';
+        return { date: ds, title: e.summary || 'Holiday' };
+      }).filter(function (x) { return x.date; });
+    } catch (e) {
+      throw new Error('Importing holidays needs the Calendar API enabled for this script. In the Apps Script editor, open Services (+), add "Google Calendar API", save, then try again. (' + (e && e.message || e) + ')');
+    }
+  }
+  items.sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+  return items;
 }
 
 
@@ -1160,10 +1253,22 @@ function mirrorWarehouse() {
   var lite = { Critical: 'CRITICAL ●●', High: 'High ●', Normal: 'Normal', None: '' };
   put('Warehouse - Digital', ['Name', 'Type', 'Link', 'Account', 'About', 'Belongs to', 'Added'],
     allDocs_('dir').map(function (d) { return [d.title || '', d.type || '', d.url || '', d.account || '', d.about || '', tag(d.tag), d.added || '']; }));
-  put('Warehouse - Physical', ['Priority', 'Item', 'Stored at', 'Qty', 'Status', 'Supplier', 'Belongs to', 'Notes', 'Added'],
-    assets.filter(function (a) { return a.kind === 'physical'; }).map(function (a) { return [lite[a.priority] || '', a.name || '', a.location || '', a.qty || '', a.need || '', sup[a.supplier] || '', tag(a.tag), a.notes || '', a.added || '']; }));
+  put('Warehouse - Physical', ['Priority', 'Item', 'Stored at', 'Qty', 'Price', 'Status', 'Supplier', 'Belongs to', 'Notes', 'Added'],
+    assets.filter(function (a) { return a.kind === 'physical'; }).map(function (a) { return [lite[a.priority] || '', a.name || '', a.location || '', a.qty || '', a.price || '', a.need || '', sup[a.supplier] || '', tag(a.tag), a.notes || '', a.added || '']; }));
   put('Warehouse - Suppliers', ['Priority', 'Supplier', 'Contact', 'What they sell', 'Purchases (link to sub page)', 'Purchases notes', 'Stored at', 'Qty', 'Belongs to'],
-    assets.filter(function (a) { return a.kind === 'supplier'; }).map(function (a) { return [lite[a.priority] || '', a.name || '', a.contact || '', a.sells || '', a.purchasesUrl || '', a.purchases || '', a.stored || '', a.qty || '', tag(a.tag)]; }));
+    assets.filter(function (a) { return a.kind === 'supplier'; }).map(function (a) { return [lite[a.priority] || '', a.name || '', a.contact || '', a.sells || '', a.purchasesUrl || '', a.purchases || '', a.stored || '', a.qty || '', (Array.isArray(a.tags) && a.tags.length ? a.tags.map(tag).filter(Boolean).join(', ') : tag(a.tag))]; }));
+  var assetById = {};
+  assets.forEach(function (a) { assetById[a.id] = a; });
+  var costRows = [];
+  Object.keys(items).forEach(function (tid) {
+    var it = items[tid];
+    (it.parts || []).forEach(function (p) {
+      var linked = p.assetId && assetById[p.assetId];
+      var price = linked ? (linked.price || '') : (p.price != null ? p.price : '');
+      costRows.push([tag(tid) || (it.title || 'Untitled'), p.checked ? 'Yes' : 'No', linked ? (linked.name || '') : (p.name || ''), p.qty != null ? p.qty : 1, price, linked ? (sup[linked.supplier] || '') : '', linked ? (linked.need || 'Have') : 'Free text']);
+    });
+  });
+  put('Warehouse - Costing (BOM)', ['Task', 'Ticked', 'Part', 'Qty', 'Price', 'Supplier', 'Stock status'], costRows);
   return ss.getUrl();
 }
 
@@ -1301,6 +1406,33 @@ function repoFetchLink_(url) {
     return { title: title, text: text };
   } catch (e) { return null; }
 }
+function extractFetchLink(url) {
+  if (!url) throw new Error('No link given.');
+  var r = repoFetchLink_(url);
+  if (!r) throw new Error('Could not fetch that page — it may be paywalled, behind a login, or rendered by JavaScript. Try downloading the PDF and uploading it instead.');
+  return r; // {title, text}
+}
+function pdfExtractText(base64, filename) {
+  if (!base64) throw new Error('No file data received.');
+  var bytes;
+  try { bytes = Utilities.base64Decode(base64); } catch (e) { throw new Error('Could not read that file — it may not have uploaded correctly.'); }
+  var blob = Utilities.newBlob(bytes, 'application/pdf', filename || 'upload.pdf');
+  var tempFile = null, tempDoc = null;
+  try {
+    var resource = { title: (filename || 'upload') + ' (OCR temp)', mimeType: MimeType.GOOGLE_DOCS };
+    try {
+      tempFile = Drive.Files.insert(resource, blob, { convert: true, ocr: true });
+    } catch (e) {
+      throw new Error('PDF reading needs the Drive API enabled for this script. In the Apps Script editor, open Services (+), add "Drive API", save, then try again. (' + (e && e.message || e) + ')');
+    }
+    tempDoc = DocumentApp.openById(tempFile.id);
+    var text = tempDoc.getBody().getText();
+    if (!text || text.trim().length < 20) throw new Error('Could not read any text from that PDF — it may be a scanned image with no readable text, or empty.');
+    return { text: text.trim().slice(0, 20000), title: (filename || 'Uploaded PDF').replace(/\.pdf$/i, '') };
+  } finally {
+    try { if (tempFile && tempFile.id) DriveApp.getFileById(tempFile.id).setTrashed(true); } catch (e2) {}
+  }
+}
 function repoResolveTitle_(title) {
   try {
     var url = 'https://api.semanticscholar.org/graph/v1/paper/search?query=' + encodeURIComponent(title) + '&limit=1&fields=title,abstract,url,year,externalIds,openAccessPdf';
@@ -1375,6 +1507,29 @@ function repoDelete(id) {
   return true;
 }
 /* ----- Repository notes: a fuller, AI-written-in-its-own-words summary saved as its own Google Doc per source ----- */
+function taskVersionsFolder_() {
+  var props = PropertiesService.getScriptProperties();
+  var id = props.getProperty('VERSIONS_DOC_FOLDER_ID'), f;
+  if (id) { try { f = DriveApp.getFolderById(id); } catch (e) { f = null; } }
+  if (!f) { f = DriveApp.createFolder(APP + ': Version docs'); props.setProperty('VERSIONS_DOC_FOLDER_ID', f.getId()); }
+  return f;
+}
+function taskVersionsDoc(id) {
+  var n = getDoc_('items', id);
+  if (!n) throw new Error('That task was not found.');
+  if (n.versionsDocUrl) return { url: n.versionsDocUrl, created: false };
+  var doc = DocumentApp.create((n.title || 'Untitled task') + ' — versions');
+  DriveApp.getFileById(doc.getId()).moveTo(taskVersionsFolder_());
+  var body = doc.getBody();
+  body.appendParagraph(n.title || 'Untitled task').setHeading(DocumentApp.ParagraphHeading.TITLE);
+  body.appendParagraph('Paste each new version below, newest on top — code, CAD, a draft, whatever this task iterates on. A heading per version (with the date) keeps them easy to scan back through.');
+  body.appendParagraph('');
+  body.appendParagraph(Utilities.formatDate(new Date(), TZ, 'yyyy-MM-dd') + ' — v1').setHeading(DocumentApp.ParagraphHeading.HEADING2);
+  body.appendParagraph('');
+  n.versionsDocUrl = doc.getUrl();
+  putDoc_('items', id, n);
+  return { url: doc.getUrl(), created: true };
+}
 function repoNotesFolder_() {
   var props = PropertiesService.getScriptProperties();
   var id = props.getProperty('REPO_NOTES_FOLDER_ID'), f;
